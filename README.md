@@ -1,120 +1,151 @@
 # 🎴 Yu-Gi-Oh! TCG Valuer & Collection Tracker (TUI)
 
-Benvenuto in **Yu-Gi-Oh! TCG Valuer & Collection Tracker**, un'applicazione CLI avanzata con interfaccia grafica da terminale (**TUI**) sviluppata in Python. Questo strumento ti permette di gestire la tua collezione di carte di Yu-Gi-Oh!, cercarle in tempo reale tramite le API ufficiali di **YGOPRODeck**, e valutarne istantaneamente il prezzo di mercato (**Cardmarket**) applicando moltiplicatori precisi basati sulle condizioni reali della carta.
+Welcome to **Yu-Gi-Oh! TCG Valuer & Collection Tracker**, an advanced CLI application with a terminal user interface (**TUI**) built in Python. This tool lets you manage your Yu-Gi-Oh! card collection, search for cards in real time through the official **YGOPRODeck** API, and instantly estimate their market value (**Cardmarket**) by applying precise multipliers based on the card's real condition.
 
 ---
 
-## ✨ Caratteristiche Principali
+## ✨ Key Features
 
-1. **Ricerca Avanzata & Normalizzazione (Modulo 1)**:
-   - Inserisci il nome della carta in **italiano** o **inglese** (con supporto fuzzy/completamento automatico). L'applicazione interroga l'API e restituisce i nomi ufficiali normalizzati in inglese.
-   - Supporto per l'inserimento diretto tramite **Codice del Set** (es. `RA01-EN001` o `LOB-001`) o tramite **Passcode (ID della carta)**.
-2. **Valutazione e Condizioni Cardmarket (Modulo 2)**:
-   - Recupera istantaneamente il prezzo di listino di **Cardmarket** e **TCGPlayer**.
-   - Mappatura automatica dei prezzi in base alle condizioni della carta secondo gli standard ufficiali Cardmarket:
-     - **NM** (Near Mint) -> `100%` del prezzo di riferimento
-     - **EX** (Excellent) -> `88%` del prezzo base
-     - **GD** (Good) -> `72.5%` del prezzo base
-     - **LP** (Light Played / Played) -> `55%` del prezzo base
-     - **PO** (Poor) -> `35%` del prezzo base
-   - Calcolo automatico in tempo reale del valore complessivo del Portfolio della Collezione sia per la condizione NM che per le stime delle altre condizioni.
-3. **Persistenza e CSV Export**:
-   - Salvataggio automatico dei dati in formato JSON (`collection.json`).
-   - Esportazione professionale in formato CSV (`collection.csv`) con colonne dettagliate per ogni condizione.
-4. **Architettura Modulare Vision / OCR (Modulo 3 - WIP)**:
-   - Struttura pronta ed espandibile tramite `CardScannerService` e `ScannerView` per integrare fotocamere o caricamento di immagini per l'estrazione automatica di codici set tramite AI Vision (GPT-4o, Claude 3.5, Gemini) o OCR locale.
-5. **Rate Limiting integrato**:
-   - Gestione asincrona dei limiti API di YGOPRODeck (ritardo controllato di `0.05s` tra le richieste) per non incorrere nel blocco delle 20 req/sec.
+1. **Advanced Search & Normalization (Module 1)**:
+   - Enter a card name in **Italian** or **English** (with fuzzy matching support). The app queries the API and returns the official, normalized English name.
+   - Direct lookup by **Set Code** (e.g. `RA01-EN001` or `LOB-001`) or by **Passcode (card ID)** is also supported.
+2. **Valuation & Cardmarket Conditions (Module 2)**:
+   - Instantly fetches the **Cardmarket** and **TCGPlayer** listing price.
+   - Automatic price mapping based on card condition, following official Cardmarket standards:
+     - **NM** (Near Mint) -> `100%` of the reference price
+     - **EX** (Excellent) -> `88%` of the base price
+     - **GD** (Good) -> `72.5%` of the base price
+     - **LP** (Light Played / Played) -> `55%` of the base price
+     - **PO** (Poor) -> `35%` of the base price
+   - Real-time automatic calculation of the total collection portfolio value, both in NM condition and estimated for the other conditions.
+3. **Persistence & CSV Export**:
+   - Automatic data saving in JSON format (`collection.json`).
+   - Professional CSV export (`collection.csv`) with detailed columns for every condition, including the grade and the effective condition detected by the Grading module.
+4. **Bulk Add**:
+   - Paste multiple set codes at once and confirm them one by one before the final save to the collection.
+5. **Hybrid CV + Local AI Automatic Grading (Module 3)**:
+   - Analyzes a photo of a physical card and computes an objective **1-10** grade, PSA/BGS style, combining:
+     - **Deterministic Computer Vision** (OpenCV) for measurable geometric defects — edge wear and centering.
+     - **A local Vision-Language model** (Ollama + `llava`, self-hosted via Docker, no data ever leaves your machine) for surface defects — scratches and creases.
+   - The grade is mapped onto the existing NM/EX/GD/LP/PO condition scale, so you can compare your copy's "real" value against the theoretical NM value already shown in the collection.
+   - Known limitation: unlike real PSA/BGS grading, it does not compute a separate Corners subgrade. Details in `.CLAUDE/07-grading.md`.
+6. **Built-in Rate Limiting**:
+   - Asynchronous handling of YGOPRODeck API limits (a controlled `0.05s` delay between requests) to avoid hitting the 20 req/sec cap.
 
 ---
 
-## 🛠 Requisiti di Sistema & Installazione
+## 🛠 System Requirements & Installation
 
-L'applicazione è configurata per girare interamente in un ambiente virtuale isolato (`.venv`) usando **Python 3.10 o superiore**.
+The application is designed to run entirely inside an isolated virtual environment (`.venv`) using **Python 3.10 or higher**.
 
-### 1. Clona/Accedi alla cartella del progetto
+### 1. Clone/enter the project folder
 ```bash
 cd c:\Users\ferla\Desktop\YGO-TGC-Valuer
 ```
 
-### 2. Configura l'ambiente virtuale e installa le dipendenze
-Se non l'hai ancora fatto, puoi creare l'ambiente ed installare i pacchetti tramite i seguenti comandi:
+### 2. Set up the virtual environment and install dependencies
+If you haven't already, create the environment and install the packages with the following commands:
 
 ```powershell
-# Crea l'ambiente virtuale
+# Create the virtual environment
 python -m venv .venv
 
-# Installa le dipendenze richieste (textual, httpx, pydantic)
+# Install the required dependencies (textual, httpx, pydantic, opencv, ollama, ...)
 .\.venv\Scripts\python -m pip install -r requirements.txt
 ```
 
+### 3. Start the local Vision model (only required by the Grading tab)
+The Grading module relies on a self-hosted **Ollama** server running the `llava` model, included in this repository as a Docker Compose setup — no external API key needed, no data ever leaves your machine:
+
+```bash
+docker compose up -d
+```
+
+On the first run, the container automatically downloads the `llava` model (a few GB, this can take a few minutes); on subsequent restarts the model stays cached in the Docker volume and startup is instant. The API is exposed on `http://localhost:11434`. If you don't need to grade cards in this session, you can skip this step: the rest of the app works fine without it.
+
 ---
 
-## 🚀 Come Usare l'Applicazione (Guida all'Uso)
+## 🚀 Using the Application (User Guide)
 
-### Avvia l'applicazione:
+### Start the application:
 ```powershell
 .\.venv\Scripts\python main.py
 ```
 
-### Navigazione e Interfaccia TUI:
-L'interfaccia si divide in 3 tab principali navigabili cliccando sui titoli con il mouse o usando la tastiera:
+### Navigation and TUI Interface:
+The interface is split into 4 main tabs, navigable by clicking the titles with the mouse or using the keyboard:
 
-#### 1. Scheda 📋 `Collezione & Valutazione`
-Questa è la dashboard principale in cui viene mostrato il tuo portfolio.
-- **Tabella delle Carte**: Elenca tutte le tue carte salvate indicando passcode ID, Nome, Codice Set, Rarità, Quantità, Prezzo NM e le stime per tutte le condizioni inferiori (EX, GD, LP, PO).
-- **Barra delle Metriche**: Mostra in alto il numero di carte uniche, i pezzi totali e il valore totale in NM ed euro.
-- **Barra dei Moltiplicatori**: Visualizza all'istante la stima del valore totale se l'intera collezione fosse in condizione Excellent, Good, Light Played o Poor.
-- **Filtro in Tempo Reale**: Digita del testo nella barra di ricerca (`Filtra collezione...`) per cercare istantaneamente carte all'interno della tua lista locale per nome o codice set.
-- **Aggiorna Prezzi (🔄)**: Esegue una scansione in background delle carte in collezione per scaricare le quotazioni di Cardmarket più aggiornate.
-- **Esporta CSV (📥)**: Salva un report professionale dettagliato nel file `collection.csv`.
-- **Elimina Selezionata (🗑️)**: Clicca su una riga della tabella e premi il pulsante o usa la tastiera per rimuovere definitivamente una carta dal database.
+#### 1. 📋 `Collection & Valuation` tab
+This is the main dashboard where your portfolio is displayed.
+- **Card Table**: Lists all your saved cards, showing passcode ID, Name, Set Code, Rarity, Quantity, NM Price, and estimates for all lower conditions (EX, GD, LP, PO), plus the grade and the effective real-world value when a card has been graded.
+- **Metrics Bar**: Shows at the top the number of unique cards, total pieces, and the total NM value in euros.
+- **Condition Breakdown Bar**: Instantly displays the estimated total value if the whole collection were in Excellent, Good, Light Played, or Poor condition.
+- **Real-Time Filter**: Type text into the search bar (`Filter collection...`) to instantly search your local list by name or set code.
+- **Refresh Prices (🔄)**: Runs a background scan of the cards in your collection to fetch the latest Cardmarket quotes.
+- **Export CSV (📥)**: Saves a detailed, professional report to `collection.csv`.
+- **Delete Selected (🗑️)**: Click a table row and press the button (or use the keyboard) to permanently remove a card from the database.
 
-#### 2. Scheda ➕ `Aggiungi Carta`
-Il pannello dedicato all'inserimento e alla normalizzazione.
-- **Ricerca**: Digita un termine di ricerca nella barra superiore. Puoi inserire:
-  - Il nome in italiano (es. `Mago Nero`, `Drago Bianco Occhi Blu`).
-  - Il nome in inglese (es. `Dark Magician`).
-  - Un codice set specifico (es. `RA01-EN001`).
-  - Un ID numerico passcode (es. `46986414`).
-- **Selezione Carta**: Una volta cliccato su `Cerca`, la colonna di sinistra `Carte Trovate` mostrerà tutte le corrispondenze trovate nel database YGOPRODeck. Seleziona la carta desiderata.
-- **Selezione Versione / Rarità**: Nella colonna di destra `Seleziona Set / Versione / Rarità` appariranno tutte le edizioni storiche e le stampe di quella carta con la relativa rarità e il rispettivo prezzo di mercato di Cardmarket. Seleziona l'edizione esatta in tuo possesso!
-- **Conferma e Aggiunta**: Specifica la quantità desiderata (es. `3`) e clicca su `Aggiungi alla Collezione`. Riceverai una notifica di conferma e la carta verrà salvata istantaneamente nel database `collection.json`, aggiornando la tua collezione.
+#### 2. ➕ `Add Card` tab
+The panel dedicated to card lookup and normalization.
+- **Search**: Type a search term in the top bar. You can enter:
+  - The Italian name (e.g. `Mago Nero`, `Drago Bianco Occhi Blu`).
+  - The English name (e.g. `Dark Magician`).
+  - A specific set code (e.g. `RA01-EN001`).
+  - A numeric passcode ID (e.g. `46986414`).
+- **Card Selection**: Once you click `Search`, the left column `Cards Found` shows every match found in the YGOPRODeck database. Select the card you want.
+- **Version / Rarity Selection**: The right column `Select Set / Version / Rarity` shows every historical printing of that card, with its rarity and current Cardmarket price. Select the exact printing you own!
+- **Confirm and Add**: Specify the desired quantity (e.g. `3`) and click `Add to Collection`. You'll get a confirmation notification and the card is saved instantly to `collection.json`, updating your collection.
 
-#### 3. Scheda 📷 `Scan da Immagine (OCR/Vision)`
-La sezione dedicata all'architettura pronta per il futuro scanner fotografico.
-- Puoi inserire il percorso di un file immagine locale (es. `C:\carte\dark_magician.jpg`) e premere `Analizza Immagine`.
-- L'app simulerà l'analisi architetturale dell'immagine, estraendo i metadati pronti per essere passati al modulo di ricerca principale.
+#### 3. 🚀 `Bulk Add` tab
+For adding many cards at once (e.g. after a big purchase/trade).
+- Paste multiple set codes into the text box, separated by spaces or newlines (e.g. `RA01-EN001 LOB-001 SDMM-IT014`).
+- Press the load button: the app resolves each code via the API and queues them up.
+- For each queued card, pick the correct version/rarity from the list and confirm (or skip the card if it's not the right one), advancing through the queue one at a time.
+- When done, permanently save all confirmed cards to the collection.
+
+#### 4. 🩺 `Card Grading (CV + AI)` tab
+Computes an objective 1-10 grade from a photo of the physical card, combining CV and local AI.
+- Enter the path to a local image file (e.g. `/photos/dark_magician.jpg`) and press `Analyze Card`.
+- The app stays responsive while the analysis runs in the background (this requires the Ollama server to be running, see the Installation section); once done it shows the Centering/Edges/Surface subgrades, the final grade, and the mapped condition (NM/EX/GD/LP/PO).
+- If you want to save the result, search for the matching card (same search engine as the Add Card tab), select the set/rarity, and press `Save with Grade to Collection`: a new entry is created in the collection with the grade and condition applied, so you can compare its real value against the theoretical NM estimate in the Collection tab.
 
 ---
 
-## 📁 Struttura della directory del codice
+## 📁 Codebase Directory Structure
 
 ```text
-YGO-TGC-Valuer/
+YGO-Ultimate-Tool/
 │
-├── .venv/                  # Ambiente virtuale Python
-├── config.py               # Configurazione, moltiplicatori condizioni e costanti
-├── models.py               # Data class Pydantic (Card, Prices, CollectionItem)
-├── main.py                 # File di avvio del programma TUI
-├── requirements.txt        # Dipendenze esterne
-├── collection.json         # File di salvataggio locale della collezione (auto-generato)
-├── collection.csv          # Esportazione in formato foglio di calcolo (auto-generato)
+├── .venv/                  # Python virtual environment
+├── docker-compose.yml      # Self-hosted Ollama server (llava model) for the Grading module
+├── docker/
+│   ├── Dockerfile
+│   └── ollama-entrypoint.sh
+├── config.py               # Configuration, condition multipliers, grading thresholds
+├── models.py               # Pydantic data classes (Card, Prices, CollectionItem, GradingResult)
+├── main.py                 # Program entry point
+├── requirements.txt        # External dependencies
+├── collection.json         # Local collection save file (auto-generated)
+├── collection.csv          # Spreadsheet export (auto-generated)
 │
 ├── services/
-│   ├── ygoprodeck_api.py   # Client asincrono HTTP per interrogare YGOPRODeck API
-│   ├── storage.py          # Logica di persistenza per file JSON e CSV
-│   └── scanner.py          # Modulo placeholder predisposto per OCR/Vision AI
+│   ├── ygoprodeck_api.py   # Async HTTP client for the YGOPRODeck API
+│   ├── storage.py          # Persistence logic for JSON and CSV files
+│   └── grading/
+│       ├── geometric_agent.py  # Deterministic CV: normalization, edge wear, centering
+│       ├── ai_agent.py         # Async client to Ollama (VLM `llava`) for surface analysis
+│       └── grader.py           # Orchestrator: merges both agents into the final 1-10 grade
 │
 └── ui/
-    ├── app.py              # Classe principale e design CSS della Textual App
+    ├── app.py              # Main Textual App class and inline CSS design
     └── views/
-        ├── collection_view.py # Tabella della collezione e statistiche
-        ├── add_card_view.py   # Logica di ricerca, autocomplete e form d'aggiunta
-        └── scanner_view.py    # Interfaccia grafica placeholder per OCR
+        ├── collection_view.py # Collection table and statistics
+        ├── add_card_view.py   # Search, autocomplete, and add-to-collection form logic
+        ├── bulk_add_view.py    # Bulk insertion of multiple set codes
+        └── grading_view.py     # Interface for the CV + AI Grading module
 ```
 
 ---
 
-## 🔒 Rate Limiting e Buone Pratiche
-L'applicazione rispetta le linee guida per sviluppatori di YGOPRODeck. Tra ogni richiesta viene inserita una pausa asincrona di `0.05` secondi. Non modificare questo valore per evitare di incorrere in ban temporanei del tuo indirizzo IP.
+## 🔒 Rate Limiting and Best Practices
+The application follows YGOPRODeck's developer guidelines. An asynchronous `0.05`-second pause is inserted between each request. Do not lower this value, to avoid a temporary ban of your IP address.

@@ -1,7 +1,7 @@
 """
 Data models for Yu-Gi-Oh! TCG Valuer.
 """
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 from config import CONDITION_MULTIPLIERS
 
@@ -35,6 +35,12 @@ class CollectionItem(BaseModel):
     quantity: int = 1                    # Quantity in collection
     added_at: Optional[str] = None       # ISO date added
 
+    # Populated by the Grading module (services/grading/). None means "ungraded", which keeps
+    # this item behaving exactly as before (assumed NM) for pricing and stack-merging purposes.
+    grade: Optional[float] = None        # Final 1-10 grade from the hybrid CV+VLM grader
+    condition: Optional[str] = None      # Grade mapped onto NM/EX/GD/LP/PO (config.GRADE_TO_CONDITION)
+    grade_breakdown: Optional[Dict[str, float]] = None  # {"centering": .., "edges": .., "surface": ..}
+
     def get_price_for_condition(self, condition: str) -> float:
         """Calculate estimated price for a given condition code (NM, EX, GD, LP, PO)."""
         mult = CONDITION_MULTIPLIERS.get(condition.upper(), 1.0)
@@ -52,6 +58,37 @@ class CollectionItem(BaseModel):
     def total_nm_price(self) -> float:
         """Total price for NM condition multiplied by quantity."""
         return round(self.base_price * self.quantity, 2)
+
+    @property
+    def effective_price(self) -> float:
+        """Price for the item's actual graded condition, or the NM price if ungraded."""
+        if self.condition:
+            return self.get_price_for_condition(self.condition)
+        return round(self.base_price, 2)
+
+    @property
+    def total_effective_price(self) -> float:
+        """effective_price multiplied by quantity."""
+        return round(self.effective_price * self.quantity, 2)
+
+
+class GradingResult(BaseModel):
+    """Output of the hybrid CV + VLM card grading pipeline (services/grading/grader.py)."""
+    # Geometric Agent (OpenCV) raw measurements
+    centering_ratio: Dict[str, float] = Field(default_factory=dict)  # e.g. {"horizontal": 55.0, "vertical": 50.0}
+    edge_wear_pct: float = 0.0
+
+    # Inspector Agent (VLM) raw response
+    surface_details: Dict[str, Any] = Field(default_factory=dict)  # raw parsed JSON from the VLM
+
+    # Computed 1-10 subgrades
+    centering_subgrade: float = 0.0
+    edges_subgrade: float = 0.0
+    surface_subgrade: float = 0.0
+
+    # Final result
+    final_grade: float = 0.0
+    condition: str = "PO"
 
 
 class CardSearchResult(BaseModel):

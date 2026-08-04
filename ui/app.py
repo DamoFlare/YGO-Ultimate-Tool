@@ -1,17 +1,21 @@
 """
 Main Textual Application for Yu-Gi-Oh! TCG Valuer.
 """
-from typing import List
+from typing import List, Optional, Dict
+from pathlib import Path
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, TabbedContent, TabPane, Input, Button, OptionList, DataTable, Static
 from textual.widgets.option_list import Option
 from services.ygoprodeck_api import YGOProDeckAPI
 from services.storage import StorageService
+from services.grading.grader import CardGrader
+from services.grading.geometric_agent import CardDetectionError
+from services.grading.ai_agent import InspectorAgentError
 from models import CollectionItem, CardSearchResult, CardSetInfo
 from ui.views.collection_view import CollectionView
 from ui.views.add_card_view import AddCardView
 from ui.views.bulk_add_view import BulkAddView
-from ui.views.scanner_view import ScannerView
+from ui.views.grading_view import GradingView
 
 
 CSS = """
@@ -140,7 +144,7 @@ Screen {
     margin: 0 1;
 }
 
-#scanner_inputs {
+#grading_inputs {
     height: 3;
     margin: 1 0;
 }
@@ -150,10 +154,39 @@ Screen {
     margin-right: 1;
 }
 
-#scanner_output_result {
+#grading_output_result {
     margin-top: 1;
     padding: 1;
     border: dashed $warning;
+}
+
+#grading_search_bar {
+    height: 3;
+    margin: 1 0;
+}
+
+#grading_search_input {
+    width: 3fr;
+    margin-right: 1;
+}
+
+#grading_search_results_container {
+    height: 15;
+    margin-bottom: 1;
+}
+
+#grading_cards_list_box, #grading_sets_list_box {
+    width: 1fr;
+}
+
+#grading_save_controls {
+    height: 3;
+    margin-top: 1;
+}
+
+#input_grading_quantity {
+    width: 10;
+    margin: 0 1;
 }
 """
 
@@ -169,6 +202,7 @@ class YGOValuerApp(App):
         super().__init__()
         self.api = YGOProDeckAPI()
         self.storage = StorageService()
+        self.grader = CardGrader()
         self.collection: List[CollectionItem] = []
 
     def compose(self) -> ComposeResult:
@@ -180,8 +214,8 @@ class YGOValuerApp(App):
                 yield AddCardView(id="add_card_view")
             with TabPane("🚀 Aggiunta Bulk", id="tab_bulk"):
                 yield BulkAddView(id="bulk_add_view")
-            with TabPane(" Scan da Immagine (OCR/Vision)", id="tab_scan"):
-                yield ScannerView(id="scanner_view")
+            with TabPane("🩺 Grading Carta (CV + AI)", id="tab_grading"):
+                yield GradingView(id="grading_view")
         yield Footer()
 
     def on_mount(self) -> None:
@@ -240,10 +274,15 @@ class YGOValuerApp(App):
         elif button_id == "btn_bulk_save_all":
             self.commit_bulk_collection()
 
-        elif button_id == "btn_scan_image":
+        elif button_id == "btn_analyze_card":
             image_path_str = self.query_one("#input_image_path", Input).value
-            scanner_view = self.query_one("#scanner_view", ScannerView)
-            await scanner_view.run_scan(image_path_str)
+            self.start_grading(image_path_str)
+
+        elif button_id == "btn_grading_search":
+            await self.perform_grading_search()
+
+        elif button_id == "btn_grading_save":
+            self.save_graded_card_to_collection()
 
     def on_data_table_header_selected(self, event: DataTable.HeaderSelected) -> None:
         if event.data_table.id == "collection_table":
@@ -343,6 +382,23 @@ class YGOValuerApp(App):
                     add_view.selected_set = add_view.selected_card.card_sets[idx]
                     add_view.update_add_form()
 
+        elif option_list_id == "grading_found_cards_list":
+            grading_view = self.query_one("#grading_view", GradingView)
+            opt_id = event.option.id
+            if opt_id != "none" and opt_id.isdigit():
+                idx = int(opt_id)
+                if idx < len(grading_view.found_cards):
+                    grading_view.display_sets_for_card(grading_view.found_cards[idx])
+
+        elif option_list_id == "grading_found_sets_list":
+            grading_view = self.query_one("#grading_view", GradingView)
+            opt_id = event.option.id
+            if opt_id != "none" and opt_id.isdigit() and grading_view.selected_card:
+                idx = int(opt_id)
+                if idx < len(grading_view.selected_card.card_sets):
+                    grading_view.selected_set = grading_view.selected_card.card_sets[idx]
+                    grading_view.update_save_form()
+
     def add_selected_card_to_collection(self) -> None:
         add_view = self.query_one("#add_card_view", AddCardView)
         if not add_view.selected_card:
@@ -363,7 +419,83 @@ class YGOValuerApp(App):
     async def action_quit(self) -> None:
         """Close API client session on quit."""
         await self.api.close()
+        await self.grader.close()
         self.exit()
+
+    # --- GRADING LOGIC ---
+
+    def start_grading(self, image_path_str: str) -> None:
+        """Kick off the CV+VLM grading pipeline in a background worker so the TUI stays responsive."""
+        grading_view = self.query_one("#grading_view", GradingView)
+        if not image_path_str.strip():
+            self.notify("Inserisci un percorso file valido.", title="Campo vuoto", severity="warning")
+            return
+
+        grading_view.loading = True
+        self.run_worker(self._run_grading(Path(image_path_str)), exclusive=True, group="grading")
+
+    async def _run_grading(self, image_path: Path) -> None:
+        grading_view = self.query_one("#grading_view", GradingView)
+        try:
+            result = await self.grader.grade_card(image_path)
+            grading_view.display_grading_result(result)
+            self.notify(f"Grade calcolato: {result.final_grade:.1f}/10 ({result.condition})", title="Analisi Completata", severity="information")
+        except CardDetectionError as e:
+            grading_view.display_analysis_error(f"Impossibile rilevare la carta nell'immagine: {e}")
+        except InspectorAgentError as e:
+            grading_view.display_analysis_error(str(e))
+        except Exception as e:
+            grading_view.display_analysis_error(f"Errore imprevisto durante l'analisi: {e}")
+        finally:
+            grading_view.loading = False
+
+    async def perform_grading_search(self) -> None:
+        grading_view = self.query_one("#grading_view", GradingView)
+        query_text = self.query_one("#grading_search_input", Input).value.strip()
+        if not query_text:
+            self.notify("Inserisci un termine di ricerca.", title="Campo vuoto", severity="warning")
+            return
+
+        self.notify(f"Ricerca API per '{query_text}'...", title="Ricerca in corso")
+        results = await self.api.search_cards(query_text)
+        grading_view.display_search_results(results)
+
+        if not results:
+            self.notify("Nessuna carta trovata con questo termine.", title="Esito Ricerca", severity="error")
+
+    def save_graded_card_to_collection(self) -> None:
+        grading_view = self.query_one("#grading_view", GradingView)
+        if not grading_view.last_result or not grading_view.selected_card:
+            return
+
+        qty_input = self.query_one("#input_grading_quantity", Input)
+        try:
+            qty = int(qty_input.value)
+            if qty <= 0:
+                qty = 1
+        except ValueError:
+            qty = 1
+
+        result = grading_view.last_result
+        grade_breakdown = {
+            "centering": result.centering_subgrade,
+            "edges": result.edges_subgrade,
+            "surface": result.surface_subgrade,
+        }
+        self.add_card_to_collection_logic(
+            grading_view.selected_card,
+            grading_view.selected_set,
+            qty,
+            grade=result.final_grade,
+            condition=result.condition,
+            grade_breakdown=grade_breakdown,
+        )
+        self.storage.save_collection(self.collection)
+        self.notify(
+            f"Aggiunta '{grading_view.selected_card.name}' (Grade {result.final_grade:.1f}, {result.condition}) alla collezione!",
+            title="Carta Gradata Salvata",
+            severity="information",
+        )
 
     # --- BULK ADD LOGIC ---
 
@@ -432,7 +564,15 @@ class YGOValuerApp(App):
         bulk_view.update_queue_list()
         bulk_view.show_current_item()
 
-    def add_card_to_collection_logic(self, card: CardSearchResult, selected_set: CardSetInfo, qty: int = 1) -> None:
+    def add_card_to_collection_logic(
+        self,
+        card: CardSearchResult,
+        selected_set: CardSetInfo,
+        qty: int = 1,
+        grade: Optional[float] = None,
+        condition: Optional[str] = None,
+        grade_breakdown: Optional[Dict[str, float]] = None,
+    ) -> None:
         set_code = selected_set.set_code if selected_set else "PROMO"
         set_name = selected_set.set_name if selected_set else ""
         rarity = selected_set.set_rarity if selected_set else "Standard"
@@ -447,8 +587,15 @@ class YGOValuerApp(App):
         if base_price == 0.0 and card.card_prices:
             base_price = card.card_prices[0].cardmarket_price
 
+        # Graded copies never merge into (or with) a differently-graded/ungraded stack: a grade
+        # describes one specific physical copy, not the whole quantity. Ungraded add/bulk-add
+        # flows (grade=None) keep merging exactly as before.
         existing_item = next(
-            (item for item in self.collection if item.id == card.id and item.set_code == set_code and item.rarity == rarity),
+            (
+                item for item in self.collection
+                if item.id == card.id and item.set_code == set_code and item.rarity == rarity
+                and item.grade == grade
+            ),
             None
         )
 
@@ -463,7 +610,10 @@ class YGOValuerApp(App):
                 set_name=set_name,
                 rarity=rarity,
                 base_price=base_price,
-                quantity=qty
+                quantity=qty,
+                grade=grade,
+                condition=condition,
+                grade_breakdown=grade_breakdown,
             )
             self.collection.append(new_item)
 

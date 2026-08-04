@@ -1,21 +1,47 @@
-# Note, WIP e discrepanze da tenere a mente
+# Note, limiti noti e cose a cui fare attenzione
 
-## Cose dichiaratamente incomplete (WIP)
+## Limite architetturale: Grading e quantità in stack (`CollectionItem`)
 
-- **Scanner OCR/Vision** (`services/scanner.py`, `ui/views/scanner_view.py`): il modulo esiste
-  solo come placeholder architetturale. `scan_card_image()` ritorna sempre un risultato
-  hardcoded (Dark Magician / RA01-EN001 / passcode 46986414), non fa alcun riconoscimento reale.
-  La docstring specifica due possibili strade future: Multimodal LLM (GPT-4o, Claude 3.5 Sonnet,
-  Gemini 1.5 Flash) oppure OCR locale (`easyocr`/`pytesseract`) con crop di bounding box. Nessuna
-  di queste dipendenze è in `requirements.txt` oggi.
+`CollectionItem` rappresenta uno **stack** di N copie identiche (stesso id/set_code/rarity) con
+un solo prezzo base — non singole carte fisiche. Il modulo di Grading giudica invece una copia
+fisica specifica, il che è concettualmente in tensione col modello a stack.
 
-## Discrepanza README vs codice
+**Soluzione adottata** (minima, reversibile, senza refactor esteso): le carte con un `grade`
+impostato non vengono più unite ad altri stack con lo stesso id/set_code/rarity ma **grade
+diverso** — la chiave di match in `add_card_to_collection_logic` (`ui/app.py`) include anche il
+grade. Le carte non gradate (`grade=None`, il caso normale per Aggiungi Carta / Bulk) continuano
+a comportarsi esattamente come prima.
 
-Il README descrive solo 3 tab (Collezione & Valutazione, Aggiungi Carta, Scan da Immagine), ma
-il codice ha una **quarta tab, "Aggiunta Bulk"** (`ui/views/bulk_add_view.py`), completamente
-implementata e funzionante, non menzionata nel README. Anche l'albero directory nel README non
-cita `bulk_add_view.py`, `test_col.json` né `test_col.csv`. Se si aggiorna il README, questa è la
-prima cosa da correggere.
+**Perché**: evitare un refactor esteso del modello dati (tracking per-copia fisica invece che
+per-stack), che avrebbe richiesto rivedere storage, CSV export, bulk-add e collection_view, non
+giustificato per gradare occasionalmente qualche carta di valore.
+
+**Come applicarla**: se in futuro serve tracciare grade multipli per la stessa carta/set/rarità
+in quantità > 1 (es. 3 copie gradate diversamente), questo comportamento già lo permette (si
+creano stack separati); se invece serve un vero tracking per-copia su tutta la collezione, va
+rivalutato il modello dati da zero.
+
+## Dipendenza dal server Ollama locale
+
+Il tab "🩺 Grading Carta" richiede il server Ollama attivo (`docker compose up -d`, vedi
+[01-stack-e-setup.md](01-stack-e-setup.md)). Se non è in esecuzione, l'analisi fallisce con un
+`InspectorAgentError` mostrato in UI (non un crash) — le altre tab dell'app restano
+completamente funzionanti. Il primo avvio del container richiede il pull del modello `llava`
+(alcuni GB): può richiedere qualche minuto la prima volta.
+
+## Formula di grading tarabile
+
+Le soglie CV (usura bordi, deviazione centratura), i pesi dei sotto-voti e il mapping
+grade→condizione sono costanti nominate in `config.py`, pensate per essere tarate osservando
+risultati reali (non sono state validate su un dataset di carte fisiche). Dettagli e razionale
+in [07-grading.md](07-grading.md).
+
+## Limite di scope dichiarato: nessun sotto-voto "Corners"
+
+Il PSA/BGS reale usa 4 sotto-voti (Centering, Corners, Edges, Surface). Questo sistema ne
+implementa solo 3: né l'agente geometrico né il prompt del VLM (che esplicitamente ignora bordi
+e centratura) coprono il rilevamento di angoli consumati/arrotondati. È una limitazione nota,
+non un bug — vedi [07-grading.md](07-grading.md) per come estenderlo in futuro.
 
 ## Dati di collezione committati in git
 
@@ -31,18 +57,21 @@ di aggiungere `.gitignore` per questi file se in futuro si vuole separare dati u
   esplicitamente di non abbassare questo valore per evitare ban IP dall'API YGOPRODeck. Va
   rispettato in qualsiasi nuova funzionalità che chiami l'API in loop (es. bulk add, refresh
   prezzi).
-- Nessuna API key richiesta: l'API YGOPRODeck è pubblica. Se in futuro si integra un modulo
-  vision/LLM per lo scanner, sarà necessario introdurre gestione segreta (es. `.env`), che oggi
-  non esiste nel progetto.
+- Nessuna API key richiesta: l'API YGOPRODeck è pubblica e il modulo di Grading usa un VLM
+  locale (Ollama) senza autenticazione. Il progetto non ha ancora bisogno di gestione segreta
+  (`.env`); se in futuro si aggiungesse un provider esterno (es. un VLM cloud in alternativa a
+  `llava`), andrebbe introdotta.
 
 ## Cosa manca strutturalmente
 
 - Nessun test automatizzato, nessuna cartella `tests/`
 - Nessuna CI/CD (`.github/workflows/` assente)
 - Nessun `LICENSE`
-- Gestione errori "silenziosa": i services usano `try/except` ampi con `print()` verso stdout,
-  non eccezioni propagate né un modulo di logging strutturato. Da tenere a mente se si vogliono
-  migliorare l'osservabilità o il debug in produzione.
+- Gestione errori "silenziosa": `ygoprodeck_api.py`/`storage.py` usano `try/except` ampi con
+  `print()` verso stdout, non eccezioni propagate né un modulo di logging strutturato. Il modulo
+  di Grading (`services/grading/`) devia intenzionalmente da questa convenzione: solleva
+  eccezioni tipizzate (`CardDetectionError`, `InspectorAgentError`) con messaggi comprensibili,
+  catturate e mostrate in UI da `ui/app.py` — preferire questo pattern per nuovo codice.
 
 ## Convenzioni di codice osservate (per restare coerenti in modifiche future)
 

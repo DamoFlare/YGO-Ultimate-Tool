@@ -16,6 +16,8 @@ Costanti globali applicative:
   - `PO` (Poor): 0.35
 - `CONDITION_NAMES` — mapping codice condizione → nome leggibile
 - Path di default per la persistenza: `collection.json`, `collection.csv`
+- Costanti del modulo di Grading (Ollama, soglie CV, pesi, mapping grade→condizione): vedi
+  [07-grading.md](07-grading.md), che le documenta nel dettaglio.
 
 ## `models.py` (Pydantic v2 `BaseModel`)
 
@@ -25,13 +27,23 @@ Costanti globali applicative:
 - **`CollectionItem`** — elemento persistito nella collezione utente:
   - campi: `id`/passcode, `name`, `set_code`, `set_name`, `rarity`, `base_price`, `quantity`,
     `added_at`
+  - campi opzionali del modulo Grading (default `None`, retro-compatibili): `grade` (float 1-10),
+    `condition` (bucket NM/EX/GD/LP/PO mappato dal grade), `grade_breakdown` (dict con i
+    sotto-voti centering/edges/surface)
   - metodo `get_price_for_condition(condition)` — applica `CONDITION_MULTIPLIERS`
   - property `condition_prices` — dizionario di tutti i prezzi per condizione
   - property `total_nm_price` — `base_price * quantity`
+  - property `effective_price` — prezzo alla condizione realmente gradata (`condition`), o il
+    prezzo NM se la carta non è gradata (comportamento invariato per le carte non gradate)
+  - property `total_effective_price` — `effective_price * quantity`
 - **`CardSearchResult`** — risultato di ricerca dall'API:
   - `id`, `name`, `type`, `desc`, `race`, `attribute`
   - `card_sets: List[CardSetInfo]`
   - `card_prices: List[CardPrices]`
+- **`GradingResult`** — output del modulo di Grading (`services/grading/grader.py`): misure
+  grezze (`centering_ratio`, `edge_wear_pct`, `surface_details` dal VLM), i 3 sotto-voti
+  (`centering_subgrade`, `edges_subgrade`, `surface_subgrade`), e il risultato finale
+  (`final_grade`, `condition`). Vedi [07-grading.md](07-grading.md) per la formula completa.
 
 ## Formati di persistenza
 

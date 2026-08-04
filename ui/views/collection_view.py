@@ -49,16 +49,18 @@ class CollectionView(Container):
             "Nome (EN)",
             "Set Code",
             "Rarità",
+            "Grade",
             "Qtà",
             "Base NM (€)",
             "EX (€)",
             "GD (€)",
             "LP (€)",
             "PO (€)",
-            "Totale (€)"
+            "Totale NM (€)",
+            "Valore Reale (€)"
         )
-        (col_id, col_name, col_set, col_rarity, col_qty,
-         col_base, col_ex, col_gd, col_lp, col_po, col_total) = column_keys
+        (col_id, col_name, col_set, col_rarity, col_grade, col_qty,
+         col_base, col_ex, col_gd, col_lp, col_po, col_total, col_effective) = column_keys
 
         # Maps each column key to the CollectionItem attribute used to sort it.
         self._sort_extractors = {
@@ -66,6 +68,7 @@ class CollectionView(Container):
             col_name: lambda item: item.name.lower(),
             col_set: lambda item: item.set_code.lower(),
             col_rarity: lambda item: (item.rarity or "Standard").lower(),
+            col_grade: lambda item: item.grade if item.grade is not None else -1.0,
             col_qty: lambda item: item.quantity,
             col_base: lambda item: item.base_price,
             col_ex: lambda item: item.get_price_for_condition("EX"),
@@ -73,6 +76,7 @@ class CollectionView(Container):
             col_lp: lambda item: item.get_price_for_condition("LP"),
             col_po: lambda item: item.get_price_for_condition("PO"),
             col_total: lambda item: item.total_nm_price,
+            col_effective: lambda item: item.total_effective_price,
         }
         self._sort_column = None
         self._sort_reverse = False
@@ -136,11 +140,13 @@ class CollectionView(Container):
         self.query_one("#cond_po", Static).update(f"Stima PO: **€{total_po_val:.2f}**")
 
         for item in filtered_items:
+            grade_str = f"{item.grade:.1f} ({item.condition})" if item.grade is not None else "-"
             table.add_row(
                 str(item.id),
                 item.name,
                 item.set_code,
                 item.rarity or "Standard",
+                grade_str,
                 str(item.quantity),
                 f"€{item.base_price:.2f}",
                 f"€{item.get_price_for_condition('EX'):.2f}",
@@ -148,5 +154,6 @@ class CollectionView(Container):
                 f"€{item.get_price_for_condition('LP'):.2f}",
                 f"€{item.get_price_for_condition('PO'):.2f}",
                 f"€{item.total_nm_price:.2f}",
-                key=f"{item.id}_{item.set_code}_{item.rarity}"
+                f"€{item.total_effective_price:.2f}",
+                key=f"{item.id}_{item.set_code}_{item.rarity}_{item.grade}"
             )

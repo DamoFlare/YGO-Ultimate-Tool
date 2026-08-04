@@ -7,17 +7,25 @@ YGO-Ultimate-Tool/
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
-├── config.py                   # costanti globali / configurazione
-├── models.py                   # modelli dati Pydantic
-├── main.py                     # entry point
-├── collection.json             # dati collezione utente (persistenza reale)
-├── collection.csv              # export CSV della collezione
-├── test_col.json               # file di esempio minimale (1 carta)
-├── test_col.csv                # export CSV corrispondente
+├── docker-compose.yml           # server Ollama self-hosted per il modulo Grading
+├── docker/
+│   ├── Dockerfile                # basato su ollama/ollama:latest
+│   └── ollama-entrypoint.sh      # avvia il server e fa il pull di `llava` al primo avvio
+├── config.py                    # costanti globali / configurazione (incl. soglie grading)
+├── models.py                    # modelli dati Pydantic (incl. GradingResult)
+├── main.py                      # entry point
+├── collection.json              # dati collezione utente (persistenza reale)
+├── collection.csv               # export CSV della collezione
+├── test_col.json                # file di esempio minimale (1 carta)
+├── test_col.csv                 # export CSV corrispondente
 ├── services/
-│   ├── ygoprodeck_api.py       # client HTTP asincrono verso YGOPRODeck API
-│   ├── storage.py              # persistenza JSON/CSV
-│   └── scanner.py              # placeholder OCR/Vision (WIP, risultato simulato)
+│   ├── ygoprodeck_api.py        # client HTTP asincrono verso YGOPRODeck API
+│   ├── storage.py               # persistenza JSON/CSV
+│   └── grading/
+│       ├── __init__.py
+│       ├── geometric_agent.py   # CV deterministica: normalizzazione, edge wear, centratura
+│       ├── ai_agent.py          # client asincrono Ollama (VLM `llava`) per la superficie
+│       └── grader.py            # orchestratore: unisce i due agenti nel grade finale 1-10
 └── ui/
     ├── __init__.py
     ├── app.py                  # App Textual principale, CSS incluso inline
@@ -25,12 +33,19 @@ YGO-Ultimate-Tool/
         ├── __init__.py
         ├── collection_view.py  # tab "Collezione & Valutazione"
         ├── add_card_view.py    # tab "Aggiungi Carta"
-        ├── bulk_add_view.py    # tab "Aggiunta Bulk" (non documentata nel README)
-        └── scanner_view.py     # tab "Scan da Immagine (OCR/Vision)"
+        ├── bulk_add_view.py    # tab "Aggiunta Bulk"
+        └── grading_view.py     # tab "Grading Carta (CV + AI)"
 ```
 
 Non esistono `docs/`, `CONTRIBUTING.md`, `LICENSE`, `Makefile`, `.github/workflows/`, `tests/`,
-`pyproject.toml`, `Dockerfile`.
+`pyproject.toml`.
+
+Nota storica: il progetto è partito con un modulo scanner OCR/Vision placeholder
+(`services/scanner.py` + `ui/views/scanner_view.py`) che ritornava sempre un risultato
+simulato/hardcoded. È stato **sostituito interamente** dal modulo di Grading CV+VLM descritto
+sopra (stesso tab riutilizzato, rinominato da "Scan da Immagine (OCR/Vision)" a "Grading Carta
+(CV + AI)"). Se trovi riferimenti a `CardScannerService`/`ScannerView` altrove (vecchi commit,
+appunti), sono superati.
 
 ## Livelli logici
 
@@ -75,12 +90,20 @@ main.py
 5. **Visualizzazione/valutazione**: `CollectionView` legge la collezione in memoria, applica i
    moltiplicatori di `config.CONDITION_MULTIPLIERS` per condizione, mostra tabella con sorting
    e filtri, e metriche aggregate (carte uniche, pezzi totali, valore NM, stime EX/GD/LP/PO).
-6. **Scanner (WIP)**: `ScannerView` invoca `CardScannerService.scan_card_image()`, che ritorna
-   sempre lo stesso risultato simulato (Dark Magician / RA01-EN001) se il file immagine esiste —
-   nessun OCR/Vision reale è implementato.
+6. **Grading**: utente inserisce il path immagine in `GradingView` → `btn_analyze_card` →
+   `YGOValuerApp.start_grading` lancia un Textual worker (`self.run_worker(...)`, con
+   `grading_view.loading = True` per lo spinner nativo) → `CardGrader.grade_card()` esegue in
+   sequenza l'agente geometrico (sync) e l'inspector VLM (async) → il risultato
+   (`GradingResult`) viene mostrato in `GradingView`. Se l'utente collega il risultato a una
+   carta (stesso motore di ricerca di `AddCardView`), `save_graded_card_to_collection` richiama
+   `add_card_to_collection_logic` con `grade`/`condition` valorizzati. Dettagli completi in
+   [07-grading.md](07-grading.md).
 
 ## Concorrenza
 
-Tutte le chiamate verso l'API esterna sono `async`/`await` (via `httpx.AsyncClient`), coerenti
-con l'event loop nativo di Textual. Rate limiting manuale con `asyncio.sleep` per rispettare il
-limite dell'API YGOPRODeck (vedi [04-servizi.md](04-servizi.md)).
+Tutte le chiamate verso le API esterne (YGOPRODeck, Ollama) sono `async`/`await` (via
+`httpx.AsyncClient` e `ollama.AsyncClient`), coerenti con l'event loop nativo di Textual. Rate
+limiting manuale con `asyncio.sleep` per rispettare il limite dell'API YGOPRODeck (vedi
+[04-servizi.md](04-servizi.md)). La chiamata di grading (potenzialmente lenta, secondi/minuti su
+CPU) gira in un Textual worker anziché in un semplice `await` diretto, per mantenere l'app
+reattiva e mostrare uno stato di caricamento nativo.

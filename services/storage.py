@@ -46,13 +46,16 @@ class StorageService:
                 "set_code",
                 "set_name",
                 "rarity",
+                "grade",
+                "condition",
                 "quantity",
                 "base_price_NM",
                 "price_EX",
                 "price_GD",
                 "price_LP",
                 "price_PO",
-                "total_NM_value"
+                "total_NM_value",
+                "total_effective_value"
             ]
             with open(self.csv_path, "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -64,13 +67,16 @@ class StorageService:
                         "set_code": item.set_code,
                         "set_name": item.set_name,
                         "rarity": item.rarity,
+                        "grade": f"{item.grade:.1f}" if item.grade is not None else "",
+                        "condition": item.condition or "",
                         "quantity": item.quantity,
                         "base_price_NM": f"{item.base_price:.2f}",
                         "price_EX": f"{item.get_price_for_condition('EX'):.2f}",
                         "price_GD": f"{item.get_price_for_condition('GD'):.2f}",
                         "price_LP": f"{item.get_price_for_condition('LP'):.2f}",
                         "price_PO": f"{item.get_price_for_condition('PO'):.2f}",
-                        "total_NM_value": f"{item.total_nm_price:.2f}"
+                        "total_NM_value": f"{item.total_nm_price:.2f}",
+                        "total_effective_value": f"{item.total_effective_price:.2f}"
                     })
             return True
         except Exception as e:

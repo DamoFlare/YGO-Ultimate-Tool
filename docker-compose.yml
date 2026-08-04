@@ -1,0 +1,24 @@
+services:
+  ollama:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    container_name: ygo-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_VISION_MODEL=llava
+    restart: unless-stopped
+    # Uncomment to use an NVIDIA GPU (requires the NVIDIA Container Toolkit installed on the host):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes:
+  ollama_data:
