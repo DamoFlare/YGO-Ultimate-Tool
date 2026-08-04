@@ -1,0 +1,1722 @@
+[
+  {
+    "id": 26157485,
+    "name": "Iron Chain Blaster",
+    "set_code": "CSOC-EN019",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.12,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 26439287,
+    "name": "Proto-Cyber Dragon",
+    "set_code": "SDMM-EN014",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.25,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 84824601,
+    "name": "Botanical Girl",
+    "set_code": "CSOC-EN027",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.17,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 82116191,
+    "name": "Gigantic Cephalotus",
+    "set_code": "CSOC-EN025",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.08,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 14315573,
+    "name": "Negate Attack",
+    "set_code": "DP1-EN027",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Rare",
+    "base_price": 0.07,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 10591919,
+    "name": "Morphtronic Scopen",
+    "set_code": "RGBT-EN016",
+    "set_name": "Raging Battle",
+    "rarity": "Common",
+    "base_price": 0.57,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 91607976,
+    "name": "Morphtronic Clocken",
+    "set_code": "CSOC-EN012",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.09,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 40640057,
+    "name": "Kuriboh",
+    "set_code": "YSD-EN013",
+    "set_name": "Starter Deck 2006",
+    "rarity": "Common",
+    "base_price": 0.05,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 21597117,
+    "name": "A Hero Emerges",
+    "set_code": "DP1-EN025",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Common",
+    "base_price": 0.05,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 80908502,
+    "name": "Elemental HERO Captain Gold",
+    "set_code": "DP06-EN004",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Rare",
+    "base_price": 0.66,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 89547299,
+    "name": "Power Injector",
+    "set_code": "CSOC-EN021",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.1,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 12923641,
+    "name": "Swords of Concealing Light",
+    "set_code": "SD5-EN031",
+    "set_name": "Structure Deck: Warrior's Triumph",
+    "rarity": "Common",
+    "base_price": 1.64,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 89621922,
+    "name": "Neo-Spacian Flare Scarab",
+    "set_code": "DP03-EN006",
+    "set_name": "Duelist Pack: Jaden Yuki 2",
+    "rarity": "Rare",
+    "base_price": 0.26,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 59793705,
+    "name": "Elemental HERO Bladedge",
+    "set_code": "YSD-EN019",
+    "set_name": "Starter Deck 2006",
+    "rarity": "Ultra Rare",
+    "base_price": 0.02,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 55119278,
+    "name": "Morphtronic Radion",
+    "set_code": "CSOC-EN011",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Rare",
+    "base_price": 2.07,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 97705809,
+    "name": "Supercharge",
+    "set_code": "POTD-EN056",
+    "set_name": "Power of the Duelist",
+    "rarity": "Rare",
+    "base_price": 0.05,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 45906428,
+    "name": "Miracle Fusion",
+    "set_code": "CRV-EN039",
+    "set_name": "Cybernetic Revolution",
+    "rarity": "Rare",
+    "base_price": 0.29,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 47829960,
+    "name": "Chaosrider Gustaph",
+    "set_code": "SDDE-EN012",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.37,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 43642620,
+    "name": "Zombie Mammoth",
+    "set_code": "CSOC-EN030",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.05,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 5285665,
+    "name": "Elemental HERO Neo Bubbleman",
+    "set_code": "SOI-EN004",
+    "set_name": "Shadow of Infinity",
+    "rarity": "Common",
+    "base_price": 0.15,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 3773196,
+    "name": "D.D. Scout Plane",
+    "set_code": "SDDE-EN011",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.36,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 14261867,
+    "name": "8-Claws Scorpion",
+    "set_code": "GLD1-EN007",
+    "set_name": "Gold Series",
+    "rarity": "Common",
+    "base_price": 0.14,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 7572887,
+    "name": "D.D. Warrior Lady",
+    "set_code": "SDDE-EN010",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.53,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 54493213,
+    "name": "Helios - The Primordial Sun",
+    "set_code": "SDDE-EN005",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 3.28,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 30069398,
+    "name": "Wall of Ivy",
+    "set_code": "CSOC-EN004",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.17,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 60682203,
+    "name": "Cold Wave",
+    "set_code": "SDZW-EN019",
+    "set_name": "Zombie World Structure Deck",
+    "rarity": "Common",
+    "base_price": 0.59,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 89943723,
+    "name": "Elemental HERO Neos",
+    "set_code": "POTD-EN001",
+    "set_name": "Power of the Duelist",
+    "rarity": "Common",
+    "base_price": 1.47,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 19505896,
+    "name": "Nettles",
+    "set_code": "CSOC-EN024",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.28,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 31828916,
+    "name": "Machina Armored Unit",
+    "set_code": "SDMM-EN021",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.13,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 80987696,
+    "name": "Time Machine",
+    "set_code": "SDMM-EN031",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.38,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 82112775,
+    "name": "D.D.M. - Different Dimension Master",
+    "set_code": "SDDE-EN015",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.54,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 23782705,
+    "name": "Machina Sniper",
+    "set_code": "SDMM-EN007",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.12,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 63995093,
+    "name": "Machine Duplication",
+    "set_code": "SDMM-EN026",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 3.06,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 36733451,
+    "name": "Dimensional Alchemist",
+    "set_code": "SDDE-EN002",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 2.02,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 6795211,
+    "name": "Teleport",
+    "set_code": "CSOC-EN055",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.1,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 93542102,
+    "name": "Morphtronic Celfon",
+    "set_code": "CSOC-EN006",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.11,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 29947751,
+    "name": "Morphtronic Magnen",
+    "set_code": "CSOC-EN007",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.13,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 5318639,
+    "name": "Mystical Space Typhoon",
+    "set_code": "SD10-EN024",
+    "set_name": "Structure Deck: Machine Re-Volt",
+    "rarity": "Common",
+    "base_price": 1.63,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 17732278,
+    "name": "Neo-Spacian Glow Moss",
+    "set_code": "DP06-EN003",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.2,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 44729197,
+    "name": "Steamroid",
+    "set_code": "CRV-EN008",
+    "set_name": "Cybernetic Revolution",
+    "rarity": "Common",
+    "base_price": 0.07,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 74519184,
+    "name": "Hand Destruction",
+    "set_code": "TU01-EN014",
+    "set_name": "Turbo Pack: Booster One",
+    "rarity": "Common",
+    "base_price": 0.24,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 54959865,
+    "name": "Neo-Spacian Air Hummingbird",
+    "set_code": "DP06-EN001",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.21,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 53152590,
+    "name": "Iron Chain Coil",
+    "set_code": "CSOC-EN020",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.16,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 72767833,
+    "name": "Card Rotator",
+    "set_code": "CSOC-EN045",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.04,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 4929256,
+    "name": "Mobius the Frost Monarch",
+    "set_code": "SD4-EN012",
+    "set_name": "Structure Deck: Fury from the Deep",
+    "rarity": "Common",
+    "base_price": 3.05,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 24094653,
+    "name": "Polymerization",
+    "set_code": "DP1-EN014",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Common",
+    "base_price": 0.02,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 71218746,
+    "name": "Drillroid",
+    "set_code": "CRV-EN009",
+    "set_name": "Cybernetic Revolution",
+    "rarity": "Common",
+    "base_price": 0.15,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 97077563,
+    "name": "Call of the Haunted",
+    "set_code": "DP04-EN025",
+    "set_name": "Duelist Pack: Zane Truesdale",
+    "rarity": "Common",
+    "base_price": 0.02,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 213326,
+    "name": "E - Emergency Call",
+    "set_code": "EOJ-EN039",
+    "set_name": "Enemy of Justice",
+    "rarity": "Common",
+    "base_price": 0.38,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 48381268,
+    "name": "Morphtronic Boarden",
+    "set_code": "CRMS-EN017",
+    "set_name": "Crimson Crisis",
+    "rarity": "Common",
+    "base_price": 0.2,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 43697559,
+    "name": "Jetroid",
+    "set_code": "CRV-EN011",
+    "set_name": "Cybernetic Revolution",
+    "rarity": "Common",
+    "base_price": 0.24,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 24311595,
+    "name": "Rescueroid",
+    "set_code": "POTD-EN011",
+    "set_name": "Power of the Duelist",
+    "rarity": "Common",
+    "base_price": 0.11,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 75775867,
+    "name": "Morphtronic Slingen",
+    "set_code": "CRMS-EN018",
+    "set_name": "Crimson Crisis",
+    "rarity": "Common",
+    "base_price": 0.26,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 28124263,
+    "name": "Morphtronic Cameran",
+    "set_code": "CSOC-EN010",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.14,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 85101228,
+    "name": "Morphtronic Bind",
+    "set_code": "RGBT-EN072",
+    "set_name": "Raging Battle",
+    "rarity": "Common",
+    "base_price": 0.19,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 56074358,
+    "name": "Morphtronic Map",
+    "set_code": "CRMS-EN050",
+    "set_name": "Crimson Crisis",
+    "rarity": "Common",
+    "base_price": 0.23,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 77229910,
+    "name": "Morphtronic Forcefield",
+    "set_code": "CRMS-EN072",
+    "set_name": "Crimson Crisis",
+    "rarity": "Common",
+    "base_price": 0.02,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 71060915,
+    "name": "Feather Wind",
+    "set_code": "EEN-EN058",
+    "set_name": "Elemental Energy",
+    "rarity": "Common",
+    "base_price": 0.16,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 7030340,
+    "name": "Factory of 100 Machines",
+    "set_code": "CSOC-EN049",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.13,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 82639107,
+    "name": "Convert Contact",
+    "set_code": "DP06-EN016",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.17,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 70074904,
+    "name": "D.D. Assailant",
+    "set_code": "SDDE-EN017",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 2.62,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 17732278,
+    "name": "Neo-Spacian Glow Moss",
+    "set_code": "STON-EN006",
+    "set_name": "Strike of Neos",
+    "rarity": "Common",
+    "base_price": 0.2,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 54497620,
+    "name": "Gadget Driver",
+    "set_code": "CSOC-EN014",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.09,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 45945685,
+    "name": "Cycroid",
+    "set_code": "CRV-EN001",
+    "set_name": "Cybernetic Revolution",
+    "rarity": "Common",
+    "base_price": 0.09,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 24268052,
+    "name": "Defense Draw",
+    "set_code": "DP08-EN023",
+    "set_name": "Duelist Pack: Yusei",
+    "rarity": "Common",
+    "base_price": 0.08,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 42015635,
+    "name": "Neo Space",
+    "set_code": "POTD-EN046",
+    "set_name": "Power of the Duelist",
+    "rarity": "Rare",
+    "base_price": 0.46,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 47596607,
+    "name": "Skyscraper 2 - Hero City",
+    "set_code": "STON-EN048",
+    "set_name": "Strike of Neos",
+    "rarity": "Super Rare",
+    "base_price": 0.16,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 21844576,
+    "name": "Elemental HERO Avian",
+    "set_code": "DP1-EN001",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Common",
+    "base_price": 0.15,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 28284902,
+    "name": "Morphtronic Monitron",
+    "set_code": "CSOC-EN072",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.12,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 14613029,
+    "name": "Morphtronic Mix-up",
+    "set_code": "CRMS-EN073",
+    "set_name": "Crimson Crisis",
+    "rarity": "Common",
+    "base_price": 0.05,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 95286165,
+    "name": "De-Fusion",
+    "set_code": "DP04-EN017",
+    "set_name": "Duelist Pack: Zane Truesdale",
+    "rarity": "Common",
+    "base_price": 0.12,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 50684552,
+    "name": "Wonder Garage",
+    "set_code": "POTD-EN055",
+    "set_name": "Power of the Duelist",
+    "rarity": "Common",
+    "base_price": 0.06,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 19024706,
+    "name": "Hero Counterattack",
+    "set_code": "DP06-EN023",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.13,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 4206964,
+    "name": "Trap Hole",
+    "set_code": "SKE-042",
+    "set_name": "Starter Deck: Kaiba Evolution",
+    "rarity": "Common",
+    "base_price": 1.61,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 17363041,
+    "name": "Chrysalis Chicky",
+    "set_code": "TAEV-EN008",
+    "set_name": "Tactical Evolution",
+    "rarity": "Common",
+    "base_price": 0.29,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 29246354,
+    "name": "Chrysalis Pinny",
+    "set_code": "TAEV-EN009",
+    "set_name": "Tactical Evolution",
+    "rarity": "Common",
+    "base_price": 0.25,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 49469105,
+    "name": "Revoke Fusion",
+    "set_code": "DP06-EN020",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Rare",
+    "base_price": 1.19,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 10489311,
+    "name": "Hero Medal",
+    "set_code": "DP06-EN021",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.15,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 18302224,
+    "name": "Reverse of Neos",
+    "set_code": "DP06-EN015",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.12,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 77565204,
+    "name": "Future Fusion",
+    "set_code": "POTD-EN044",
+    "set_name": "Power of the Duelist",
+    "rarity": "Rare",
+    "base_price": 0.12,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 44676200,
+    "name": "Hero Barrier",
+    "set_code": "DP03-EN027",
+    "set_name": "Duelist Pack: Jaden Yuki 2",
+    "rarity": "Common",
+    "base_price": 0.26,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 77414722,
+    "name": "Magic Jammer",
+    "set_code": "SD2-EN026",
+    "set_name": "Structure Deck: Zombie Madness",
+    "rarity": "Common",
+    "base_price": 1.64,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 28002611,
+    "name": "Gadget Hauler",
+    "set_code": "CSOC-EN013",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.12,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 42682609,
+    "name": "Chrysalis Dolphin",
+    "set_code": "POTD-EN006",
+    "set_name": "Power of the Duelist",
+    "rarity": "Common",
+    "base_price": 0.26,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 79979666,
+    "name": "Elemental HERO Bubbleman",
+    "set_code": "DP1-EN009",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Common",
+    "base_price": 0.09,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 90239723,
+    "name": "Morphtronic Repair Unit",
+    "set_code": "RGBT-EN054",
+    "set_name": "Raging Battle",
+    "rarity": "Common",
+    "base_price": 0.31,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 51043243,
+    "name": "Worm Cartaros",
+    "set_code": "HA01-EN019",
+    "set_name": "Hidden Arsenal",
+    "rarity": "Super Rare",
+    "base_price": 0.22,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 88650530,
+    "name": "Worm Apocalypse",
+    "set_code": "HA01-EN017",
+    "set_name": "Hidden Arsenal",
+    "rarity": "Super Rare",
+    "base_price": 0.08,
+    "quantity": 3,
+    "added_at": null
+  },
+  {
+    "id": 70231910,
+    "name": "Dark Core",
+    "set_code": "SDDE-EN023",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 2.37,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 61127349,
+    "name": "Big Bang Shot",
+    "set_code": "SDDE-EN024",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.25,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 9126351,
+    "name": "Swap Frog",
+    "set_code": "SOVR-EN034",
+    "set_name": "Stardust Overdrive",
+    "rarity": "Common",
+    "base_price": 0.21,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 60999392,
+    "name": "Machina Soldier",
+    "set_code": "SDMM-EN006",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.36,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 80769747,
+    "name": "Iron Chain Snake",
+    "set_code": "CSOC-EN018",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.13,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 31281980,
+    "name": "Healing Wave Generator",
+    "set_code": "CSOC-EN001",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.04,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 65622692,
+    "name": "Y-Dragon Head",
+    "set_code": "DP2-EN006",
+    "set_name": "Duelist Pack: Chazz Princeton",
+    "rarity": "Common",
+    "base_price": 0.12,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 64500000,
+    "name": "Z-Metal Tank",
+    "set_code": "DP2-EN007",
+    "set_name": "Duelist Pack: Chazz Princeton",
+    "rarity": "Common",
+    "base_price": 0.1,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 86188410,
+    "name": "Elemental HERO Wildheart",
+    "set_code": "DP03-EN003",
+    "set_name": "Duelist Pack: Jaden Yuki 2",
+    "rarity": "Common",
+    "base_price": 0.09,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 6480253,
+    "name": "Wroughtweiler",
+    "set_code": "DP1-EN007",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Common",
+    "base_price": 0.07,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 69884162,
+    "name": "Elemental HERO Neos Alius",
+    "set_code": "DP06-EN005",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.1,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 84327329,
+    "name": "Elemental HERO Clayman",
+    "set_code": "YSD-EN009",
+    "set_name": "Starter Deck 2006",
+    "rarity": "Common",
+    "base_price": 0.17,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 41436536,
+    "name": "Elemental HERO Phoenix Enforcer",
+    "set_code": "DP05-EN012",
+    "set_name": "Duelist Pack: Aster Phoenix",
+    "rarity": "Rare",
+    "base_price": 0.67,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 61204971,
+    "name": "Elemental HERO Thunder Giant",
+    "set_code": "DP1-EN011",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Rare",
+    "base_price": 0.19,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 14225239,
+    "name": "Elemental HERO Mariner",
+    "set_code": "EOJ-EN034",
+    "set_name": "Enemy of Justice",
+    "rarity": "Common",
+    "base_price": 0.12,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 25119460,
+    "name": "YZ-Tank Dragon",
+    "set_code": "DR1-EN109",
+    "set_name": "Dark Revelation Volume 1",
+    "rarity": "Rare",
+    "base_price": 0.27,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 18325492,
+    "name": "Gyroid",
+    "set_code": "CRV-EN007",
+    "set_name": "Cybernetic Revolution",
+    "rarity": "Common",
+    "base_price": 0.05,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 27870033,
+    "name": "Pursuit Chaser",
+    "set_code": "CSOC-EN016",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.13,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 20721928,
+    "name": "Elemental HERO Sparkman",
+    "set_code": "YSD-EN010",
+    "set_name": "Starter Deck 2006",
+    "rarity": "Common",
+    "base_price": 0.02,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 68005187,
+    "name": "Soul Exchange",
+    "set_code": "SDRL-EN021",
+    "set_name": "Rise of the Dragon Lords Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.24,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 81566151,
+    "name": "Elemental HERO Flare Neos",
+    "set_code": "DP03-EN013",
+    "set_name": "Duelist Pack: Jaden Yuki 2",
+    "rarity": "Rare",
+    "base_price": 1.63,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 10526791,
+    "name": "Elemental HERO Wildedge",
+    "set_code": "DP03-EN010",
+    "set_name": "Duelist Pack: Jaden Yuki 2",
+    "rarity": "Rare",
+    "base_price": 0.76,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 47737087,
+    "name": "Elemental HERO Rampart Blaster",
+    "set_code": "DP1-EN012",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Rare",
+    "base_price": 0.19,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 58932615,
+    "name": "Elemental HERO Burstinatrix",
+    "set_code": "YSD-EN008",
+    "set_name": "Starter Deck 2006",
+    "rarity": "Common",
+    "base_price": 0.14,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 43452193,
+    "name": "Mirror Gate",
+    "set_code": "DP06-EN022",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.2,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 43237273,
+    "name": "Neo-Spacian Dark Panther",
+    "set_code": "DP03-EN007",
+    "set_name": "Duelist Pack: Jaden Yuki 2",
+    "rarity": "Rare",
+    "base_price": 2.28,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 63703130,
+    "name": "O - Oversoul",
+    "set_code": "EOJ-EN041",
+    "set_name": "Enemy of Justice",
+    "rarity": "Common",
+    "base_price": 0.03,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 17955766,
+    "name": "Neo-Spacian Aqua Dolphin",
+    "set_code": "DP03-EN005",
+    "set_name": "Duelist Pack: Jaden Yuki 2",
+    "rarity": "Rare",
+    "base_price": 0.15,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 95943058,
+    "name": "Evil HERO Infernal Gainer",
+    "set_code": "DP06-EN007",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.11,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 95281259,
+    "name": "The Warrior Returning Alive",
+    "set_code": "DP1-EN016",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Common",
+    "base_price": 0.03,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 22020907,
+    "name": "Hero Signal",
+    "set_code": "DP1-EN028",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Common",
+    "base_price": 0.06,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 58932615,
+    "name": "Elemental HERO Burstinatrix",
+    "set_code": "DP1-EN002",
+    "set_name": "Duelist Pack: Jaden Yuki",
+    "rarity": "Common",
+    "base_price": 0.14,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 36378213,
+    "name": "Ambulanceroid",
+    "set_code": "POTD-EN009",
+    "set_name": "Power of the Duelist",
+    "rarity": "Common",
+    "base_price": 0.11,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 77565204,
+    "name": "Future Fusion",
+    "set_code": "DP04-EN023",
+    "set_name": "Duelist Pack: Zane Truesdale",
+    "rarity": "Common",
+    "base_price": 0.12,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 23299957,
+    "name": "Vehicroid Connection Zone",
+    "set_code": "POTD-EN040",
+    "set_name": "Power of the Duelist",
+    "rarity": "Common",
+    "base_price": 0.09,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 98927491,
+    "name": "Ambulance Rescueroid",
+    "set_code": "POTD-EN035",
+    "set_name": "Power of the Duelist",
+    "rarity": "Common",
+    "base_price": 0.11,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 71930383,
+    "name": "Patroid",
+    "set_code": "CRV-EN006",
+    "set_name": "Cybernetic Revolution",
+    "rarity": "Common",
+    "base_price": 0.22,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 92720564,
+    "name": "Morphtronic Boomboxen",
+    "set_code": "CSOC-EN009",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Rare",
+    "base_price": 0.19,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 99861526,
+    "name": "Submarineroid",
+    "set_code": "POTD-EN008",
+    "set_name": "Power of the Duelist",
+    "rarity": "Rare",
+    "base_price": 0.13,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 31467372,
+    "name": "Everliving Underworld Cannon",
+    "set_code": "CSOC-EN060",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.13,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 5973663,
+    "name": "The World Tree",
+    "set_code": "CSOC-EN059",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Rare",
+    "base_price": 0.37,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 55144522,
+    "name": "Pot of Greed",
+    "set_code": "SD1-EN015",
+    "set_name": "Structure Deck: Dragon's Roar",
+    "rarity": "Common",
+    "base_price": 4.66,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 30241314,
+    "name": "Macro Cosmos",
+    "set_code": "SDDE-EN036",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 4.21,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 72237166,
+    "name": "Samsara Kaiser",
+    "set_code": "SDDE-EN003",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.21,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 36584821,
+    "name": "Gren Maju Da Eiza",
+    "set_code": "SDDE-EN013",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 3.36,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 4334811,
+    "name": "Scrap Recycler",
+    "set_code": "SDMM-EN004",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.9,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 37043180,
+    "name": "D.D. Warrior",
+    "set_code": "SDDE-EN006",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.38,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 40133511,
+    "name": "Bazoo the Soul-Eater",
+    "set_code": "SDDE-EN008",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.67,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 48092532,
+    "name": "D.D. Survivor",
+    "set_code": "SDDE-EN014",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.66,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 23282832,
+    "name": "Over Limit",
+    "set_code": "DP06-EN024",
+    "set_name": "Duelist Pack: Jaden Yuki 3",
+    "rarity": "Common",
+    "base_price": 0.04,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 67159705,
+    "name": "Armored Cybern",
+    "set_code": "PTDN-EN009",
+    "set_name": "Phantom Darkness",
+    "rarity": "Common",
+    "base_price": 0.03,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 50400231,
+    "name": "Satellite Cannon",
+    "set_code": "TU01-EN007",
+    "set_name": "Turbo Pack: Booster One",
+    "rarity": "Rare",
+    "base_price": 0.07,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 13093792,
+    "name": "Destiny HERO - Diamond Dude",
+    "set_code": "TU03-EN012",
+    "set_name": "Turbo Pack: Booster Three",
+    "rarity": "Common",
+    "base_price": 0.11,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 27408609,
+    "name": "Golden Homunculus",
+    "set_code": "SDDE-EN004",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.8,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 64752646,
+    "name": "Fire Princess",
+    "set_code": "GLD1-EN005",
+    "set_name": "Gold Series",
+    "rarity": "Common",
+    "base_price": 0.44,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 9666558,
+    "name": "Golem Dragon",
+    "set_code": "TU06-EN019",
+    "set_name": "Turbo Pack: Booster Six",
+    "rarity": "Common",
+    "base_price": 0.84,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 94853057,
+    "name": "Banisher of the Radiance",
+    "set_code": "SDDE-EN016",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.77,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 45985838,
+    "name": "Solar Flare Dragon",
+    "set_code": "GLD1-EN019",
+    "set_name": "Gold Series",
+    "rarity": "Common",
+    "base_price": 0.19,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 23265594,
+    "name": "Heavy Mech Support Platform",
+    "set_code": "SDMM-EN012",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.06,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 67159705,
+    "name": "Armored Cybern",
+    "set_code": "SDMM-EN018",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 0.96,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 59575539,
+    "name": "Krebons",
+    "set_code": "TDGS-EN018",
+    "set_name": "The Duelist Genesis",
+    "rarity": "Common",
+    "base_price": 0.26,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 23771716,
+    "name": "7 Colored Fish",
+    "set_code": "GLD1-EN001",
+    "set_name": "Gold Series",
+    "rarity": "Common",
+    "base_price": 0.08,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 22666164,
+    "name": "Commander Covington",
+    "set_code": "SDMM-EN005",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.18,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 25771826,
+    "name": "Ally of Justice Garadholg",
+    "set_code": "HA01-EN015",
+    "set_name": "Hidden Arsenal",
+    "rarity": "Super Rare",
+    "base_price": 0.04,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 89386122,
+    "name": "Ally of Justice Clausolas",
+    "set_code": "HA01-EN014",
+    "set_name": "Hidden Arsenal",
+    "rarity": "Super Rare",
+    "base_price": 0.03,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 21615956,
+    "name": "Flamvell Guard",
+    "set_code": "HA01-EN009",
+    "set_name": "Hidden Arsenal",
+    "rarity": "Super Rare",
+    "base_price": 0.1,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 68226653,
+    "name": "Flamvell Dragnov",
+    "set_code": "HA01-EN007",
+    "set_name": "Hidden Arsenal",
+    "rarity": "Super Rare",
+    "base_price": 0.05,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 52265835,
+    "name": "Ally of Justice Rudra",
+    "set_code": "HA01-EN016",
+    "set_name": "Hidden Arsenal",
+    "rarity": "Super Rare",
+    "base_price": 0.07,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 16191953,
+    "name": "Master Gig",
+    "set_code": "RGBT-ENPP5",
+    "set_name": "Duelist Pack Collection Tin 2009",
+    "rarity": "Super Rare",
+    "base_price": 2.35,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 20450925,
+    "name": "Hanewata",
+    "set_code": "CSOC-EN034",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Super Rare",
+    "base_price": 0.07,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 74131780,
+    "name": "Exiled Force",
+    "set_code": "SDDE-EN009",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.44,
+    "quantity": 2,
+    "added_at": null
+  },
+  {
+    "id": 33248692,
+    "name": "Option Hunter",
+    "set_code": "SOI-EN058",
+    "set_name": "Shadow of Infinity",
+    "rarity": "Rare",
+    "base_price": 0.17,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 36256625,
+    "name": "Super Vehicroid Jumbo Drill",
+    "set_code": "POTD-EN036",
+    "set_name": "Power of the Duelist",
+    "rarity": "Super Rare",
+    "base_price": 0.12,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 70423794,
+    "name": "Morphtronic Cord",
+    "set_code": "CSOC-EN051",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.05,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 93369354,
+    "name": "Fishborg Blaster",
+    "set_code": "ANPR-EN027",
+    "set_name": "Ancient Prophecy",
+    "rarity": "Common",
+    "base_price": 0.32,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 18511384,
+    "name": "Fusion Recovery",
+    "set_code": "CRV-EN038",
+    "set_name": "Cybernetic Revolution",
+    "rarity": "Common",
+    "base_price": 0.09,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 26302522,
+    "name": "Blast Sphere",
+    "set_code": "SDMM-EN011",
+    "set_name": "Machina Mayhem Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.32,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 44424095,
+    "name": "Morphtronic Accelerator",
+    "set_code": "CSOC-EN050",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Rare",
+    "base_price": 1.05,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 53582587,
+    "name": "Torrential Tribute",
+    "set_code": "SDDE-EN031",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 2.51,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 51638941,
+    "name": "V-Tiger Jet",
+    "set_code": "DP2-EN001",
+    "set_name": "Duelist Pack: Chazz Princeton",
+    "rarity": "Common",
+    "base_price": 0.15,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 66331855,
+    "name": "Morphtronic Datatron",
+    "set_code": "CSOC-EN008",
+    "set_name": "Crossroads of Chaos",
+    "rarity": "Common",
+    "base_price": 0.1,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 96300057,
+    "name": "W-Wing Catapult",
+    "set_code": "DP2-EN008",
+    "set_name": "Duelist Pack: Chazz Princeton",
+    "rarity": "Common",
+    "base_price": 0.15,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 9622164,
+    "name": "D.D.R. - Different Dimension Reincarnation",
+    "set_code": "SDDE-EN018",
+    "set_name": "The Dark Emperor Structure Deck",
+    "rarity": "Common",
+    "base_price": 1.67,
+    "quantity": 1,
+    "added_at": null
+  },
+  {
+    "id": 14936691,
+    "name": "Worm Erokin",
+    "set_code": "HA01-EN021",
+    "set_name": "Hidden Arsenal",
+    "rarity": "Secret Rare",
+    "base_price": 0.26,
+    "quantity": 1,
+    "added_at": null
+  }
+]

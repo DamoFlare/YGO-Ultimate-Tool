@@ -1,0 +1,66 @@
+"""
+Data models for Yu-Gi-Oh! TCG Valuer.
+"""
+from typing import List, Optional, Dict
+from pydantic import BaseModel, Field
+from config import CONDITION_MULTIPLIERS
+
+
+class CardSetInfo(BaseModel):
+    """Information about a specific set printing of a card."""
+    set_name: str
+    set_code: str
+    set_rarity: str
+    set_rarity_code: Optional[str] = ""
+    set_price: Optional[str] = "0"
+
+
+class CardPrices(BaseModel):
+    """Base prices from external sources (Cardmarket, TCGPlayer, etc.)."""
+    cardmarket_price: float = 0.0
+    tcgplayer_price: float = 0.0
+    ebay_price: float = 0.0
+    amazon_price: float = 0.0
+    coolstuffinc_price: float = 0.0
+
+
+class CollectionItem(BaseModel):
+    """Represents an item stored in the user's collection."""
+    id: int                              # Passcode / YGOPRODeck ID
+    name: str                            # English Name
+    set_code: str                        # Specific set code (e.g. RA01-EN001)
+    set_name: Optional[str] = ""         # Set Name (e.g. 25th Anniversary Rarity Collection)
+    rarity: str                          # Rarity (e.g. Ultra Rare)
+    base_price: float = 0.0              # Cardmarket NM base/trend price
+    quantity: int = 1                    # Quantity in collection
+    added_at: Optional[str] = None       # ISO date added
+
+    def get_price_for_condition(self, condition: str) -> float:
+        """Calculate estimated price for a given condition code (NM, EX, GD, LP, PO)."""
+        mult = CONDITION_MULTIPLIERS.get(condition.upper(), 1.0)
+        return round(self.base_price * mult, 2)
+
+    @property
+    def condition_prices(self) -> Dict[str, float]:
+        """Dictionary of prices for all condition grades."""
+        return {
+            cond: self.get_price_for_condition(cond)
+            for cond in CONDITION_MULTIPLIERS.keys()
+        }
+
+    @property
+    def total_nm_price(self) -> float:
+        """Total price for NM condition multiplied by quantity."""
+        return round(self.base_price * self.quantity, 2)
+
+
+class CardSearchResult(BaseModel):
+    """Result from searching YGOPRODeck API."""
+    id: int
+    name: str
+    type: str
+    desc: str
+    race: Optional[str] = None
+    attribute: Optional[str] = None
+    card_sets: List[CardSetInfo] = Field(default_factory=list)
+    card_prices: List[CardPrices] = Field(default_factory=list)
