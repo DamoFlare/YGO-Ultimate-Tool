@@ -1,9 +1,16 @@
 # Servizi (`services/`)
 
-## `services/ygoprodeck_api.py` — classe `YGOProDeckAPI`
+## `services/ygoprodeck_api.py` — classe `YGOProDeckAPI` (solo ricerca carte, MAI prezzi)
 
 Client HTTP asincrono (`httpx.AsyncClient`) verso l'API pubblica **YGOPRODeck**
 (`https://db.ygoprodeck.com/api/v7/`). Nessuna autenticazione richiesta.
+
+⚠️ **Usato esclusivamente per identificare le carte** (nome, passcode, set/rarità disponibili).
+I campi di prezzo che questo client parsa (`CardSetInfo.set_price`, `CardPrices.*`) **non vengono
+mai mostrati all'utente né usati per calcolare un prezzo**: la loro origine/aggiornamento non è
+documentata da YGOPRODeck ed erano risultati molto distanti dai prezzi di mercato reali (vedi
+[06-note-e-discrepanze.md](06-note-e-discrepanze.md)). L'unica fonte di prezzo è
+`services/cardtrader_api.py` (sotto).
 
 - Rate limiting manuale: `_rate_limit()` con `asyncio.sleep(config.API_RATE_LIMIT_DELAY)` prima
   di ogni chiamata, per restare sotto ~20 richieste/secondo.
@@ -20,6 +27,23 @@ Client HTTP asincrono (`httpx.AsyncClient`) verso l'API pubblica **YGOPRODeck**
 - `close()` — chiude la sessione httpx; chiamato da `YGOValuerApp.action_quit` all'uscita
   dell'app per evitare connessioni pendenti
 
+## `services/cardtrader_api.py` — classe `CardTraderAPI` (unica fonte di prezzo)
+
+Client HTTP asincrono verso l'API autenticata di **CardTrader**
+(`https://api.cardtrader.com/api/v2`, Bearer token da `.env`/`config.CARDTRADER_TOKEN`).
+Descrizione completa dell'architettura, formula di matching e limiti noti in
+[08-pricing-cardtrader.md](08-pricing-cardtrader.md); qui solo un riepilogo:
+
+- `find_real_prices(set_code, rarity)` — funzione principale: risolve il set_code YGOPRODeck
+  (es. `LOB-001`) in un'espansione + carta CardTrader, interroga le inserzioni di mercato reali
+  (`/marketplace/products`), e ritorna il prezzo minimo per ciascuna condizione NM/EX/GD/LP/PO
+  che ha inserzioni attive. Ritorna `None` (mai un'eccezione) su qualsiasi fallimento — nessun
+  match, nessuna inserzione, rete giù, token invalido — per non rompere mai il flusso di
+  aggiunta/refresh della collezione.
+- Cache in memoria per dati stabili (espansioni, blueprint per espansione), nessuna cache per le
+  inserzioni di mercato (i prezzi cambiano in tempo reale).
+- Rate limiting con lo stesso pattern di `YGOProDeckAPI._rate_limit` (`config.CARDTRADER_RATE_LIMIT_DELAY`).
+
 ## `services/storage.py` — classe `StorageService`
 
 Persistenza locale su file, nessun database:
@@ -27,8 +51,8 @@ Persistenza locale su file, nessun database:
 - `load_collection()` — legge `collection.json` e deserializza in lista di `CollectionItem`
 - `save_collection()` — serializza (`model_dump()`) e scrive `collection.json`
 - `export_to_csv()` — genera `collection.csv` con colonne dettagliate per ogni condizione
-  (id, name, set_code, set_name, rarity, quantity, base_price_NM, price_EX/GD/LP/PO,
-  total_NM_value)
+  (id, name, set_code, set_name, rarity, grade, condition, quantity, base_price_NM,
+  price_EX/GD/LP/PO, total_NM_value, total_effective_value, price_source)
 
 ## `services/grading/` — modulo di Grading Ibrido (CV + VLM locale)
 

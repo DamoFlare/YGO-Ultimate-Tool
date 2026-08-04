@@ -6,7 +6,7 @@ import csv
 from pathlib import Path
 from typing import List
 from models import CollectionItem
-from config import DEFAULT_COLLECTION_FILE, DEFAULT_CSV_EXPORT_FILE, CONDITION_MULTIPLIERS
+from config import DEFAULT_COLLECTION_FILE, DEFAULT_CSV_EXPORT_FILE
 
 
 class StorageService:
@@ -55,7 +55,8 @@ class StorageService:
                 "price_LP",
                 "price_PO",
                 "total_NM_value",
-                "total_effective_value"
+                "total_effective_value",
+                "price_source"
             ]
             with open(self.csv_path, "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -76,7 +77,8 @@ class StorageService:
                         "price_LP": f"{item.get_price_for_condition('LP'):.2f}",
                         "price_PO": f"{item.get_price_for_condition('PO'):.2f}",
                         "total_NM_value": f"{item.total_nm_price:.2f}",
-                        "total_effective_value": f"{item.total_effective_price:.2f}"
+                        "total_effective_value": f"{item.total_effective_price:.2f}",
+                        "price_source": item.price_source or "unavailable"
                     })
             return True
         except Exception as e:

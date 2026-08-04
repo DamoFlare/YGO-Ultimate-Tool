@@ -73,9 +73,10 @@ class AddCardView(Container):
             return
 
         for idx, cset in enumerate(card.card_sets):
-            price_str = f"€{cset.set_price}" if cset.set_price else "N/A"
-            # Mostra il codice set in modo molto visibile (es: SDMM-IT014)
-            label_text = f"{cset.set_code} - {cset.set_rarity} - {cset.set_name} ({price_str})"
+            # Mostra il codice set in modo molto visibile (es: SDMM-IT014). Niente prezzo qui:
+            # il prezzo reale viene da CardTrader solo al momento del salvataggio (vedi
+            # update_add_form), non dal set_price di YGOPRODeck.
+            label_text = f"{cset.set_code} - {cset.set_rarity} - {cset.set_name}"
             sets_list.add_option(Option(label_text, id=str(idx)))
 
         sets_list.focus()
@@ -102,21 +103,13 @@ class AddCardView(Container):
             btn_add.disabled = True
             return
 
-        # Price determination
-        base_price = 0.0
-        if self.selected_set and self.selected_set.set_price:
-            try:
-                base_price = float(self.selected_set.set_price)
-            except ValueError:
-                base_price = 0.0
-
-        if base_price == 0.0 and self.selected_card.card_prices:
-            base_price = self.selected_card.card_prices[0].cardmarket_price
-
         set_code = self.selected_set.set_code if self.selected_set else "PROMO"
         rarity = self.selected_set.set_rarity if self.selected_set else "Standard"
 
+        # Il prezzo reale (CardTrader) viene cercato solo al momento del salvataggio in
+        # add_card_to_collection_logic — qui non mostriamo alcuna stima YGOPRODeck.
         summary.update(
-            f"Carta: **{self.selected_card.name}** | Codice Set: [b cyan]{set_code}[/b cyan] | Rarità: **{rarity}** | Prezzo Base NM: **€{base_price:.2f}**"
+            f"Carta: **{self.selected_card.name}** | Codice Set: [b cyan]{set_code}[/b cyan] | Rarità: **{rarity}** | "
+            f"Prezzo: verrà recuperato da CardTrader al salvataggio"
         )
         btn_add.disabled = False

@@ -87,10 +87,10 @@ class BulkAddView(Container):
                 card = results[0] # Usually one card per specific set code
                 status_label.update(f"Configurazione: [bold cyan]{card.name}[/bold cyan] ({query})")
                 
-                # Filter sets to match the query code or just show all if ambiguity
+                # Filter sets to match the query code or just show all if ambiguity. Niente
+                # prezzo qui: il prezzo reale viene da CardTrader solo al salvataggio.
                 for idx, cset in enumerate(card.card_sets):
-                    price_str = f"€{cset.set_price}" if cset.set_price else "N/A"
-                    label = f"{cset.set_code} - {cset.set_rarity} - {cset.set_name} ({price_str})"
+                    label = f"{cset.set_code} - {cset.set_rarity} - {cset.set_name}"
                     set_list.add_option(Option(label, id=str(idx)))
                 
                 btn_add.disabled = False

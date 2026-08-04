@@ -1,5 +1,24 @@
 # Note, limiti noti e cose a cui fare attenzione
 
+## Cronologia: da YGOPRODeck a CardTrader per i prezzi
+
+L'app originariamente prendeva i prezzi da YGOPRODeck (`card_sets[].set_price` /
+`card_prices[].cardmarket_price`). L'utente ha segnalato prezzi molto più alti del reale (es.
+1.20€ mostrati vs 0.20€ visti su Cardtrader) — indagando, la documentazione YGOPRODeck non
+specifica l'origine/aggiornamento di `set_price`, e `cardmarket_price` è documentato come "il
+prezzo più basso tra tutte le versioni della carta" (non specifico alla stampa selezionata):
+nessuno dei due era un prezzo di mercato affidabile.
+
+Primo tentativo: un'API Cardmarket via RapidAPI (`cardmarket-api-tcg`, provider tcggo). Scartata
+dopo verifica empirica diretta (chiamate reali autenticate): **non ha dati per Yu-Gi-Oh!** (né
+per Magic/One Piece), solo Pokémon e Lorcana. Tutti i riferimenti a RapidAPI sono stati rimossi
+dal progetto (config, `.env`, permessi locali, eventuale server MCP).
+
+Adottata **CardTrader** (marketplace reale, non un aggregatore) come unica fonte di prezzo.
+YGOPRODeck resta nel progetto ma **solo per la ricerca/identificazione delle carte** — nessun suo
+campo di prezzo viene più mostrato o usato in un calcolo. Dettagli completi in
+[08-pricing-cardtrader.md](08-pricing-cardtrader.md).
+
 ## Limite architetturale: Grading e quantità in stack (`CollectionItem`)
 
 `CollectionItem` rappresenta uno **stack** di N copie identiche (stesso id/set_code/rarity) con
@@ -53,14 +72,15 @@ di aggiungere `.gitignore` per questi file se in futuro si vuole separare dati u
 
 ## Vincoli operativi importanti
 
-- **Rate limit API**: `config.API_RATE_LIMIT_DELAY = 0.05` (secondi). Il README avvisa
-  esplicitamente di non abbassare questo valore per evitare ban IP dall'API YGOPRODeck. Va
-  rispettato in qualsiasi nuova funzionalità che chiami l'API in loop (es. bulk add, refresh
-  prezzi).
-- Nessuna API key richiesta: l'API YGOPRODeck è pubblica e il modulo di Grading usa un VLM
-  locale (Ollama) senza autenticazione. Il progetto non ha ancora bisogno di gestione segreta
-  (`.env`); se in futuro si aggiungesse un provider esterno (es. un VLM cloud in alternativa a
-  `llava`), andrebbe introdotta.
+- **Rate limit YGOPRODeck**: `config.API_RATE_LIMIT_DELAY = 0.05` (secondi). Il README avvisa
+  esplicitamente di non abbassare questo valore per evitare ban IP. Va rispettato in qualsiasi
+  nuova funzionalità che chiami l'API in loop (es. bulk add).
+- **Rate limit CardTrader**: `config.CARDTRADER_RATE_LIMIT_DELAY = 0.1` (secondi), sotto il
+  limite reale di 200 richieste/10s globali (10/s su `/marketplace/products`). Vedi
+  [08-pricing-cardtrader.md](08-pricing-cardtrader.md).
+- **Gestione segreti**: il progetto ha un file `.env` (git-ignored, `.env.example` come
+  template) con `CARDTRADER_TOKEN`, caricato da `config.py` via `python-dotenv`. YGOPRODeck resta
+  pubblico senza chiave; il modulo di Grading usa un VLM locale (Ollama) anch'esso senza chiave.
 
 ## Cosa manca strutturalmente
 

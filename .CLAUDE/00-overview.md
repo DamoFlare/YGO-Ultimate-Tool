@@ -11,10 +11,12 @@ Repository GitHub: `DamoFlare/YGO-Ultimate-Tool` (remote `origin`), branch unico
 ## Cosa fa (in breve)
 
 1. Cerca carte (per nome, per passcode/ID numerico, o per set code tipo `RA01-EN001`) tramite
-   l'API pubblica **YGOPRODeck**.
-2. Aggiunge le carte trovate a una collezione personale, con quantità e prezzo base.
-3. Calcola il valore della collezione applicando moltiplicatori di prezzo per condizione
-   (NM/EX/GD/LP/PO), basati sui prezzi Cardmarket restituiti dall'API.
+   l'API pubblica **YGOPRODeck** — usata solo per identificare la carta, mai per i prezzi.
+2. Aggiunge le carte trovate a una collezione personale, con quantità e prezzo reale.
+3. Calcola il valore della collezione usando **prezzi reali di mercato da CardTrader**
+   (inserzioni live, non aggregati/storici) per ciascuna condizione (NM/EX/GD/LP/PO), con stima
+   a moltiplicatore solo come fallback quando manca un'inserzione reale per quella condizione.
+   Vedi [08-pricing-cardtrader.md](08-pricing-cardtrader.md).
 4. Persiste la collezione su `collection.json` ed esporta in `collection.csv`.
 5. Offre una modalità di inserimento massivo ("Aggiunta Bulk") per incollare molti set-code in
    una volta e confermarli uno a uno.
@@ -34,16 +36,21 @@ Repository GitHub: `DamoFlare/YGO-Ultimate-Tool` (remote `origin`), branch unico
 - Il modulo di Grading richiede un server Ollama locale in esecuzione (`docker compose up -d`,
   vedi [01-stack-e-setup.md](01-stack-e-setup.md)) — senza, il tab Grading Carta fallisce con un
   errore comprensibile ma le altre tab funzionano normalmente.
+- Il pricing richiede un token CardTrader valido in `.env` (`CARDTRADER_TOKEN`) — senza, la
+  ricerca carte funziona comunque ma nessun prezzo viene mai mostrato (fallback silenzioso a
+  `€0.00`). Vedi [08-pricing-cardtrader.md](08-pricing-cardtrader.md).
 
 ## Indice della knowledge base
 
 - [01-stack-e-setup.md](01-stack-e-setup.md) — linguaggio, dipendenze, come avviare il progetto
-  (incluso il Docker per Ollama)
+  (Docker per Ollama, token CardTrader)
 - [02-architettura.md](02-architettura.md) — struttura a livelli, entry point, flusso dati
 - [03-modelli-dati.md](03-modelli-dati.md) — `config.py`, `models.py`, formati JSON/CSV
-- [04-servizi.md](04-servizi.md) — `services/` (API client, storage, grading)
+- [04-servizi.md](04-servizi.md) — `services/` (API client di ricerca/prezzo, storage, grading)
 - [05-ui.md](05-ui.md) — `ui/` (app Textual e le 4 view/tab)
-- [06-note-e-discrepanze.md](06-note-e-discrepanze.md) — TODO impliciti, limiti noti, cose a cui
-  fare attenzione
+- [06-note-e-discrepanze.md](06-note-e-discrepanze.md) — TODO impliciti, limiti noti, cronologia
+  della migrazione dei prezzi
 - [07-grading.md](07-grading.md) — architettura del modulo di Grading: formula, soglie, pesi,
   come tararli
+- [08-pricing-cardtrader.md](08-pricing-cardtrader.md) — architettura del pricing CardTrader:
+  matching, rate limit, limiti noti

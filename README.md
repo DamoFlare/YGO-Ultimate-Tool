@@ -1,23 +1,18 @@
 # 🎴 Yu-Gi-Oh! TCG Valuer & Collection Tracker (TUI)
 
-Welcome to **Yu-Gi-Oh! TCG Valuer & Collection Tracker**, an advanced CLI application with a terminal user interface (**TUI**) built in Python. This tool lets you manage your Yu-Gi-Oh! card collection, search for cards in real time through the official **YGOPRODeck** API, and instantly estimate their market value (**Cardmarket**) by applying precise multipliers based on the card's real condition.
+Welcome to **Yu-Gi-Oh! TCG Valuer & Collection Tracker**, an advanced CLI application with a terminal user interface (**TUI**) built in Python. This tool lets you manage your Yu-Gi-Oh! card collection, search for cards in real time through the official **YGOPRODeck** API, and instantly value them using **real, live marketplace listing prices from CardTrader** — not an aggregated or historical estimate.
 
 ---
 
 ## ✨ Key Features
 
 1. **Advanced Search & Normalization (Module 1)**:
-   - Enter a card name in **Italian** or **English** (with fuzzy matching support). The app queries the API and returns the official, normalized English name.
+   - Enter a card name in **Italian** or **English** (with fuzzy matching support). The app queries the **YGOPRODeck** API and returns the official, normalized English name — this API is used only for card lookup, never for pricing.
    - Direct lookup by **Set Code** (e.g. `RA01-EN001` or `LOB-001`) or by **Passcode (card ID)** is also supported.
-2. **Valuation & Cardmarket Conditions (Module 2)**:
-   - Instantly fetches the **Cardmarket** and **TCGPlayer** listing price.
-   - Automatic price mapping based on card condition, following official Cardmarket standards:
-     - **NM** (Near Mint) -> `100%` of the reference price
-     - **EX** (Excellent) -> `88%` of the base price
-     - **GD** (Good) -> `72.5%` of the base price
-     - **LP** (Light Played / Played) -> `55%` of the base price
-     - **PO** (Poor) -> `35%` of the base price
-   - Real-time automatic calculation of the total collection portfolio value, both in NM condition and estimated for the other conditions.
+2. **Real Marketplace Pricing via CardTrader (Module 2)**:
+   - Every price shown comes from **CardTrader**'s live marketplace listings (real sellers, real stock), matched by set code and rarity — not a cached/aggregated estimate.
+   - For each condition (NM/EX/GD/LP/PO) the app looks for the lowest **actually listed** price in that exact condition. If a specific condition currently has no active listing, it's estimated from the real NM price using standard condition multipliers (NM 100%, EX 88%, GD 72.5%, LP 55%, PO 35%) as a fallback only.
+   - Real-time automatic calculation of the total collection portfolio value, both in NM condition and for the other conditions.
 3. **Persistence & CSV Export**:
    - Automatic data saving in JSON format (`collection.json`).
    - Professional CSV export (`collection.csv`) with detailed columns for every condition, including the grade and the effective condition detected by the Grading module.
@@ -30,7 +25,7 @@ Welcome to **Yu-Gi-Oh! TCG Valuer & Collection Tracker**, an advanced CLI applic
    - The grade is mapped onto the existing NM/EX/GD/LP/PO condition scale, so you can compare your copy's "real" value against the theoretical NM value already shown in the collection.
    - Known limitation: unlike real PSA/BGS grading, it does not compute a separate Corners subgrade. Details in `.CLAUDE/07-grading.md`.
 6. **Built-in Rate Limiting**:
-   - Asynchronous handling of YGOPRODeck API limits (a controlled `0.05s` delay between requests) to avoid hitting the 20 req/sec cap.
+   - Asynchronous handling of both YGOPRODeck's and CardTrader's API limits (controlled delays between requests) to avoid hitting either provider's rate caps.
 
 ---
 
@@ -54,7 +49,16 @@ python -m venv .venv
 .\.venv\Scripts\python -m pip install -r requirements.txt
 ```
 
-### 3. Start the local Vision model (only required by the Grading tab)
+### 3. Configure your CardTrader API token (required for pricing)
+All prices shown by the app come from [CardTrader](https://www.cardtrader.com)'s real marketplace API. Get a Bearer token from your CardTrader profile settings, then create a `.env` file in the project root (copy `.env.example`) with:
+
+```
+CARDTRADER_TOKEN=your-token-here
+```
+
+`.env` is git-ignored — your token never gets committed. Without a valid token, card search still works, but no pricing will be available (the app fails gracefully, showing `€0.00` rather than crashing).
+
+### 4. Start the local Vision model (only required by the Grading tab)
 The Grading module relies on a self-hosted **Ollama** server running the `llava` model, included in this repository as a Docker Compose setup — no external API key needed, no data ever leaves your machine:
 
 ```bash
@@ -81,7 +85,7 @@ This is the main dashboard where your portfolio is displayed.
 - **Metrics Bar**: Shows at the top the number of unique cards, total pieces, and the total NM value in euros.
 - **Condition Breakdown Bar**: Instantly displays the estimated total value if the whole collection were in Excellent, Good, Light Played, or Poor condition.
 - **Real-Time Filter**: Type text into the search bar (`Filter collection...`) to instantly search your local list by name or set code.
-- **Refresh Prices (🔄)**: Runs a background scan of the cards in your collection to fetch the latest Cardmarket quotes.
+- **Refresh Prices (🔄)**: Runs a background scan of the cards in your collection to fetch the latest real CardTrader marketplace prices.
 - **Export CSV (📥)**: Saves a detailed, professional report to `collection.csv`.
 - **Delete Selected (🗑️)**: Click a table row and press the button (or use the keyboard) to permanently remove a card from the database.
 
@@ -93,8 +97,8 @@ The panel dedicated to card lookup and normalization.
   - A specific set code (e.g. `RA01-EN001`).
   - A numeric passcode ID (e.g. `46986414`).
 - **Card Selection**: Once you click `Search`, the left column `Cards Found` shows every match found in the YGOPRODeck database. Select the card you want.
-- **Version / Rarity Selection**: The right column `Select Set / Version / Rarity` shows every historical printing of that card, with its rarity and current Cardmarket price. Select the exact printing you own!
-- **Confirm and Add**: Specify the desired quantity (e.g. `3`) and click `Add to Collection`. You'll get a confirmation notification and the card is saved instantly to `collection.json`, updating your collection.
+- **Version / Rarity Selection**: The right column `Select Set / Version / Rarity` shows every historical printing of that card with its rarity. Select the exact printing you own — the real price is looked up from CardTrader only after you confirm (see below), so no price is shown at this stage.
+- **Confirm and Add**: Specify the desired quantity (e.g. `3`) and click `Add to Collection`. The app looks up the real CardTrader price for that exact printing, then saves the card instantly to `collection.json`, updating your collection.
 
 #### 3. 🚀 `Bulk Add` tab
 For adding many cards at once (e.g. after a big purchase/trade).
@@ -117,6 +121,7 @@ Computes an objective 1-10 grade from a photo of the physical card, combining CV
 YGO-Ultimate-Tool/
 │
 ├── .venv/                  # Python virtual environment
+├── .env                    # Local secrets (CARDTRADER_TOKEN) — git-ignored, copy from .env.example
 ├── docker-compose.yml      # Self-hosted Ollama server (llava model) for the Grading module
 ├── docker/
 │   ├── Dockerfile
@@ -129,7 +134,8 @@ YGO-Ultimate-Tool/
 ├── collection.csv          # Spreadsheet export (auto-generated)
 │
 ├── services/
-│   ├── ygoprodeck_api.py   # Async HTTP client for the YGOPRODeck API
+│   ├── ygoprodeck_api.py   # Async HTTP client for the YGOPRODeck API (card search only, no pricing)
+│   ├── cardtrader_api.py   # Async client for CardTrader's real marketplace prices
 │   ├── storage.py          # Persistence logic for JSON and CSV files
 │   └── grading/
 │       ├── geometric_agent.py  # Deterministic CV: normalization, edge wear, centering
@@ -150,4 +156,4 @@ YGO-Ultimate-Tool/
 ---
 
 ## 🔒 Rate Limiting and Best Practices
-The application follows YGOPRODeck's developer guidelines. An asynchronous `0.05`-second pause is inserted between each request. Do not lower this value, to avoid a temporary ban of your IP address.
+The application follows both providers' rate limits: an asynchronous `0.05`-second pause between YGOPRODeck requests, and a `0.1`-second pause between CardTrader requests (CardTrader's real limit is 200 requests/10s globally, 10 req/s on the marketplace endpoint). Do not lower these values, to avoid a temporary ban of your IP address or API token.

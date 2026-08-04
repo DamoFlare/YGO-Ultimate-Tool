@@ -7,7 +7,6 @@ from textual.containers import Container, Horizontal, Vertical, ScrollableContai
 from textual.widgets import DataTable, Static, Button, Input, Label, Header, Footer
 from textual.reactive import reactive
 from models import CollectionItem
-from config import CONDITION_MULTIPLIERS
 
 
 class CollectionView(Container):
@@ -123,11 +122,12 @@ class CollectionView(Container):
         total_pieces = sum(item.quantity for item in items)
         total_nm_val = sum(item.total_nm_price for item in items)
 
-        # Condition totals
-        total_ex_val = sum(item.base_price * item.quantity * CONDITION_MULTIPLIERS["EX"] for item in items)
-        total_gd_val = sum(item.base_price * item.quantity * CONDITION_MULTIPLIERS["GD"] for item in items)
-        total_lp_val = sum(item.base_price * item.quantity * CONDITION_MULTIPLIERS["LP"] for item in items)
-        total_po_val = sum(item.base_price * item.quantity * CONDITION_MULTIPLIERS["PO"] for item in items)
+        # Condition totals — uses get_price_for_condition so real CardTrader prices (when
+        # available) are reflected here too, not just the multiplier estimate.
+        total_ex_val = sum(item.get_price_for_condition("EX") * item.quantity for item in items)
+        total_gd_val = sum(item.get_price_for_condition("GD") * item.quantity for item in items)
+        total_lp_val = sum(item.get_price_for_condition("LP") * item.quantity for item in items)
+        total_po_val = sum(item.get_price_for_condition("PO") * item.quantity for item in items)
 
         # Update metrics
         self.query_one("#metric_count", Static).update(f"Carte Uniche: **{total_unique}**")

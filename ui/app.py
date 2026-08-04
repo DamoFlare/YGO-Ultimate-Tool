@@ -7,6 +7,7 @@ from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, TabbedContent, TabPane, Input, Button, OptionList, DataTable, Static
 from textual.widgets.option_list import Option
 from services.ygoprodeck_api import YGOProDeckAPI
+from services.cardtrader_api import CardTraderAPI
 from services.storage import StorageService
 from services.grading.grader import CardGrader
 from services.grading.geometric_agent import CardDetectionError
@@ -201,11 +202,12 @@ class YGOValuerApp(App):
 
     CSS = CSS
     TITLE = "Yu-Gi-Oh! TCG Valuer & Collection Tracker"
-    SUB_TITLE = "YGOPRODeck & Cardmarket Price Engine"
+    SUB_TITLE = "YGOPRODeck Card Search & CardTrader Price Engine"
 
     def __init__(self):
         super().__init__()
         self.api = YGOProDeckAPI()
+        self.cardtrader = CardTraderAPI()
         self.storage = StorageService()
         self.grader = CardGrader()
         self.collection: List[CollectionItem] = []
@@ -265,13 +267,13 @@ class YGOValuerApp(App):
             await self.perform_card_search()
 
         elif button_id == "btn_confirm_add":
-            self.add_selected_card_to_collection()
+            await self.add_selected_card_to_collection()
 
         elif button_id == "btn_bulk_load":
             await self.perform_bulk_load()
 
         elif button_id == "btn_bulk_add_current":
-            self.process_bulk_add_current()
+            await self.process_bulk_add_current()
 
         elif button_id == "btn_bulk_skip":
             self.process_bulk_skip()
@@ -290,7 +292,7 @@ class YGOValuerApp(App):
             await self.perform_grading_search()
 
         elif button_id == "btn_grading_save":
-            self.save_graded_card_to_collection()
+            await self.save_graded_card_to_collection()
 
     def on_data_table_header_selected(self, event: DataTable.HeaderSelected) -> None:
         if event.data_table.id == "collection_table":
@@ -320,37 +322,33 @@ class YGOValuerApp(App):
             self.notify("Nessuna riga selezionata o errore nell'eliminazione.", title="Seleziona riga", severity="error")
 
     async def refresh_all_prices(self) -> None:
-        """Re-query YGOPRODeck API for all unique cards in collection to update prices."""
+        """Re-query CardTrader for all cards in collection to update real marketplace prices."""
         if not self.collection:
             self.notify("La collezione è vuota.", title="Aggiornamento Prezzi")
             return
 
-        self.notify("Aggiornamento prezzi in corso da YGOPRODeck...", title="Aggiornamento API", severity="information")
-        updated_count = 0
+        self.notify("Aggiornamento prezzi in corso da CardTrader...", title="Aggiornamento API", severity="information")
+        real_price_count = 0
         for item in self.collection:
-            results = await self.api.get_card_by_id(item.id)
-            if results:
-                card = results[0]
-                # Find base price matching set or general cardmarket price
-                new_price = 0.0
-                for cset in card.card_sets:
-                    if cset.set_code.upper() == item.set_code.upper() and cset.set_price:
-                        try:
-                            new_price = float(cset.set_price)
-                            break
-                        except ValueError:
-                            pass
-                if new_price == 0.0 and card.card_prices:
-                    new_price = card.card_prices[0].cardmarket_price
-
-                if new_price > 0.0:
-                    item.base_price = new_price
-                    updated_count += 1
+            real_prices = await self.cardtrader.find_real_prices(item.set_code, item.rarity)
+            if real_prices:
+                item.real_condition_prices = real_prices
+                item.price_source = "cardtrader"
+                if "NM" in real_prices:
+                    item.base_price = real_prices["NM"]
+                real_price_count += 1
+            else:
+                item.real_condition_prices = None
+                item.price_source = None
 
         self.storage.save_collection(self.collection)
         collection_view = self.query_one("#collection_view", CollectionView)
         collection_view.update_table(self.collection)
-        self.notify(f"Prezzi aggiornati per {updated_count} carte!", title="Completato", severity="information")
+        self.notify(
+            f"Prezzi reali CardTrader trovati per {real_price_count}/{len(self.collection)} carte.",
+            title="Completato",
+            severity="information",
+        )
 
     # --- EVENT HANDLERS: Add Card View ---
 
@@ -407,7 +405,7 @@ class YGOValuerApp(App):
                     grading_view.selected_set = grading_view.selected_card.card_sets[idx]
                     grading_view.update_save_form()
 
-    def add_selected_card_to_collection(self) -> None:
+    async def add_selected_card_to_collection(self) -> None:
         add_view = self.query_one("#add_card_view", AddCardView)
         if not add_view.selected_card:
             return
@@ -420,13 +418,14 @@ class YGOValuerApp(App):
         except ValueError:
             qty = 1
 
-        self.add_card_to_collection_logic(add_view.selected_card, add_view.selected_set, qty)
+        await self.add_card_to_collection_logic(add_view.selected_card, add_view.selected_set, qty)
         self.storage.save_collection(self.collection)
         self.notify(f"Aggiunta '{add_view.selected_card.name}' x{qty} alla collezione!", title="Carta Salvata", severity="information")
 
     async def action_quit(self) -> None:
         """Close API client session on quit."""
         await self.api.close()
+        await self.cardtrader.close()
         await self.grader.close()
         self.exit()
 
@@ -476,7 +475,7 @@ class YGOValuerApp(App):
         if not results:
             self.notify("Nessuna carta trovata con questo termine.", title="Esito Ricerca", severity="error")
 
-    def save_graded_card_to_collection(self) -> None:
+    async def save_graded_card_to_collection(self) -> None:
         grading_view = self.query_one("#grading_view", GradingView)
         if not grading_view.last_result or not grading_view.selected_card:
             return
@@ -495,7 +494,7 @@ class YGOValuerApp(App):
             "edges": result.edges_subgrade,
             "surface": result.surface_subgrade,
         }
-        self.add_card_to_collection_logic(
+        await self.add_card_to_collection_logic(
             grading_view.selected_card,
             grading_view.selected_set,
             qty,
@@ -532,7 +531,7 @@ class YGOValuerApp(App):
         
         bulk_view.start_processing(queue)
 
-    def process_bulk_add_current(self) -> None:
+    async def process_bulk_add_current(self) -> None:
         bulk_view = self.query_one("#bulk_add_view", BulkAddView)
         idx = bulk_view.current_index
         if idx < 0 or idx >= len(bulk_view.queue):
@@ -540,7 +539,7 @@ class YGOValuerApp(App):
 
         item = bulk_view.queue[idx]
         set_list = self.query_one("#bulk_set_option_list", OptionList)
-        
+
         selected_option = set_list.highlighted
         if selected_option is None:
             self.notify("Seleziona una versione/rarità prima di aggiungere.", title="Selezione Mancante", severity="warning")
@@ -548,9 +547,9 @@ class YGOValuerApp(App):
 
         card = item["results"][0]
         selected_set = card.card_sets[selected_option]
-        
+
         # Reuse logic for adding to collection (staged in memory only, not yet saved to disk)
-        self.add_card_to_collection_logic(card, selected_set)
+        await self.add_card_to_collection_logic(card, selected_set)
 
         item["added"] = True
         self.advance_bulk_queue()
@@ -577,7 +576,7 @@ class YGOValuerApp(App):
         bulk_view.update_queue_list()
         bulk_view.show_current_item()
 
-    def add_card_to_collection_logic(
+    async def add_card_to_collection_logic(
         self,
         card: CardSearchResult,
         selected_set: CardSetInfo,
@@ -590,15 +589,17 @@ class YGOValuerApp(App):
         set_name = selected_set.set_name if selected_set else ""
         rarity = selected_set.set_rarity if selected_set else "Standard"
 
+        # Pricing comes exclusively from CardTrader's real marketplace listings — YGOPRODeck is
+        # only used for card lookup/search (name, passcode, available sets), never for prices.
+        # If no CardTrader match is found, base_price stays 0.0 (unknown) rather than falling
+        # back to an unreliable estimate.
         base_price = 0.0
-        if selected_set and selected_set.set_price:
-            try:
-                base_price = float(selected_set.set_price)
-            except ValueError:
-                base_price = 0.0
-
-        if base_price == 0.0 and card.card_prices:
-            base_price = card.card_prices[0].cardmarket_price
+        real_prices = await self.cardtrader.find_real_prices(set_code, rarity)
+        price_source = None
+        if real_prices:
+            price_source = "cardtrader"
+            if "NM" in real_prices:
+                base_price = real_prices["NM"]
 
         # Graded copies never merge into (or with) a differently-graded/ungraded stack: a grade
         # describes one specific physical copy, not the whole quantity. Ungraded add/bulk-add
@@ -615,6 +616,8 @@ class YGOValuerApp(App):
         if existing_item:
             existing_item.quantity += qty
             existing_item.base_price = base_price
+            existing_item.real_condition_prices = real_prices
+            existing_item.price_source = price_source
         else:
             new_item = CollectionItem(
                 id=card.id,
@@ -627,6 +630,8 @@ class YGOValuerApp(App):
                 grade=grade,
                 condition=condition,
                 grade_breakdown=grade_breakdown,
+                real_condition_prices=real_prices,
+                price_source=price_source,
             )
             self.collection.append(new_item)
 

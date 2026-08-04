@@ -11,13 +11,27 @@ load_dotenv()  # reads .env in the project root, if present; never overrides rea
 YGOPRODECK_BASE_URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
 API_RATE_LIMIT_DELAY = 0.05  # Delay between requests to respect 20 req/sec limit
 
-# Cardmarket TCG price API (RapidAPI, https://rapidapi.com/tcggopro/api/cardmarket-api-tcg)
-# Credentials are read from .env (never commit real keys) — see .env.example.
-RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY", "")
-RAPIDAPI_HOST = os.getenv("RAPIDAPI_HOST", "cardmarket-api-tcg.p.rapidapi.com")
-RAPIDAPI_BASE_URL = f"https://{RAPIDAPI_HOST}"
+# CardTrader marketplace API (https://www.cardtrader.com/en/docs/api/full/reference)
+# Real, live marketplace listings — used as the primary price source, replacing YGOPRODeck's
+# set_price/cardmarket_price (undocumented origin, not tied to a specific printing/condition).
+# Credentials are read from .env (never commit real tokens) — see .env.example.
+CARDTRADER_TOKEN = os.getenv("CARDTRADER_TOKEN", "")
+CARDTRADER_BASE_URL = "https://api.cardtrader.com/api/v2"
+CARDTRADER_YUGIOH_GAME_ID = 4  # confirmed live via GET /games
+CARDTRADER_RATE_LIMIT_DELAY = 0.1  # conservative; real limit is 200 req/10s (10 req/s on /marketplace/products)
 
-# Cardmarket Condition Multipliers (Cardmarket Standards)
+# Maps our NM/EX/GD/LP/PO buckets to CardTrader's condition strings (properties_hash.condition).
+# "Mint" is folded into NM since our scale has no separate tier above Near Mint.
+CARDTRADER_CONDITION_MAP = {
+    "NM": ["Mint", "Near Mint"],
+    "EX": ["Slightly Played"],
+    "GD": ["Moderately Played"],
+    "LP": ["Played"],
+    "PO": ["Poor"],
+}
+
+# Cardmarket Condition Multipliers (Cardmarket Standards) — fallback estimate used only when
+# CardTrader has no real marketplace listing for a given condition (see CollectionItem.get_price_for_condition).
 CONDITION_MULTIPLIERS = {
     "NM": 1.00,   # Near Mint (100%)
     "EX": 0.88,   # Excellent (~85-90%)

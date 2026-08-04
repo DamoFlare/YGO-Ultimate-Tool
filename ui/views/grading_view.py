@@ -111,9 +111,9 @@ class GradingView(Container):
             sets_list.add_option(Option("Nessun set specifico disponibile per questa carta", id="none"))
             return
 
+        # Niente prezzo qui: il prezzo reale viene da CardTrader solo al salvataggio.
         for idx, cset in enumerate(card.card_sets):
-            price_str = f"€{cset.set_price}" if cset.set_price else "N/A"
-            sets_list.add_option(Option(f"{cset.set_code} - {cset.set_rarity} - {cset.set_name} ({price_str})", id=str(idx)))
+            sets_list.add_option(Option(f"{cset.set_code} - {cset.set_rarity} - {cset.set_name}", id=str(idx)))
         sets_list.focus()
         self.update_save_form()
 

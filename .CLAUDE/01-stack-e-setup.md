@@ -8,15 +8,32 @@ Python 3.12.3 (README richiede minimo 3.10+). Nessun altro linguaggio nel repo.
 
 ```
 textual>=0.50.0               # framework TUI (Terminal User Interface)
-httpx>=0.27.0                 # client HTTP asincrono per le chiamate API YGOPRODeck
-pydantic>=2.0.0               # validazione dati / modelli tipizzati
-opencv-python-headless>=4.9.0 # CV deterministica per il modulo di Grading (no GUI/GTK)
-numpy>=1.26.0                 # usato da opencv-python-headless
-ollama>=0.2.0                 # client ufficiale (AsyncClient) verso il server Ollama locale
+httpx>=0.27.0                 # client HTTP asincrono per le chiamate API (YGOPRODeck, CardTrader)
+pydantic>=2.0.0                # validazione dati / modelli tipizzati
+opencv-python-headless>=4.9.0  # CV deterministica per il modulo di Grading (no GUI/GTK)
+numpy>=1.26.0                  # usato da opencv-python-headless
+ollama>=0.2.0                  # client ufficiale (AsyncClient) verso il server Ollama locale
+python-dotenv>=1.0.0           # carica .env (CARDTRADER_TOKEN) in config.py
 ```
 
 Nessun database, nessun framework web/browser: tutta l'interfaccia è testuale via Textual, in
 esecuzione in terminale.
+
+## CardTrader (fonte prezzi — richiesto per qualsiasi valorizzazione)
+
+L'unica fonte di prezzo dell'app è **CardTrader** (`services/cardtrader_api.py`, vedi
+[08-pricing-cardtrader.md](08-pricing-cardtrader.md)), via API autenticata con Bearer token.
+Serve un file `.env` in root (copiare `.env.example`) con:
+
+```
+CARDTRADER_TOKEN=il-tuo-token
+```
+
+`.env` è in `.gitignore`, mai committato. `config.py` lo carica con `python-dotenv` all'avvio
+(`load_dotenv()`). Senza token valido, la ricerca carte (YGOPRODeck) funziona comunque, ma
+nessun prezzo viene mai mostrato (fallback silenzioso a `€0.00`, mai un crash — vedi
+[06-note-e-discrepanze.md](06-note-e-discrepanze.md) per la storia di come si è arrivati a
+questa scelta, incluso il tentativo scartato con RapidAPI/Cardmarket).
 
 ## Server Ollama locale (richiesto solo dal tab "Grading Carta")
 
@@ -72,7 +89,4 @@ codice sorgente reale, che vive in `services/`, `ui/`, e nei moduli root `config
 
 - Nessun test automatizzato (no `pytest`, no cartella `tests/`)
 - Nessuna CI/CD (`.github/workflows/` non esiste)
-- Nessun `Dockerfile`
 - Nessun `LICENSE`
-- Nessun `.env`/`.env.example` — l'app non richiede API key (l'API YGOPRODeck è pubblica e senza
-  autenticazione)

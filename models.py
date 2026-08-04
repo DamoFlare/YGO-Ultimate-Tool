@@ -41,9 +41,20 @@ class CollectionItem(BaseModel):
     condition: Optional[str] = None      # Grade mapped onto NM/EX/GD/LP/PO (config.GRADE_TO_CONDITION)
     grade_breakdown: Optional[Dict[str, float]] = None  # {"centering": .., "edges": .., "surface": ..}
 
+    # Populated by services/cardtrader_api.py — the only price source in this app (YGOPRODeck is
+    # used solely for card lookup/search, never for prices). A missing bucket means no active
+    # CardTrader listing was found for that specific condition (falls back to estimating it from
+    # the real NM price via CONDITION_MULTIPLIERS); real_condition_prices=None entirely means no
+    # CardTrader match was found at all, so base_price stays 0.0 (unknown, not estimated).
+    real_condition_prices: Optional[Dict[str, float]] = None  # e.g. {"NM": 15.89, "EX": 12.4}
+    price_source: Optional[str] = None   # "cardtrader" if matched, else None (no real price known)
+
     def get_price_for_condition(self, condition: str) -> float:
-        """Calculate estimated price for a given condition code (NM, EX, GD, LP, PO)."""
-        mult = CONDITION_MULTIPLIERS.get(condition.upper(), 1.0)
+        """Real CardTrader marketplace price for this condition if known, else an estimate."""
+        condition = condition.upper()
+        if self.real_condition_prices and condition in self.real_condition_prices:
+            return round(self.real_condition_prices[condition], 2)
+        mult = CONDITION_MULTIPLIERS.get(condition, 1.0)
         return round(self.base_price * mult, 2)
 
     @property
