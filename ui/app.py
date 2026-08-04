@@ -16,6 +16,7 @@ from ui.views.collection_view import CollectionView
 from ui.views.add_card_view import AddCardView
 from ui.views.bulk_add_view import BulkAddView
 from ui.views.grading_view import GradingView
+from ui.screens.image_picker_screen import ImagePickerScreen
 
 
 CSS = """
@@ -154,6 +155,10 @@ Screen {
     margin-right: 1;
 }
 
+#btn_browse_image {
+    margin-right: 1;
+}
+
 #grading_output_result {
     margin-top: 1;
     padding: 1;
@@ -273,6 +278,9 @@ class YGOValuerApp(App):
 
         elif button_id == "btn_bulk_save_all":
             self.commit_bulk_collection()
+
+        elif button_id == "btn_browse_image":
+            self.push_screen(ImagePickerScreen(), self.set_image_path_from_browser)
 
         elif button_id == "btn_analyze_card":
             image_path_str = self.query_one("#input_image_path", Input).value
@@ -423,6 +431,11 @@ class YGOValuerApp(App):
         self.exit()
 
     # --- GRADING LOGIC ---
+
+    def set_image_path_from_browser(self, picked_path: Optional[str]) -> None:
+        """Callback for ImagePickerScreen: fills the image path input with the chosen file."""
+        if picked_path:
+            self.query_one("#input_image_path", Input).value = picked_path
 
     def start_grading(self, image_path_str: str) -> None:
         """Kick off the CV+VLM grading pipeline in a background worker so the TUI stays responsive."""

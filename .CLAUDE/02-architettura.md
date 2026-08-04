@@ -29,12 +29,15 @@ YGO-Ultimate-Tool/
 └── ui/
     ├── __init__.py
     ├── app.py                  # App Textual principale, CSS incluso inline
-    └── views/
+    ├── views/
+    │   ├── __init__.py
+    │   ├── collection_view.py  # tab "Collezione & Valutazione"
+    │   ├── add_card_view.py    # tab "Aggiungi Carta"
+    │   ├── bulk_add_view.py    # tab "Aggiunta Bulk"
+    │   └── grading_view.py     # tab "Grading Carta (CV + AI)"
+    └── screens/
         ├── __init__.py
-        ├── collection_view.py  # tab "Collezione & Valutazione"
-        ├── add_card_view.py    # tab "Aggiungi Carta"
-        ├── bulk_add_view.py    # tab "Aggiunta Bulk"
-        └── grading_view.py     # tab "Grading Carta (CV + AI)"
+        └── image_picker_screen.py  # modal "Browse" per scegliere un'immagine dal filesystem
 ```
 
 Non esistono `docs/`, `CONTRIBUTING.md`, `LICENSE`, `Makefile`, `.github/workflows/`, `tests/`,

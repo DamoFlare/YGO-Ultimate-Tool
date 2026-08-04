@@ -7,7 +7,10 @@
     "rarity": "Common",
     "base_price": 0.12,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 26439287,
@@ -17,7 +20,10 @@
     "rarity": "Common",
     "base_price": 1.25,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 84824601,
@@ -25,9 +31,12 @@
     "set_code": "CSOC-EN027",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.17,
+    "base_price": 0.16,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 82116191,
@@ -37,7 +46,10 @@
     "rarity": "Common",
     "base_price": 0.08,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 14315573,
@@ -45,9 +57,12 @@
     "set_code": "DP1-EN027",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Rare",
-    "base_price": 0.07,
+    "base_price": 0.06,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 10591919,
@@ -55,9 +70,12 @@
     "set_code": "RGBT-EN016",
     "set_name": "Raging Battle",
     "rarity": "Common",
-    "base_price": 0.57,
+    "base_price": 0.6,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 91607976,
@@ -67,7 +85,10 @@
     "rarity": "Common",
     "base_price": 0.09,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 40640057,
@@ -77,7 +98,10 @@
     "rarity": "Common",
     "base_price": 0.05,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 21597117,
@@ -87,7 +111,10 @@
     "rarity": "Common",
     "base_price": 0.05,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 80908502,
@@ -95,9 +122,12 @@
     "set_code": "DP06-EN004",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Rare",
-    "base_price": 0.66,
+    "base_price": 0.74,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 89547299,
@@ -107,7 +137,10 @@
     "rarity": "Common",
     "base_price": 0.1,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 12923641,
@@ -117,7 +150,10 @@
     "rarity": "Common",
     "base_price": 1.64,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 89621922,
@@ -127,7 +163,10 @@
     "rarity": "Rare",
     "base_price": 0.26,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 59793705,
@@ -137,7 +176,10 @@
     "rarity": "Ultra Rare",
     "base_price": 0.02,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 55119278,
@@ -145,9 +187,12 @@
     "set_code": "CSOC-EN011",
     "set_name": "Crossroads of Chaos",
     "rarity": "Rare",
-    "base_price": 2.07,
+    "base_price": 1.9,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 97705809,
@@ -157,7 +202,10 @@
     "rarity": "Rare",
     "base_price": 0.05,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 45906428,
@@ -167,7 +215,10 @@
     "rarity": "Rare",
     "base_price": 0.29,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 47829960,
@@ -177,7 +228,10 @@
     "rarity": "Common",
     "base_price": 1.37,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 43642620,
@@ -187,7 +241,10 @@
     "rarity": "Common",
     "base_price": 0.05,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 5285665,
@@ -197,7 +254,10 @@
     "rarity": "Common",
     "base_price": 0.15,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 3773196,
@@ -207,7 +267,10 @@
     "rarity": "Common",
     "base_price": 1.36,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 14261867,
@@ -217,7 +280,10 @@
     "rarity": "Common",
     "base_price": 0.14,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 7572887,
@@ -227,7 +293,10 @@
     "rarity": "Common",
     "base_price": 1.53,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 54493213,
@@ -237,7 +306,10 @@
     "rarity": "Common",
     "base_price": 3.28,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 30069398,
@@ -247,7 +319,10 @@
     "rarity": "Common",
     "base_price": 0.17,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 60682203,
@@ -255,9 +330,12 @@
     "set_code": "SDZW-EN019",
     "set_name": "Zombie World Structure Deck",
     "rarity": "Common",
-    "base_price": 0.59,
+    "base_price": 0.67,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 89943723,
@@ -267,7 +345,10 @@
     "rarity": "Common",
     "base_price": 1.47,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 19505896,
@@ -275,9 +356,12 @@
     "set_code": "CSOC-EN024",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.28,
+    "base_price": 0.27,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 31828916,
@@ -287,7 +371,10 @@
     "rarity": "Common",
     "base_price": 1.13,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 80987696,
@@ -297,7 +384,10 @@
     "rarity": "Common",
     "base_price": 1.38,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 82112775,
@@ -307,7 +397,10 @@
     "rarity": "Common",
     "base_price": 1.54,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 23782705,
@@ -317,7 +410,10 @@
     "rarity": "Common",
     "base_price": 1.12,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 63995093,
@@ -327,7 +423,10 @@
     "rarity": "Common",
     "base_price": 3.06,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 36733451,
@@ -337,7 +436,10 @@
     "rarity": "Common",
     "base_price": 2.02,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 6795211,
@@ -347,7 +449,10 @@
     "rarity": "Common",
     "base_price": 0.1,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 93542102,
@@ -357,7 +462,10 @@
     "rarity": "Common",
     "base_price": 0.11,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 29947751,
@@ -367,7 +475,10 @@
     "rarity": "Common",
     "base_price": 0.13,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 5318639,
@@ -377,7 +488,10 @@
     "rarity": "Common",
     "base_price": 1.63,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 17732278,
@@ -387,7 +501,10 @@
     "rarity": "Common",
     "base_price": 0.2,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 44729197,
@@ -397,7 +514,10 @@
     "rarity": "Common",
     "base_price": 0.07,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 74519184,
@@ -407,7 +527,10 @@
     "rarity": "Common",
     "base_price": 0.24,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 54959865,
@@ -417,7 +540,10 @@
     "rarity": "Common",
     "base_price": 0.21,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 53152590,
@@ -425,9 +551,12 @@
     "set_code": "CSOC-EN020",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.16,
+    "base_price": 0.18,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 72767833,
@@ -437,7 +566,10 @@
     "rarity": "Common",
     "base_price": 0.04,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 4929256,
@@ -447,7 +579,10 @@
     "rarity": "Common",
     "base_price": 3.05,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 24094653,
@@ -457,7 +592,10 @@
     "rarity": "Common",
     "base_price": 0.02,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 71218746,
@@ -467,7 +605,10 @@
     "rarity": "Common",
     "base_price": 0.15,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 97077563,
@@ -477,7 +618,10 @@
     "rarity": "Common",
     "base_price": 0.02,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 213326,
@@ -487,7 +631,10 @@
     "rarity": "Common",
     "base_price": 0.38,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 48381268,
@@ -497,7 +644,10 @@
     "rarity": "Common",
     "base_price": 0.2,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 43697559,
@@ -507,7 +657,10 @@
     "rarity": "Common",
     "base_price": 0.24,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 24311595,
@@ -517,7 +670,10 @@
     "rarity": "Common",
     "base_price": 0.11,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 75775867,
@@ -527,7 +683,10 @@
     "rarity": "Common",
     "base_price": 0.26,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 28124263,
@@ -537,7 +696,10 @@
     "rarity": "Common",
     "base_price": 0.14,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 85101228,
@@ -547,7 +709,10 @@
     "rarity": "Common",
     "base_price": 0.19,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 56074358,
@@ -557,7 +722,10 @@
     "rarity": "Common",
     "base_price": 0.23,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 77229910,
@@ -567,7 +735,10 @@
     "rarity": "Common",
     "base_price": 0.02,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 71060915,
@@ -575,9 +746,12 @@
     "set_code": "EEN-EN058",
     "set_name": "Elemental Energy",
     "rarity": "Common",
-    "base_price": 0.16,
+    "base_price": 0.15,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 7030340,
@@ -587,7 +761,10 @@
     "rarity": "Common",
     "base_price": 0.13,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 82639107,
@@ -597,7 +774,10 @@
     "rarity": "Common",
     "base_price": 0.17,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 70074904,
@@ -607,7 +787,10 @@
     "rarity": "Common",
     "base_price": 2.62,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 17732278,
@@ -617,7 +800,10 @@
     "rarity": "Common",
     "base_price": 0.2,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 54497620,
@@ -627,7 +813,10 @@
     "rarity": "Common",
     "base_price": 0.09,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 45945685,
@@ -637,7 +826,10 @@
     "rarity": "Common",
     "base_price": 0.09,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 24268052,
@@ -647,7 +839,10 @@
     "rarity": "Common",
     "base_price": 0.08,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 42015635,
@@ -657,7 +852,10 @@
     "rarity": "Rare",
     "base_price": 0.46,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 47596607,
@@ -667,7 +865,10 @@
     "rarity": "Super Rare",
     "base_price": 0.16,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 21844576,
@@ -677,7 +878,10 @@
     "rarity": "Common",
     "base_price": 0.15,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 28284902,
@@ -687,7 +891,10 @@
     "rarity": "Common",
     "base_price": 0.12,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 14613029,
@@ -697,7 +904,10 @@
     "rarity": "Common",
     "base_price": 0.05,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 95286165,
@@ -707,7 +917,10 @@
     "rarity": "Common",
     "base_price": 0.12,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 50684552,
@@ -717,7 +930,10 @@
     "rarity": "Common",
     "base_price": 0.06,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 19024706,
@@ -727,7 +943,10 @@
     "rarity": "Common",
     "base_price": 0.13,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 4206964,
@@ -737,7 +956,10 @@
     "rarity": "Common",
     "base_price": 1.61,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 17363041,
@@ -745,9 +967,12 @@
     "set_code": "TAEV-EN008",
     "set_name": "Tactical Evolution",
     "rarity": "Common",
-    "base_price": 0.29,
+    "base_price": 0.27,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 29246354,
@@ -757,7 +982,10 @@
     "rarity": "Common",
     "base_price": 0.25,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 49469105,
@@ -767,7 +995,10 @@
     "rarity": "Rare",
     "base_price": 1.19,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 10489311,
@@ -777,7 +1008,10 @@
     "rarity": "Common",
     "base_price": 0.15,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 18302224,
@@ -787,7 +1021,10 @@
     "rarity": "Common",
     "base_price": 0.12,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 77565204,
@@ -795,9 +1032,12 @@
     "set_code": "POTD-EN044",
     "set_name": "Power of the Duelist",
     "rarity": "Rare",
-    "base_price": 0.12,
+    "base_price": 0.16,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 44676200,
@@ -807,7 +1047,10 @@
     "rarity": "Common",
     "base_price": 0.26,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 77414722,
@@ -817,7 +1060,10 @@
     "rarity": "Common",
     "base_price": 1.64,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 28002611,
@@ -827,7 +1073,10 @@
     "rarity": "Common",
     "base_price": 0.12,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 42682609,
@@ -837,7 +1086,10 @@
     "rarity": "Common",
     "base_price": 0.26,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 79979666,
@@ -847,7 +1099,10 @@
     "rarity": "Common",
     "base_price": 0.09,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 90239723,
@@ -857,7 +1112,10 @@
     "rarity": "Common",
     "base_price": 0.31,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 51043243,
@@ -865,9 +1123,12 @@
     "set_code": "HA01-EN019",
     "set_name": "Hidden Arsenal",
     "rarity": "Super Rare",
-    "base_price": 0.22,
+    "base_price": 0.23,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 88650530,
@@ -875,9 +1136,12 @@
     "set_code": "HA01-EN017",
     "set_name": "Hidden Arsenal",
     "rarity": "Super Rare",
-    "base_price": 0.08,
+    "base_price": 0.09,
     "quantity": 3,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 70231910,
@@ -887,7 +1151,10 @@
     "rarity": "Common",
     "base_price": 2.37,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 61127349,
@@ -897,7 +1164,10 @@
     "rarity": "Common",
     "base_price": 1.25,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 9126351,
@@ -905,9 +1175,12 @@
     "set_code": "SOVR-EN034",
     "set_name": "Stardust Overdrive",
     "rarity": "Common",
-    "base_price": 0.21,
+    "base_price": 0.2,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 60999392,
@@ -917,7 +1190,10 @@
     "rarity": "Common",
     "base_price": 1.36,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 80769747,
@@ -925,9 +1201,12 @@
     "set_code": "CSOC-EN018",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.13,
+    "base_price": 0.17,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 31281980,
@@ -937,7 +1216,10 @@
     "rarity": "Common",
     "base_price": 0.04,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 65622692,
@@ -947,7 +1229,10 @@
     "rarity": "Common",
     "base_price": 0.12,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 64500000,
@@ -957,7 +1242,10 @@
     "rarity": "Common",
     "base_price": 0.1,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 86188410,
@@ -967,7 +1255,10 @@
     "rarity": "Common",
     "base_price": 0.09,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 6480253,
@@ -977,7 +1268,10 @@
     "rarity": "Common",
     "base_price": 0.07,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 69884162,
@@ -987,7 +1281,10 @@
     "rarity": "Common",
     "base_price": 0.1,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 84327329,
@@ -997,7 +1294,10 @@
     "rarity": "Common",
     "base_price": 0.17,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 41436536,
@@ -1007,7 +1307,10 @@
     "rarity": "Rare",
     "base_price": 0.67,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 61204971,
@@ -1017,7 +1320,10 @@
     "rarity": "Rare",
     "base_price": 0.19,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 14225239,
@@ -1027,7 +1333,10 @@
     "rarity": "Common",
     "base_price": 0.12,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 25119460,
@@ -1037,7 +1346,10 @@
     "rarity": "Rare",
     "base_price": 0.27,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 18325492,
@@ -1047,7 +1359,10 @@
     "rarity": "Common",
     "base_price": 0.05,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 27870033,
@@ -1057,7 +1372,10 @@
     "rarity": "Common",
     "base_price": 0.13,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 20721928,
@@ -1067,7 +1385,10 @@
     "rarity": "Common",
     "base_price": 0.02,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 68005187,
@@ -1077,7 +1398,10 @@
     "rarity": "Common",
     "base_price": 1.24,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 81566151,
@@ -1087,7 +1411,10 @@
     "rarity": "Rare",
     "base_price": 1.63,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 10526791,
@@ -1097,7 +1424,10 @@
     "rarity": "Rare",
     "base_price": 0.76,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 47737087,
@@ -1107,7 +1437,10 @@
     "rarity": "Rare",
     "base_price": 0.19,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 58932615,
@@ -1117,7 +1450,10 @@
     "rarity": "Common",
     "base_price": 0.14,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 43452193,
@@ -1127,7 +1463,10 @@
     "rarity": "Common",
     "base_price": 0.2,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 43237273,
@@ -1137,7 +1476,10 @@
     "rarity": "Rare",
     "base_price": 2.28,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 63703130,
@@ -1145,9 +1487,12 @@
     "set_code": "EOJ-EN041",
     "set_name": "Enemy of Justice",
     "rarity": "Common",
-    "base_price": 0.03,
+    "base_price": 0.02,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 17955766,
@@ -1157,7 +1502,10 @@
     "rarity": "Rare",
     "base_price": 0.15,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 95943058,
@@ -1165,9 +1513,12 @@
     "set_code": "DP06-EN007",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.11,
+    "base_price": 0.09,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 95281259,
@@ -1177,7 +1528,10 @@
     "rarity": "Common",
     "base_price": 0.03,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 22020907,
@@ -1187,7 +1541,10 @@
     "rarity": "Common",
     "base_price": 0.06,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 58932615,
@@ -1197,7 +1554,10 @@
     "rarity": "Common",
     "base_price": 0.14,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 36378213,
@@ -1205,9 +1565,12 @@
     "set_code": "POTD-EN009",
     "set_name": "Power of the Duelist",
     "rarity": "Common",
-    "base_price": 0.11,
+    "base_price": 0.1,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 77565204,
@@ -1215,9 +1578,12 @@
     "set_code": "DP04-EN023",
     "set_name": "Duelist Pack: Zane Truesdale",
     "rarity": "Common",
-    "base_price": 0.12,
+    "base_price": 0.16,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 23299957,
@@ -1227,7 +1593,10 @@
     "rarity": "Common",
     "base_price": 0.09,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 98927491,
@@ -1237,7 +1606,10 @@
     "rarity": "Common",
     "base_price": 0.11,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 71930383,
@@ -1245,9 +1617,12 @@
     "set_code": "CRV-EN006",
     "set_name": "Cybernetic Revolution",
     "rarity": "Common",
-    "base_price": 0.22,
+    "base_price": 0.24,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 92720564,
@@ -1255,9 +1630,12 @@
     "set_code": "CSOC-EN009",
     "set_name": "Crossroads of Chaos",
     "rarity": "Rare",
-    "base_price": 0.19,
+    "base_price": 0.2,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 99861526,
@@ -1267,7 +1645,10 @@
     "rarity": "Rare",
     "base_price": 0.13,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 31467372,
@@ -1277,7 +1658,10 @@
     "rarity": "Common",
     "base_price": 0.13,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 5973663,
@@ -1287,7 +1671,10 @@
     "rarity": "Rare",
     "base_price": 0.37,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 55144522,
@@ -1297,7 +1684,10 @@
     "rarity": "Common",
     "base_price": 4.66,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 30241314,
@@ -1307,7 +1697,10 @@
     "rarity": "Common",
     "base_price": 4.21,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 72237166,
@@ -1317,7 +1710,10 @@
     "rarity": "Common",
     "base_price": 1.21,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 36584821,
@@ -1327,7 +1723,10 @@
     "rarity": "Common",
     "base_price": 3.36,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 4334811,
@@ -1337,7 +1736,10 @@
     "rarity": "Common",
     "base_price": 1.9,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 37043180,
@@ -1347,7 +1749,10 @@
     "rarity": "Common",
     "base_price": 1.38,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 40133511,
@@ -1357,7 +1762,10 @@
     "rarity": "Common",
     "base_price": 1.67,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 48092532,
@@ -1367,7 +1775,10 @@
     "rarity": "Common",
     "base_price": 1.66,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 23282832,
@@ -1377,7 +1788,10 @@
     "rarity": "Common",
     "base_price": 0.04,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 67159705,
@@ -1387,7 +1801,10 @@
     "rarity": "Common",
     "base_price": 0.03,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 50400231,
@@ -1395,9 +1812,12 @@
     "set_code": "TU01-EN007",
     "set_name": "Turbo Pack: Booster One",
     "rarity": "Rare",
-    "base_price": 0.07,
+    "base_price": 0.06,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 13093792,
@@ -1405,9 +1825,12 @@
     "set_code": "TU03-EN012",
     "set_name": "Turbo Pack: Booster Three",
     "rarity": "Common",
-    "base_price": 0.11,
+    "base_price": 0.12,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 27408609,
@@ -1417,7 +1840,10 @@
     "rarity": "Common",
     "base_price": 1.8,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 64752646,
@@ -1427,7 +1853,10 @@
     "rarity": "Common",
     "base_price": 0.44,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 9666558,
@@ -1437,7 +1866,10 @@
     "rarity": "Common",
     "base_price": 0.84,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 94853057,
@@ -1447,7 +1879,10 @@
     "rarity": "Common",
     "base_price": 1.77,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 45985838,
@@ -1455,9 +1890,12 @@
     "set_code": "GLD1-EN019",
     "set_name": "Gold Series",
     "rarity": "Common",
-    "base_price": 0.19,
+    "base_price": 0.15,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 23265594,
@@ -1467,7 +1905,10 @@
     "rarity": "Common",
     "base_price": 1.06,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 67159705,
@@ -1477,7 +1918,10 @@
     "rarity": "Common",
     "base_price": 0.96,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 59575539,
@@ -1487,7 +1931,10 @@
     "rarity": "Common",
     "base_price": 0.26,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 23771716,
@@ -1497,7 +1944,10 @@
     "rarity": "Common",
     "base_price": 0.08,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 22666164,
@@ -1507,7 +1957,10 @@
     "rarity": "Common",
     "base_price": 1.18,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 25771826,
@@ -1517,7 +1970,10 @@
     "rarity": "Super Rare",
     "base_price": 0.04,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 89386122,
@@ -1527,7 +1983,10 @@
     "rarity": "Super Rare",
     "base_price": 0.03,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 21615956,
@@ -1537,7 +1996,10 @@
     "rarity": "Super Rare",
     "base_price": 0.1,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 68226653,
@@ -1547,7 +2009,10 @@
     "rarity": "Super Rare",
     "base_price": 0.05,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 52265835,
@@ -1557,7 +2022,10 @@
     "rarity": "Super Rare",
     "base_price": 0.07,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 16191953,
@@ -1567,7 +2035,10 @@
     "rarity": "Super Rare",
     "base_price": 2.35,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 20450925,
@@ -1577,7 +2048,10 @@
     "rarity": "Super Rare",
     "base_price": 0.07,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 74131780,
@@ -1587,7 +2061,10 @@
     "rarity": "Common",
     "base_price": 1.44,
     "quantity": 2,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 33248692,
@@ -1597,7 +2074,10 @@
     "rarity": "Rare",
     "base_price": 0.17,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 36256625,
@@ -1607,7 +2087,10 @@
     "rarity": "Super Rare",
     "base_price": 0.12,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 70423794,
@@ -1617,7 +2100,10 @@
     "rarity": "Common",
     "base_price": 0.05,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 93369354,
@@ -1625,9 +2111,12 @@
     "set_code": "ANPR-EN027",
     "set_name": "Ancient Prophecy",
     "rarity": "Common",
-    "base_price": 0.32,
+    "base_price": 0.28,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 18511384,
@@ -1635,9 +2124,12 @@
     "set_code": "CRV-EN038",
     "set_name": "Cybernetic Revolution",
     "rarity": "Common",
-    "base_price": 0.09,
+    "base_price": 0.1,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 26302522,
@@ -1647,7 +2139,10 @@
     "rarity": "Common",
     "base_price": 1.32,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 44424095,
@@ -1657,7 +2152,10 @@
     "rarity": "Rare",
     "base_price": 1.05,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 53582587,
@@ -1667,7 +2165,10 @@
     "rarity": "Common",
     "base_price": 2.51,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 51638941,
@@ -1677,7 +2178,10 @@
     "rarity": "Common",
     "base_price": 0.15,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 66331855,
@@ -1687,7 +2191,10 @@
     "rarity": "Common",
     "base_price": 0.1,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 96300057,
@@ -1697,7 +2204,10 @@
     "rarity": "Common",
     "base_price": 0.15,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 9622164,
@@ -1707,7 +2217,10 @@
     "rarity": "Common",
     "base_price": 1.67,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   },
   {
     "id": 14936691,
@@ -1715,8 +2228,11 @@
     "set_code": "HA01-EN021",
     "set_name": "Hidden Arsenal",
     "rarity": "Secret Rare",
-    "base_price": 0.26,
+    "base_price": 0.28,
     "quantity": 1,
-    "added_at": null
+    "added_at": null,
+    "grade": null,
+    "condition": null,
+    "grade_breakdown": null
   }
 ]

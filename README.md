@@ -105,7 +105,7 @@ For adding many cards at once (e.g. after a big purchase/trade).
 
 #### 4. 🩺 `Card Grading (CV + AI)` tab
 Computes an objective 1-10 grade from a photo of the physical card, combining CV and local AI.
-- Enter the path to a local image file (e.g. `/photos/dark_magician.jpg`) and press `Analyze Card`.
+- Enter the path to a local image file (e.g. `/photos/dark_magician.jpg`), or click `📂 Browse` to open a directory tree and pick the image file visually instead of typing the path. Then press `Analyze Card`.
 - The app stays responsive while the analysis runs in the background (this requires the Ollama server to be running, see the Installation section); once done it shows the Centering/Edges/Surface subgrades, the final grade, and the mapped condition (NM/EX/GD/LP/PO).
 - If you want to save the result, search for the matching card (same search engine as the Add Card tab), select the set/rarity, and press `Save with Grade to Collection`: a new entry is created in the collection with the grade and condition applied, so you can compare its real value against the theoretical NM estimate in the Collection tab.
 
@@ -138,11 +138,13 @@ YGO-Ultimate-Tool/
 │
 └── ui/
     ├── app.py              # Main Textual App class and inline CSS design
-    └── views/
-        ├── collection_view.py # Collection table and statistics
-        ├── add_card_view.py   # Search, autocomplete, and add-to-collection form logic
-        ├── bulk_add_view.py    # Bulk insertion of multiple set codes
-        └── grading_view.py     # Interface for the CV + AI Grading module
+    ├── views/
+    │   ├── collection_view.py # Collection table and statistics
+    │   ├── add_card_view.py   # Search, autocomplete, and add-to-collection form logic
+    │   ├── bulk_add_view.py    # Bulk insertion of multiple set codes
+    │   └── grading_view.py     # Interface for the CV + AI Grading module
+    └── screens/
+        └── image_picker_screen.py  # "Browse" modal: filesystem directory tree to pick an image
 ```
 
 ---

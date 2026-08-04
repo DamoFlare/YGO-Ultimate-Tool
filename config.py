@@ -1,11 +1,21 @@
 """
 Configuration settings for Yu-Gi-Oh! TCG Valuer application.
 """
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()  # reads .env in the project root, if present; never overrides real env vars
 
 # API Configuration
 YGOPRODECK_BASE_URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
 API_RATE_LIMIT_DELAY = 0.05  # Delay between requests to respect 20 req/sec limit
+
+# Cardmarket TCG price API (RapidAPI, https://rapidapi.com/tcggopro/api/cardmarket-api-tcg)
+# Credentials are read from .env (never commit real keys) — see .env.example.
+RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY", "")
+RAPIDAPI_HOST = os.getenv("RAPIDAPI_HOST", "cardmarket-api-tcg.p.rapidapi.com")
+RAPIDAPI_BASE_URL = f"https://{RAPIDAPI_HOST}"
 
 # Cardmarket Condition Multipliers (Cardmarket Standards)
 CONDITION_MULTIPLIERS = {

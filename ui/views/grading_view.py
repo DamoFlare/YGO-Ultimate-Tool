@@ -31,6 +31,7 @@ class GradingView(Container):
                 )
                 with Horizontal(id="grading_inputs"):
                     yield Input(placeholder="Percorso immagine della carta (es. /foto/carta.jpg)...", id="input_image_path")
+                    yield Button("📂 Browse", id="btn_browse_image")
                     yield Button("🩺 Analizza Carta", id="btn_analyze_card", variant="primary")
 
                 yield Static("", id="grading_output_result")

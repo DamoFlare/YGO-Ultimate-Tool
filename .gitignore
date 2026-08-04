@@ -9,3 +9,4 @@ lib64/
 lib64
 .gitignore
 pyvenv.cfg
+.env
