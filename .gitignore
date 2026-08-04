@@ -1,3 +1,11 @@
 .git/
 .venv/
 __pycache__/
+venv/
+bin/
+include/
+lib/
+lib64/
+lib64
+.gitignore
+pyvenv.cfg
