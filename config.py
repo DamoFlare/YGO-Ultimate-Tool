@@ -66,6 +66,7 @@ OLLAMA_VISION_MODEL = "llava"
 # Geometric Agent — image processing tunables (services/grading/geometric_agent.py)
 NORMALIZED_CARD_WIDTH = 750
 NORMALIZED_CARD_HEIGHT = 1047  # standard TCG card ratio 63mm x 88mm
+CARD_SATURATION_THRESHOLD = 60  # HSV saturation above which a pixel counts as "card" vs background
 EDGE_WEAR_BORDER_PX = 8            # thin outer perimeter strip inspected for wear
 EDGE_WEAR_REFERENCE_OFFSET_PX = 24  # inner ring used as the "expected border color" baseline
 EDGE_WEAR_COLOR_DISTANCE_THRESHOLD = 40.0  # BGR distance beyond which a pixel counts as "worn"

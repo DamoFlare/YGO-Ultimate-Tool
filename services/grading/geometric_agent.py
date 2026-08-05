@@ -30,11 +30,60 @@ def _order_points(pts: np.ndarray) -> np.ndarray:
     return rect
 
 
+def _quad_is_plausible(rect: np.ndarray) -> bool:
+    """
+    Reject a 4-point polygon approximation that is a poor stand-in for a physical card: aspect
+    ratio far from 63x88mm, or corners far from 90 degrees (perspective/skew noise from glare or
+    a slightly imprecise Canny edge). When this returns False, the caller should fall back to the
+    more robust `minAreaRect` crop instead of trusting a shaky 4-point homography.
+    """
+    tl, tr, br, bl = rect
+    width = (np.linalg.norm(tr - tl) + np.linalg.norm(br - bl)) / 2.0
+    height = (np.linalg.norm(bl - tl) + np.linalg.norm(br - tr)) / 2.0
+    if height == 0:
+        return False
+
+    expected_ratio = config.NORMALIZED_CARD_WIDTH / config.NORMALIZED_CARD_HEIGHT
+    if abs((width / height) - expected_ratio) / expected_ratio > 0.15:
+        return False
+
+    corners = [tl, tr, br, bl]
+    for i in range(4):
+        p0, p1, p2 = corners[i - 1], corners[i], corners[(i + 1) % 4]
+        v1, v2 = p0 - p1, p2 - p1
+        cos_angle = np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2) + 1e-6)
+        angle = np.degrees(np.arccos(np.clip(cos_angle, -1.0, 1.0)))
+        if abs(angle - 90.0) > 25.0:
+            return False
+    return True
+
+
 def _largest_contour(gray: np.ndarray) -> Optional[np.ndarray]:
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     edges = cv2.Canny(blurred, 50, 150)
     edges = cv2.dilate(edges, np.ones((5, 5), np.uint8), iterations=1)
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if not contours:
+        return None
+    return max(contours, key=cv2.contourArea)
+
+
+def _foreground_contour(image: np.ndarray) -> Optional[np.ndarray]:
+    """
+    Segment the card from the background by HSV saturation instead of gradient/edge detection.
+    A busy background texture (e.g. wood grain) generates lots of small Canny edges that
+    fragment the card's true outline and can make `_largest_contour` lock onto an internal
+    contour (like the printed art frame) instead of the physical card edge — and even a plain
+    color-distance mask gets fooled by the brightness variation of the grain itself. A printed
+    card is consistently far more saturated than a wood/plastic/fabric surface, which holds even
+    when that surface has natural texture and shading, so thresholding on saturation alone
+    segments the card cleanly where both alternatives fail.
+    """
+    saturation = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)[:, :, 1]
+    mask = (saturation > config.CARD_SATURATION_THRESHOLD).astype("uint8") * 255
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, np.ones((25, 25), np.uint8))
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((9, 9), np.uint8))
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     if not contours:
         return None
     return max(contours, key=cv2.contourArea)
@@ -50,17 +99,40 @@ def normalize_card_image(image_path: Path) -> np.ndarray:
         raise CardDetectionError(f"Could not read image file: {image_path}")
 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    contour = _largest_contour(gray)
+    image_area = image.shape[0] * image.shape[1]
+
+    def _plausible_card_area(c) -> bool:
+        return c is not None and 0.1 <= (cv2.contourArea(c) / image_area) <= 0.95
+
+    # Prefer color-based segmentation (robust to busy backgrounds like wood grain, which
+    # fragments Canny edges and can make the gradient-based detector lock onto an internal
+    # contour instead of the true card outline); fall back to the gradient-based one otherwise.
+    foreground_contour = _foreground_contour(image)
+    edge_contour = _largest_contour(gray)
+
+    if _plausible_card_area(foreground_contour):
+        contour = foreground_contour
+    elif _plausible_card_area(edge_contour):
+        contour = edge_contour
+    else:
+        contour = foreground_contour or edge_contour
+
     if contour is None:
         raise CardDetectionError("No card outline detected in the image.")
 
     peri = cv2.arcLength(contour, True)
     approx = cv2.approxPolyDP(contour, 0.02 * peri, True)
 
+    src_pts = None
     if len(approx) == 4:
-        src_pts = _order_points(approx.reshape(4, 2).astype("float32"))
-    else:
-        # Fallback: use the rotated bounding box of the largest contour instead of a perfect quad.
+        candidate = _order_points(approx.reshape(4, 2).astype("float32"))
+        if _quad_is_plausible(candidate):
+            src_pts = candidate
+
+    if src_pts is None:
+        # Fallback: the 4-point approximation is missing or implausible (skewed corners, wrong
+        # aspect ratio) — use the rotated bounding box of the largest contour instead, a simple
+        # crop+rotate that is far less sensitive to noisy corner points than a full homography.
         rect = cv2.minAreaRect(contour)
         box = cv2.boxPoints(rect)
         src_pts = _order_points(box.astype("float32"))
@@ -79,6 +151,12 @@ def calculate_edge_wear(normalized_img: np.ndarray) -> tuple:
     Extract a thin outer perimeter and return the % of pixels that deviate from the expected
     (undamaged) border color, sampled from a slightly deeper reference ring.
 
+    The reference color is computed **per side** (top/bottom/left/right independently) rather
+    than as a single card-wide median: a directional light source produces a natural brightness
+    gradient across the card that a single reference color would misread as wear on the darker/
+    brighter sides. Corners belong to the top/bottom strips (which span the full width) so each
+    pixel is only ever compared against one side's reference.
+
     Returns (damaged_pct, damaged_mask), where damaged_mask is a boolean (h, w) array marking
     exactly which pixels in the outer perimeter were flagged as worn — used by
     build_annotated_image() to visualize what the geometric agent actually detected.
@@ -86,23 +164,35 @@ def calculate_edge_wear(normalized_img: np.ndarray) -> tuple:
     h, w = normalized_img.shape[:2]
     border = config.EDGE_WEAR_BORDER_PX
     ref_offset = config.EDGE_WEAR_REFERENCE_OFFSET_PX
+    threshold = config.EDGE_WEAR_COLOR_DISTANCE_THRESHOLD
+    img = normalized_img.astype("float32")
+
+    sides = {
+        "top": (
+            (slice(0, border), slice(None)),
+            (slice(ref_offset, ref_offset + border), slice(None)),
+        ),
+        "bottom": (
+            (slice(h - border, h), slice(None)),
+            (slice(h - ref_offset - border, h - ref_offset), slice(None)),
+        ),
+        "left": (
+            (slice(border, h - border), slice(0, border)),
+            (slice(border, h - border), slice(ref_offset, ref_offset + border)),
+        ),
+        "right": (
+            (slice(border, h - border), slice(w - border, w)),
+            (slice(border, h - border), slice(w - ref_offset - border, w - ref_offset)),
+        ),
+    }
 
     outer_mask = np.zeros((h, w), dtype=bool)
-    outer_mask[:border, :] = True
-    outer_mask[-border:, :] = True
-    outer_mask[:, :border] = True
-    outer_mask[:, -border:] = True
-
-    ref_mask = np.zeros((h, w), dtype=bool)
-    ref_mask[ref_offset:ref_offset + border, :] = True
-    ref_mask[-(ref_offset + border):-ref_offset, :] = True
-    ref_mask[:, ref_offset:ref_offset + border] = True
-    ref_mask[:, -(ref_offset + border):-ref_offset] = True
-
-    reference_color = np.median(normalized_img[ref_mask].reshape(-1, 3), axis=0)
-
-    distances = np.linalg.norm(normalized_img.astype("float32") - reference_color, axis=2)
-    damaged_mask = outer_mask & (distances > config.EDGE_WEAR_COLOR_DISTANCE_THRESHOLD)
+    damaged_mask = np.zeros((h, w), dtype=bool)
+    for outer_slice, ref_slice in sides.values():
+        outer_mask[outer_slice] = True
+        reference_color = np.median(img[ref_slice].reshape(-1, 3), axis=0)
+        distances = np.linalg.norm(img[outer_slice] - reference_color, axis=2)
+        damaged_mask[outer_slice] = distances > threshold
 
     damaged_ratio = float(np.count_nonzero(damaged_mask)) / float(np.count_nonzero(outer_mask))
     return round(damaged_ratio * 100.0, 2), damaged_mask
@@ -129,10 +219,22 @@ def calculate_centering(normalized_img: np.ndarray) -> dict:
     for c in contours:
         area = cv2.contourArea(c)
         ratio = area / card_area
-        if min_ratio <= ratio <= max_ratio and area > best_area:
-            x, y, cw, ch = cv2.boundingRect(c)
-            best = (x, y, cw, ch)
-            best_area = area
+        if not (min_ratio <= ratio <= max_ratio) or area <= best_area:
+            continue
+
+        x, y, cw, ch = cv2.boundingRect(c)
+        # A real inner print frame has margin on all sides; a box touching the image edge is
+        # almost certainly the outer card border being picked up again, not the inner frame.
+        if x <= 1 or y <= 1 or (x + cw) >= w - 1 or (y + ch) >= h - 1:
+            continue
+
+        # Require a convex quadrilateral (the print frame is a rectangle, not an arbitrary blob).
+        approx = cv2.approxPolyDP(c, 0.02 * cv2.arcLength(c, True), True)
+        if len(approx) != 4 or not cv2.isContourConvex(approx):
+            continue
+
+        best = (x, y, cw, ch)
+        best_area = area
 
     if best is None:
         return {"horizontal": 50.0, "vertical": 50.0, "detected": False, "bbox": None}
