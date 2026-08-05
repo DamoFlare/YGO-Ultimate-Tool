@@ -20,19 +20,41 @@ invece:
 1. `geometric_agent.normalize_card_image(path)` — rileva il contorno della carta e fa perspective
    warp verso un rettangolo canonico (`config.NORMALIZED_CARD_WIDTH/HEIGHT`, default 750x1047,
    proporzione fisica di una carta TCG 63x88mm). Solleva `CardDetectionError` se non trova alcun
-   contorno nell'immagine.
+   contorno nell'immagine. Il rilevamento del contorno esterno è a due strategie (vedi
+   "Cronologia: indagine precisione CV" più sotto per il perché):
+   - `_foreground_contour(image)` — segmentazione per **saturazione HSV** (`config.
+     CARD_SATURATION_THRESHOLD`, default 60): una carta stampata è sempre molto più satura di
+     un tavolo/sfondo, anche se quello ha una texture marcata (es. venatura del legno). Strategia
+     primaria, molto più robusta della successiva su sfondi "rumorosi".
+   - `_largest_contour(gray)` — il vecchio approccio Canny + contorno più grande. Usato solo
+     come fallback se la segmentazione per saturazione non produce un contorno con area
+     plausibile (10%-95% dell'immagine totale).
+   - Il contorno scelto (quale dei due) viene poi semplificato a 4 punti (`approxPolyDP`) e
+     validato da `_quad_is_plausible()` (proporzioni vicine a 63:88 entro il 15%, angoli vicini
+     a 90° entro 25°) prima di fidarsi del perspective warp a 4 punti; se il quadrilatero non è
+     plausibile (angoli storti, proporzioni sbagliate — tipico di un edge rumoroso), si usa
+     invece `cv2.minAreaRect(contour)` come crop+rotate più semplice e meno sensibile al rumore
+     sui singoli punti.
 2. `geometric_agent.calculate_edge_wear(img)` — confronta un anello perimetrale sottile
    (`config.EDGE_WEAR_BORDER_PX`, default 8px) con un anello di riferimento più interno
    (`config.EDGE_WEAR_REFERENCE_OFFSET_PX`, default 24px), calcolando la % di pixel che si
    discostano per colore oltre `config.EDGE_WEAR_COLOR_DISTANCE_THRESHOLD` (default 40.0, distanza
-   euclidea in BGR). Ritorna una tupla `(pct, damaged_mask)`: `damaged_mask` è una maschera
-   booleana (h,w) con esattamente i pixel segnalati come usurati, usata per l'overlay visivo (vedi
-   sezione "Trasparenza" sotto).
+   euclidea in BGR). **Il colore di riferimento è calcolato per singolo lato** (top/bottom/left/
+   right indipendenti, non un unico mediano per tutta la carta) — un gradiente di luce
+   direzionale altrimenti veniva letto come usura sui lati più scuri/chiari. Ritorna una tupla
+   `(pct, damaged_mask)`: `damaged_mask` è una maschera booleana (h,w) con esattamente i pixel
+   segnalati come usurati, usata per l'overlay visivo (vedi sezione "Trasparenza" sotto).
 3. `geometric_agent.calculate_centering(img)` — cerca un contorno quadrilatero la cui area rientra
-   in `config.CENTERING_FRAME_AREA_RATIO_RANGE` (default 0.55-0.95 dell'area totale della carta) e
-   ne misura i margini rispetto ai bordi fisici, ritornando i rapporti orizzontale/verticale
-   (50/50 = perfetto), un flag `detected`, e `bbox` (x,y,w,h del frame rilevato, `None` se non
-   rilevato) — anche questo usato solo per l'overlay visivo, non per il calcolo del sotto-voto.
+   in `config.CENTERING_FRAME_AREA_RATIO_RANGE` (default 0.55-0.95 dell'area totale della carta),
+   **non tocca i bordi dell'immagine** (altrimenti è quasi certamente il bordo esterno della carta
+   rilevato di nuovo, non il frame interno) ed è un **quadrilatero convesso** (`approxPolyDP` a 4
+   punti + `cv2.isContourConvex`), e ne misura i margini rispetto ai bordi fisici, ritornando i
+   rapporti orizzontale/verticale (50/50 = perfetto), un flag `detected`, e `bbox` (x,y,w,h del
+   frame rilevato, `None` se non rilevato) — anche questo usato solo per l'overlay visivo, non per
+   il calcolo del sotto-voto. **Nella pratica osservata (vedi cronologia sotto), `detected` è quasi
+   sempre `False`**: il contorno del frame di stampa raramente soddisfa questi vincoli, quindi il
+   sotto-voto centering scatta quasi sempre sul fallback prudente — limite noto, non ancora
+   risolto.
 4. `ai_agent.InspectorAgent.analyze_surface(img)` — invia l'immagine **già normalizzata** al
    modello `llava` via Ollama locale (`config.OLLAMA_BASE_URL`), con
    `config.INSPECTOR_SYSTEM_PROMPT` (fisso nello schema JSON — non modificarlo senza aggiornare
@@ -130,6 +152,85 @@ l'intera app è stata ricostruita come web app. Vedi
 [06-note-e-discrepanze.md](06-note-e-discrepanze.md) per la cronologia completa. Il problema è
 del tutto assente nell'implementazione web attuale: un `<img>` con `max-width: 100%` non ha
 questi edge case.
+
+## Cronologia: indagine precisione CV (crop, edge wear, centering)
+
+L'utente ha segnalato che i grade calcolati sembravano poco precisi (es. una carta in condizioni
+buone valutata 2.0/10 con Centering e Edges entrambi 1.0/10). Indagine e fix fatti nella stessa
+sessione, ordinati per come sono stati scoperti — utile leggerli in ordine per capire cosa è
+stato scartato e perché, prima di riprovare le stesse strade.
+
+1. **Causa radice reale: il ritaglio esterno prendeva il contorno sbagliato.** Su una foto di test
+   (carta su tavolo di legno chiaro), `_largest_contour` (Canny + contorno più grande) non trovava
+   affatto il bordo fisico della carta — il bordo carta/legno produce un edge troppo debole/
+   frammentato per Canny su quel tipo di sfondo. Il contorno più grande trovato era invece il
+   frame blu dell'artwork **interno** alla carta (area ~6% dell'immagine, non l'85%+ atteso per
+   il bordo fisico), e il fallback `cv2.minAreaRect` su quel contorno sbagliato produceva un
+   rettangolo che sbandava nel tavolo su un lato — da cui il crop finale include legno vero e
+   proprio, letto poi come "usura" nel calcolo edge wear (94.9% di usura misurata — implausibile
+   per una carta in condizioni buone). **Diagnosticato salvando e ispezionando visivamente
+   l'immagine normalizzata e i contorni intermedi**, non solo guardando i numeri finali — i numeri
+   da soli non avrebbero rivelato che il problema era a monte, nel crop, non nelle formule.
+2. **Primo tentativo di fix (scartato)**: segmentazione per distanza di colore dal colore di
+   sfondo campionato agli angoli dell'immagine. Fallito: la venatura del legno ha variazioni di
+   luminosità che superano comunque la soglia di distanza colore, quindi il contorno "foreground"
+   seguiva le venature del legno invece del bordo della carta (verificato disegnando il contorno
+   sull'immagine originale).
+3. **Fix adottato**: segmentazione per **saturazione HSV** invece che per distanza di colore o
+   gradiente. Verificato empiricamente su due foto: sfondo (tavolo) mediana saturazione ~21-31,
+   carta mediana ~120-125 — separazione molto netta, stabile anche con texture marcata sullo
+   sfondo. `_foreground_contour()` in `geometric_agent.py`, soglia `config.
+   CARD_SATURATION_THRESHOLD`. Verificato visivamente (contorno disegnato sull'immagine
+   originale) che segue perfettamente il bordo fisico reale su entrambe le foto di test
+   (`test-image.jpg`, `test-image2.jpg`, nella root del repo).
+4. **Aggiunta validazione di forma** (`_quad_is_plausible`) sul quadrilatero a 4 punti prima di
+   fidarsi del perspective warp: proporzioni vicine a 63:88mm, angoli vicini a 90°. Prima di
+   questo fix, un quadrilatero "trovato" ma storto veniva comunque usato ciecamente per il warp.
+5. **Con il crop finalmente corretto, l'edge wear restava comunque alto (50-70%, non 0-10%
+   plausibile).** Scomponendo la misura lato per lato è emerso che la deviazione è distribuita
+   su tutti e 4 i lati (non concentrata su un lato solo, che avrebbe indicato un difetto reale) —
+   sintomo di una **causa sistematica di calibrazione**, non di un bug di segmentazione: l'anello
+   di riferimento (`EDGE_WEAR_REFERENCE_OFFSET_PX = 24px`, ~2mm) probabilmente cade già oltre il
+   sottile bordo nero reale della carta, dentro il frame colorato — quindi si confronta "vero
+   bordo nero" con "già non più bordo nero" su ogni carta, sistematicamente. **Non risolto**: la
+   soglia per-lato (punto 3 di questa lista, comunque un miglioramento reale e verificato — vedi
+   sopra "Pipeline") elimina i falsi positivi da gradiente di luce, ma la calibrazione mm→pixel
+   dell'offset resta da tarare con foto reali di carte a condizione nota (vedi "Prossimo passo"
+   sotto).
+6. **Centering: nessun bug di segmentazione, ma un'assunzione strutturale sbagliata.** Verificato
+   che sull'immagine ben ritagliata, il contorno più grande trovato da Canny copre solo ~22%
+   dell'area carta — molto lontano dal range 55-95% assunto in `config.
+   CENTERING_FRAME_AREA_RATIO_RANGE`. Motivo: una carta Yu-Gi-Oh ha titolo/artwork/testo come
+   riquadri **separati**, non un unico frame continuo che Canny possa richiudere in un solo
+   contorno — quindi "trova il contorno più grande in quel range" non trova quasi mai nulla, a
+   prescindere dalla foto. Le validazioni aggiunte al punto successivo rendono il fallimento
+   *onesto* (`detected: False` → fallback prudente 7.0/10) invece che silenzioso, ma non risolvono
+   il rilevamento.
+7. **Tentativo di redesign del centering (scartato)**: invece di cercare un contorno del frame,
+   misurare lo spessore del bordo nero per lato scansionando il profilo di luminosità/saturazione
+   dal margine verso l'interno (stessa idea del punto 3, applicata al bordo interno). Testato su
+   entrambe le foto: il profilo non ha un salto netto (sfuma gradualmente per compressione JPEG/
+   blur/riflessi), qualsiasi soglia scelta cade su un punto ambiguo della transizione. Risultato:
+   scentrature implausibili (88-90% orizzontale) che non corrispondono a quanto si vede a occhio
+   nelle foto. **Scartato prima di essere integrato nel codice** — non ha mai sostituito la
+   versione precedente, `calculate_centering` resta quella del punto 6.
+8. **Decisione presa: niente classificatore ML**. L'utente ha chiesto se un classificatore CV/ML
+   allenato su un dataset di carte già gradate potesse sostituire questo approccio deterministico.
+   Deciso di **non procedere**: (a) non esiste un dataset pubblico affidabile foto+grade per
+   Yu-Gi-Oh — PSA/BGS non pubblicano immagini, uno scraping eBay darebbe foto con
+   angolazioni/luci troppo incoerenti da normalizzare; (b) centering ed edge wear sono quantità
+   geometriche misurabili direttamente — un classificatore ne perderebbe la trasparenza
+   ("perché questo grade") che è un requisito esplicito del progetto, per rifare in modo opaco
+   qualcosa che la CV può già misurare una volta tarata bene. La superficie (graffi/pieghe) resta
+   l'unico sotto-voto dove un modello serve davvero, ed è già lì (VLM via Ollama).
+
+### Prossimo passo (non ancora fatto)
+
+Sia la calibrazione edge-wear (punto 5) sia un vero redesign del centering (punto 6/7) sono
+bloccati sulla stessa cosa: **foto reali di carte con condizione nota**, per capire dove cade
+davvero la soglia invece di tararla a intuito. Da fare insieme quando disponibili, prima di
+riprovare altre euristiche alla cieca — i tentativi ai punti 2 e 7 sono stati scartati proprio
+perché prodotti senza un riferimento di verità con cui confrontarsi.
 
 ## Limiti noti (scope dichiarato in fase di design)
 

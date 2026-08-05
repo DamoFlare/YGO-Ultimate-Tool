@@ -61,17 +61,27 @@ Sostituisce interamente il vecchio placeholder `services/scanner.py`/`CardScanne
 formula e soglie in [07-grading.md](07-grading.md); qui solo un riepilogo per orientarsi nel
 codice.
 
-- **`geometric_agent.py`** — zero dipendenze AI, solo `cv2`/`numpy`:
-  - `normalize_card_image(path)` — rileva il contorno della carta (Canny + contorni, fallback su
-    `minAreaRect` se non trova un quadrilatero pulito) e fa perspective warp verso un rettangolo
-    canonico (`config.NORMALIZED_CARD_WIDTH/HEIGHT`). Solleva `CardDetectionError` se non trova
-    proprio nessun contorno.
+- **`geometric_agent.py`** — zero dipendenze AI, solo `cv2`/`numpy`. Dettagli e cronologia
+  dell'indagine sulla precisione (crop, edge wear, centering) in
+  [07-grading.md](07-grading.md); qui solo un riepilogo:
+  - `normalize_card_image(path)` — rileva il contorno della carta con doppia strategia
+    (`_foreground_contour`, segmentazione per saturazione HSV — primaria, robusta su sfondi con
+    texture come il legno; `_largest_contour`, Canny + contorno più grande — fallback), valida il
+    quadrilatero risultante (`_quad_is_plausible`, proporzioni/angoli) prima di fidarsi del
+    perspective warp altrimenti usa `minAreaRect`, e produce un rettangolo canonico
+    (`config.NORMALIZED_CARD_WIDTH/HEIGHT`). Solleva `CardDetectionError` se non trova proprio
+    nessun contorno.
   - `calculate_edge_wear(img)` — % di pixel del perimetro sottile che si discostano (per colore)
-    da un anello di riferimento più interno; ritorna una percentuale di "usura".
-  - `calculate_centering(img)` — cerca il frame stampato interno e misura i margini rispetto ai
+    da un anello di riferimento più interno, calcolato **separatamente per ciascuno dei 4 lati**
+    (non un unico riferimento per tutta la carta, per non confondere un gradiente di luce con
+    usura reale); ritorna una percentuale di "usura". Calibrazione dell'offset in mm→pixel non
+    ancora validata su foto reali (limite noto, vedi 07-grading.md).
+  - `calculate_centering(img)` — cerca il frame stampato interno (contorno quadrilatero convesso,
+    non a contatto coi bordi immagine, area in un range plausibile) e misura i margini rispetto ai
     bordi fisici della carta, ritornando i rapporti orizzontale/verticale (50/50 = perfetto) più
     un flag `detected` (se `False`, la misura non è affidabile e il chiamante deve usare un
-    fallback prudente, non assumere centratura perfetta).
+    fallback prudente, non assumere centratura perfetta). Nella pratica `detected` è quasi sempre
+    `False` — limite noto non ancora risolto, vedi 07-grading.md.
 - **`ai_agent.py`** — `InspectorAgent`, client asincrono (`ollama.AsyncClient`) verso il server
   Ollama locale (`config.OLLAMA_BASE_URL`, modello `config.OLLAMA_VISION_MODEL = "llava"`).
   `analyze_surface(img)` invia l'immagine già normalizzata con `format="json"` e
