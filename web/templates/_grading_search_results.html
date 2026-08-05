@@ -1,0 +1,41 @@
+<div id="grading-search-results">
+  {% if searched and not cards %}
+    <p class="description">Nessuna carta trovata con questo termine.</p>
+  {% endif %}
+  {% for card in cards %}
+  <details class="panel" {{ "open" if loop.first else "" }}>
+    <summary>📋 {{ card.name }} (ID: {{ card.id }}) — {{ card.type }}</summary>
+    {% if card.card_sets %}
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>Set Code</th><th>Rarità</th><th>Nome Set</th><th></th></tr></thead>
+      <tbody>
+      {% for cset in card.card_sets %}
+      <tr>
+        <td>{{ cset.set_code }}</td>
+        <td>{{ cset.set_rarity }}</td>
+        <td>{{ cset.set_name }}</td>
+        <td>
+          <form hx-post="/grading/save" hx-target="#grading-feedback" hx-swap="innerHTML" style="display:flex; gap:0.4rem; align-items:center;">
+            <input type="hidden" name="card_id" value="{{ card.id }}">
+            <input type="hidden" name="set_code" value="{{ cset.set_code }}">
+            <input type="hidden" name="rarity" value="{{ cset.set_rarity }}">
+            <input type="number" name="qty" value="1" min="1" style="width:60px;">
+            <button class="btn-success" type="submit">✅ Salva con Grade</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    {% else %}
+    <form hx-post="/grading/save" hx-target="#grading-feedback" hx-swap="innerHTML" class="action-bar">
+      <input type="hidden" name="card_id" value="{{ card.id }}">
+      <input type="number" name="qty" value="1" min="1" style="width:60px;">
+      <button class="btn-success" type="submit">✅ Salva con Grade</button>
+    </form>
+    {% endif %}
+  </details>
+  {% endfor %}
+</div>

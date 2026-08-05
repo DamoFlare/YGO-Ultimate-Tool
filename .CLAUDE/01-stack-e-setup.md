@@ -7,17 +7,23 @@ Python 3.12.3 (README richiede minimo 3.10+). Nessun altro linguaggio nel repo.
 ## Dipendenze (`requirements.txt`)
 
 ```
-textual>=0.50.0               # framework TUI (Terminal User Interface)
-httpx>=0.27.0                 # client HTTP asincrono per le chiamate API (YGOPRODeck, CardTrader)
-pydantic>=2.0.0                # validazione dati / modelli tipizzati
-opencv-python-headless>=4.9.0  # CV deterministica per il modulo di Grading (no GUI/GTK)
-numpy>=1.26.0                  # usato da opencv-python-headless
-ollama>=0.2.0                  # client ufficiale (AsyncClient) verso il server Ollama locale
-python-dotenv>=1.0.0           # carica .env (CARDTRADER_TOKEN) in config.py
+fastapi>=0.110.0               # framework web (route, dependency injection, upload multipart)
+uvicorn>=0.29.0                # server ASGI che esegue l'app FastAPI
+jinja2>=3.1.0                  # motore di template HTML (server-side rendering)
+python-multipart>=0.0.9        # richiesto da FastAPI per parsare form/upload multipart
+httpx>=0.27.0                  # client HTTP asincrono per le chiamate API (YGOPRODeck, CardTrader)
+pydantic>=2.0.0                 # validazione dati / modelli tipizzati
+opencv-python-headless>=4.9.0   # CV deterministica per il modulo di Grading (no GUI/GTK)
+numpy>=1.26.0                   # usato da opencv-python-headless
+ollama>=0.2.0                   # client ufficiale (AsyncClient) verso il server Ollama locale
+python-dotenv>=1.0.0            # carica .env (CARDTRADER_TOKEN) in config.py
+pillow>=10.0.0                  # conversione immagini CV → PNG per l'embed base64 nell'HTML
 ```
 
-Nessun database, nessun framework web/browser: tutta l'interfaccia è testuale via Textual, in
-esecuzione in terminale.
+Nessun database: la persistenza resta `collection.json`/`.csv` su file (vedi
+[03-modelli-dati.md](03-modelli-dati.md)). L'interfaccia è servita via browser da un server
+FastAPI locale (`web/`) — niente Textual/TUI, niente npm/build step JS (htmx è vendorizzato come
+singolo file in `web/static/`).
 
 ## CardTrader (fonte prezzi — richiesto per qualsiasi valorizzazione)
 
@@ -51,21 +57,11 @@ docker compose up -d
   (download di alcuni GB), poi è immediato.
 - Espone l'API su `http://localhost:11434` (vedi `config.OLLAMA_BASE_URL`).
 - Nessuna API key: il modello gira interamente in locale, nessun dato lascia la macchina.
-- Se il container non è in esecuzione, il tab "Grading Carta" fallisce con un errore leggibile
-  (`InspectorAgentError`, vedi [04-servizi.md](04-servizi.md)); le altre tab dell'app non ne
+- Se il container non è in esecuzione, la pagina "Grading Carta" fallisce con un errore leggibile
+  (`InspectorAgentError`, vedi [04-servizi.md](04-servizi.md)); le altre pagine dell'app non ne
   risentono.
 
 ## Avvio del progetto
-
-Da README (comandi scritti per Windows/PowerShell):
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python -m pip install -r requirements.txt
-.\.venv\Scripts\python main.py
-```
-
-Equivalente su Linux/macOS:
 
 ```bash
 python3 -m venv venv
@@ -74,15 +70,17 @@ pip install -r requirements.txt
 python main.py
 ```
 
-Non esiste build step (no bundling, no compilazione, no `pyproject.toml`/`setup.py`). L'unico
-entry point è `main.py`, che istanzia `YGOValuerApp` (da `ui/app.py`) e chiama `.run()`.
+`main.py` stampa l'URL e avvia `uvicorn.run("web.app:app", host=config.WEB_HOST,
+port=config.WEB_PORT)` — apri `http://127.0.0.1:8000` nel browser. `Ctrl+C` per fermare il
+server. Non esiste build step (no bundling JS, no `pyproject.toml`/`setup.py`): il front-end è
+HTML server-side (Jinja2) con htmx vendorizzato, nessun npm/webpack.
 
 ## Nota ambientale
 
 Nella working directory locale è presente un virtualenv Python **materializzato nella root del
 repo** (`bin/`, `include/`, `lib/`, `lib64/`, `pyvenv.cfg`, `__pycache__/`). Questi non sono
 tracciati da git (esclusi via `.gitignore`) ma occupano la root — da ignorare quando si esplora il
-codice sorgente reale, che vive in `services/`, `ui/`, e nei moduli root `config.py`/`models.py`/
+codice sorgente reale, che vive in `services/`, `web/`, e nei moduli root `config.py`/`models.py`/
 `main.py`.
 
 ## Cosa manca (assente dal repo)

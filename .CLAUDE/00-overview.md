@@ -2,9 +2,16 @@
 
 ## Cos'è
 
-Applicazione a riga di comando con interfaccia grafica testuale (TUI), scritta in Python, per
-gestire e valutare una collezione di carte Yu-Gi-Oh! TCG. Nome descrittivo nel README:
-"Yu-Gi-Oh! TCG Valuer & Collection Tracker". La cartella storica/di progetto era `YGO-TGC-Valuer/`.
+Applicazione web locale (Python, FastAPI + HTML server-side con htmx) per gestire e valutare una
+collezione di carte Yu-Gi-Oh! TCG. Nome descrittivo nel README: "Yu-Gi-Oh! TCG Valuer &
+Collection Tracker". La cartella storica/di progetto era `YGO-TGC-Valuer/`.
+
+Un server locale (`python main.py`) espone l'interfaccia sul browser a
+`http://127.0.0.1:8000` — single-user, bindato solo su localhost, nessuna autenticazione (non
+serve: nessuno oltre al proprietario della macchina può raggiungerlo). **Era originariamente una
+TUI Textual**: è stata ritirata e ricostruita come web app perché il modulo di Grading aveva
+bisogno di mostrare foto in modo affidabile, cosa che il rendering grafico da terminale non
+garantiva (due bug non banali di libreria, vedi [06-note-e-discrepanze.md](06-note-e-discrepanze.md)).
 
 Repository GitHub: `DamoFlare/YGO-Ultimate-Tool` (remote `origin`), branch unico `main`.
 
@@ -27,15 +34,18 @@ Repository GitHub: `DamoFlare/YGO-Ultimate-Tool` (remote `origin`), branch unico
 
 ## Stato del progetto
 
-- Repository giovane: nato con 2 commit (`First commit`, poi `Update .gitignore and add pyvenv
-  configuration file`); il modulo di Grading (CV + VLM) è stata la prima feature sviluppata dopo
-  quei commit iniziali, sostituendo lo scanner OCR placeholder che c'era in origine.
-- Nessun test automatizzato, nessuna CI/CD, nessuna licenza dichiarata.
-- Il README ora descrive correttamente le 4 tab (Collezione, Aggiungi Carta, Aggiunta Bulk,
-  Grading Carta).
+- Repository giovane, sviluppato quasi interamente in un'unica lunga sessione: partito da 2
+  commit iniziali (`First commit`, poi `Update .gitignore and add pyvenv configuration file`),
+  poi TUI Textual → modulo di Grading (CV+VLM) → migrazione prezzi a CardTrader → **migrazione
+  completa da TUI a web app** (FastAPI + htmx), tutte nella stessa sessione di lavoro.
+- Nessun test automatizzato "formale" (no `pytest`/`tests/`), ma ogni feature è stata verificata
+  end-to-end con chiamate reali ai servizi esterni (YGOPRODeck, CardTrader, Ollama) durante lo
+  sviluppo. Nessuna CI/CD, nessuna licenza dichiarata.
+- Il README descrive le 4 pagine (Collezione, Aggiungi Carta, Aggiunta Bulk, Grading Carta) come
+  pagine web, non più tab di una TUI.
 - Il modulo di Grading richiede un server Ollama locale in esecuzione (`docker compose up -d`,
-  vedi [01-stack-e-setup.md](01-stack-e-setup.md)) — senza, il tab Grading Carta fallisce con un
-  errore comprensibile ma le altre tab funzionano normalmente.
+  vedi [01-stack-e-setup.md](01-stack-e-setup.md)) — senza, la pagina Grading fallisce con un
+  errore comprensibile ma le altre pagine funzionano normalmente.
 - Il pricing richiede un token CardTrader valido in `.env` (`CARDTRADER_TOKEN`) — senza, la
   ricerca carte funziona comunque ma nessun prezzo viene mai mostrato (fallback silenzioso a
   `€0.00`). Vedi [08-pricing-cardtrader.md](08-pricing-cardtrader.md).
@@ -44,12 +54,12 @@ Repository GitHub: `DamoFlare/YGO-Ultimate-Tool` (remote `origin`), branch unico
 
 - [01-stack-e-setup.md](01-stack-e-setup.md) — linguaggio, dipendenze, come avviare il progetto
   (Docker per Ollama, token CardTrader)
-- [02-architettura.md](02-architettura.md) — struttura a livelli, entry point, flusso dati
+- [02-architettura.md](02-architettura.md) — struttura a livelli, entry point, flusso richieste
 - [03-modelli-dati.md](03-modelli-dati.md) — `config.py`, `models.py`, formati JSON/CSV
 - [04-servizi.md](04-servizi.md) — `services/` (API client di ricerca/prezzo, storage, grading)
-- [05-ui.md](05-ui.md) — `ui/` (app Textual e le 4 view/tab)
+- [05-ui.md](05-ui.md) — `web/` (FastAPI, router, template Jinja2/htmx)
 - [06-note-e-discrepanze.md](06-note-e-discrepanze.md) — TODO impliciti, limiti noti, cronologia
-  della migrazione dei prezzi
+  della migrazione dei prezzi e della migrazione da TUI a web
 - [07-grading.md](07-grading.md) — architettura del modulo di Grading: formula, soglie, pesi,
   come tararli
 - [08-pricing-cardtrader.md](08-pricing-cardtrader.md) — architettura del pricing CardTrader:

@@ -5,12 +5,20 @@
     "set_code": "CSOC-EN019",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.12,
+    "base_price": 0.18,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.14,
+      "GD": 0.19,
+      "LP": 0.32,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 26439287,
@@ -18,12 +26,20 @@
     "set_code": "SDMM-EN014",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 1.25,
+    "base_price": 0.31,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.31,
+      "EX": 0.25,
+      "GD": 0.19,
+      "LP": 0.15,
+      "PO": 0.35
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 84824601,
@@ -31,12 +47,20 @@
     "set_code": "CSOC-EN027",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.16,
+    "base_price": 0.19,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.18,
+      "GD": 0.24,
+      "LP": 0.6,
+      "PO": 0.38
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 82116191,
@@ -44,12 +68,19 @@
     "set_code": "CSOC-EN025",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.08,
+    "base_price": 0.24,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.18,
+      "GD": 0.18,
+      "LP": 0.31
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 14315573,
@@ -57,12 +88,20 @@
     "set_code": "DP1-EN027",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Rare",
-    "base_price": 0.06,
+    "base_price": 0.19,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.24,
+      "GD": 0.37,
+      "LP": 0.19,
+      "PO": 0.24
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 10591919,
@@ -70,12 +109,19 @@
     "set_code": "RGBT-EN016",
     "set_name": "Raging Battle",
     "rarity": "Common",
-    "base_price": 0.6,
+    "base_price": 0.98,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.98,
+      "EX": 0.47,
+      "GD": 0.82,
+      "LP": 0.6
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 91607976,
@@ -83,12 +129,20 @@
     "set_code": "CSOC-EN012",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.09,
+    "base_price": 0.2,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.2,
+      "EX": 0.18,
+      "GD": 0.2,
+      "LP": 0.24,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 40640057,
@@ -96,12 +150,20 @@
     "set_code": "YSD-EN013",
     "set_name": "Starter Deck 2006",
     "rarity": "Common",
-    "base_price": 0.05,
+    "base_price": 0.66,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.66,
+      "EX": 0.55,
+      "GD": 0.54,
+      "LP": 0.34,
+      "PO": 0.41
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 21597117,
@@ -109,12 +171,20 @@
     "set_code": "DP1-EN025",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Common",
-    "base_price": 0.05,
+    "base_price": 0.24,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.16,
+      "GD": 0.16,
+      "LP": 0.11,
+      "PO": 0.14
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 80908502,
@@ -122,12 +192,17 @@
     "set_code": "DP06-EN004",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Rare",
-    "base_price": 0.74,
+    "base_price": 4.7,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 4.7,
+      "GD": 4.1
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 89547299,
@@ -135,12 +210,20 @@
     "set_code": "CSOC-EN021",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.1,
+    "base_price": 0.19,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.18,
+      "GD": 0.15,
+      "LP": 0.27,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 12923641,
@@ -148,12 +231,20 @@
     "set_code": "SD5-EN031",
     "set_name": "Structure Deck: Warrior's Triumph",
     "rarity": "Common",
-    "base_price": 1.64,
+    "base_price": 0.46,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.46,
+      "EX": 0.38,
+      "GD": 0.41,
+      "LP": 0.28,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 89621922,
@@ -161,12 +252,20 @@
     "set_code": "DP03-EN006",
     "set_name": "Duelist Pack: Jaden Yuki 2",
     "rarity": "Rare",
-    "base_price": 0.26,
+    "base_price": 0.55,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.55,
+      "EX": 0.52,
+      "GD": 0.6,
+      "LP": 0.38,
+      "PO": 0.56
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 59793705,
@@ -174,12 +273,20 @@
     "set_code": "YSD-EN019",
     "set_name": "Starter Deck 2006",
     "rarity": "Ultra Rare",
-    "base_price": 0.02,
+    "base_price": 5.24,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 5.24,
+      "EX": 0.35,
+      "GD": 0.61,
+      "LP": 0.75,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 55119278,
@@ -192,7 +299,11 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "EX": 5.36
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 97705809,
@@ -200,12 +311,20 @@
     "set_code": "POTD-EN056",
     "set_name": "Power of the Duelist",
     "rarity": "Rare",
-    "base_price": 0.05,
+    "base_price": 0.31,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.31,
+      "EX": 0.27,
+      "GD": 0.4,
+      "LP": 0.13,
+      "PO": 0.31
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 45906428,
@@ -213,12 +332,19 @@
     "set_code": "CRV-EN039",
     "set_name": "Cybernetic Revolution",
     "rarity": "Rare",
-    "base_price": 0.29,
+    "base_price": 5.6,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 5.6,
+      "GD": 13376.58,
+      "LP": 244.72,
+      "PO": 1.13
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 47829960,
@@ -226,12 +352,20 @@
     "set_code": "SDDE-EN012",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.37,
+    "base_price": 0.51,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.51,
+      "EX": 0.17,
+      "GD": 0.35,
+      "LP": 0.19,
+      "PO": 0.2
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 43642620,
@@ -239,12 +373,20 @@
     "set_code": "CSOC-EN030",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.05,
+    "base_price": 0.29,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.29,
+      "EX": 0.14,
+      "GD": 0.13,
+      "LP": 0.26,
+      "PO": 0.31
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 5285665,
@@ -252,12 +394,20 @@
     "set_code": "SOI-EN004",
     "set_name": "Shadow of Infinity",
     "rarity": "Common",
-    "base_price": 0.15,
+    "base_price": 0.72,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.72,
+      "EX": 0.46,
+      "GD": 0.28,
+      "LP": 0.34,
+      "PO": 0.41
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 3773196,
@@ -265,12 +415,20 @@
     "set_code": "SDDE-EN011",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.36,
+    "base_price": 1.34,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.34,
+      "EX": 0.43,
+      "GD": 0.41,
+      "LP": 0.4,
+      "PO": 0.45
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 14261867,
@@ -278,12 +436,20 @@
     "set_code": "GLD1-EN007",
     "set_name": "Gold Series",
     "rarity": "Common",
-    "base_price": 0.14,
+    "base_price": 0.23,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.23,
+      "EX": 0.27,
+      "GD": 0.25,
+      "LP": 0.24,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 7572887,
@@ -291,12 +457,20 @@
     "set_code": "SDDE-EN010",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.53,
+    "base_price": 1.42,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.42,
+      "EX": 0.77,
+      "GD": 0.7,
+      "LP": 1.07,
+      "PO": 0.9
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 54493213,
@@ -304,12 +478,20 @@
     "set_code": "SDDE-EN005",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 3.28,
+    "base_price": 0.99,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.99,
+      "EX": 0.55,
+      "GD": 0.51,
+      "LP": 0.19,
+      "PO": 0.2
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 30069398,
@@ -317,12 +499,20 @@
     "set_code": "CSOC-EN004",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.17,
+    "base_price": 0.14,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.18,
+      "GD": 0.17,
+      "LP": 0.32,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 60682203,
@@ -330,12 +520,20 @@
     "set_code": "SDZW-EN019",
     "set_name": "Zombie World Structure Deck",
     "rarity": "Common",
-    "base_price": 0.67,
+    "base_price": 2.53,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 2.53,
+      "EX": 0.78,
+      "GD": 0.93,
+      "LP": 2.9,
+      "PO": 0.72
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 89943723,
@@ -343,12 +541,20 @@
     "set_code": "POTD-EN001",
     "set_name": "Power of the Duelist",
     "rarity": "Common",
-    "base_price": 1.47,
+    "base_price": 0.27,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.27,
+      "EX": 0.36,
+      "GD": 0.28,
+      "LP": 0.29,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 19505896,
@@ -356,12 +562,20 @@
     "set_code": "CSOC-EN024",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.27,
+    "base_price": 0.92,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.92,
+      "EX": 0.49,
+      "GD": 0.39,
+      "LP": 3.23,
+      "PO": 1.42
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 31828916,
@@ -369,12 +583,20 @@
     "set_code": "SDMM-EN021",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 1.13,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.19,
+      "GD": 0.17,
+      "LP": 0.19,
+      "PO": 0.31
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 80987696,
@@ -382,12 +604,18 @@
     "set_code": "SDMM-EN031",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 1.38,
+    "base_price": 0.29,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.29,
+      "EX": 0.31,
+      "GD": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 82112775,
@@ -395,12 +623,19 @@
     "set_code": "SDDE-EN015",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.54,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.19,
+      "GD": 0.24,
+      "LP": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 23782705,
@@ -408,12 +643,20 @@
     "set_code": "SDMM-EN007",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 1.12,
+    "base_price": 0.26,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.26,
+      "EX": 0.14,
+      "GD": 0.19,
+      "LP": 0.19,
+      "PO": 0.32
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 63995093,
@@ -421,12 +664,20 @@
     "set_code": "SDMM-EN026",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 3.06,
+    "base_price": 0.3,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.3,
+      "EX": 0.34,
+      "GD": 0.29,
+      "LP": 0.28,
+      "PO": 0.66
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 36733451,
@@ -434,12 +685,19 @@
     "set_code": "SDDE-EN002",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 2.02,
+    "base_price": 4.1,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 4.1,
+      "EX": 3.74,
+      "GD": 2.66,
+      "LP": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 6795211,
@@ -447,12 +705,20 @@
     "set_code": "CSOC-EN055",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.1,
+    "base_price": 0.13,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.13,
+      "EX": 0.18,
+      "GD": 0.19,
+      "LP": 0.27,
+      "PO": 0.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 93542102,
@@ -460,12 +726,20 @@
     "set_code": "CSOC-EN006",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.11,
+    "base_price": 0.96,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.96,
+      "EX": 0.81,
+      "GD": 0.6,
+      "LP": 0.59,
+      "PO": 0.62
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 29947751,
@@ -473,12 +747,19 @@
     "set_code": "CSOC-EN007",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.13,
+    "base_price": 0.33,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.33,
+      "EX": 0.18,
+      "GD": 0.18,
+      "LP": 0.41
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 5318639,
@@ -486,12 +767,20 @@
     "set_code": "SD10-EN024",
     "set_name": "Structure Deck: Machine Re-Volt",
     "rarity": "Common",
-    "base_price": 1.63,
+    "base_price": 0.54,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.54,
+      "EX": 0.49,
+      "GD": 0.43,
+      "LP": 0.28,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 17732278,
@@ -499,12 +788,20 @@
     "set_code": "DP06-EN003",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.2,
+    "base_price": 0.19,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.21,
+      "GD": 0.19,
+      "LP": 0.19,
+      "PO": 0.24
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 44729197,
@@ -512,12 +809,20 @@
     "set_code": "CRV-EN008",
     "set_name": "Cybernetic Revolution",
     "rarity": "Common",
-    "base_price": 0.07,
+    "base_price": 0.24,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.17,
+      "GD": 0.11,
+      "LP": 0.18,
+      "PO": 0.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 74519184,
@@ -525,12 +830,19 @@
     "set_code": "TU01-EN014",
     "set_name": "Turbo Pack: Booster One",
     "rarity": "Common",
-    "base_price": 0.24,
+    "base_price": 2.25,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 2.25,
+      "EX": 1.83,
+      "GD": 0.8,
+      "LP": 1.16
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 54959865,
@@ -538,12 +850,20 @@
     "set_code": "DP06-EN001",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.21,
+    "base_price": 0.99,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.99,
+      "EX": 0.86,
+      "GD": 0.34,
+      "LP": 0.62,
+      "PO": 0.62
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 53152590,
@@ -551,12 +871,20 @@
     "set_code": "CSOC-EN020",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.18,
+    "base_price": 0.14,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.18,
+      "GD": 0.14,
+      "LP": 0.28,
+      "PO": 0.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 72767833,
@@ -564,12 +892,20 @@
     "set_code": "CSOC-EN045",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.04,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.13,
+      "GD": 0.19,
+      "LP": 0.27,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 4929256,
@@ -582,7 +918,14 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "EX": 0.87,
+      "GD": 0.77,
+      "LP": 0.61,
+      "PO": 0.55
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 24094653,
@@ -590,12 +933,20 @@
     "set_code": "DP1-EN014",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Common",
-    "base_price": 0.02,
+    "base_price": 0.91,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.91,
+      "EX": 0.4,
+      "GD": 0.24,
+      "LP": 0.23,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 71218746,
@@ -603,12 +954,20 @@
     "set_code": "CRV-EN009",
     "set_name": "Cybernetic Revolution",
     "rarity": "Common",
-    "base_price": 0.15,
+    "base_price": 0.24,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.28,
+      "GD": 0.11,
+      "LP": 0.18,
+      "PO": 0.24
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 97077563,
@@ -616,12 +975,20 @@
     "set_code": "DP04-EN025",
     "set_name": "Duelist Pack: Zane Truesdale",
     "rarity": "Common",
-    "base_price": 0.02,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.23,
+      "GD": 0.11,
+      "LP": 0.11,
+      "PO": 0.25
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 213326,
@@ -629,12 +996,20 @@
     "set_code": "EOJ-EN039",
     "set_name": "Enemy of Justice",
     "rarity": "Common",
-    "base_price": 0.38,
+    "base_price": 0.53,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.53,
+      "EX": 2.15,
+      "GD": 0.76,
+      "LP": 2.09,
+      "PO": 0.24
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 48381268,
@@ -642,12 +1017,20 @@
     "set_code": "CRMS-EN017",
     "set_name": "Crimson Crisis",
     "rarity": "Common",
-    "base_price": 0.2,
+    "base_price": 0.41,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.41,
+      "EX": 0.41,
+      "GD": 0.4,
+      "LP": 0.37,
+      "PO": 0.41
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 43697559,
@@ -655,12 +1038,20 @@
     "set_code": "CRV-EN011",
     "set_name": "Cybernetic Revolution",
     "rarity": "Common",
-    "base_price": 0.24,
+    "base_price": 0.35,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.35,
+      "EX": 0.18,
+      "GD": 0.11,
+      "LP": 0.27,
+      "PO": 0.23
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 24311595,
@@ -668,12 +1059,20 @@
     "set_code": "POTD-EN011",
     "set_name": "Power of the Duelist",
     "rarity": "Common",
-    "base_price": 0.11,
+    "base_price": 0.41,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.41,
+      "EX": 0.14,
+      "GD": 0.16,
+      "LP": 0.13,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 75775867,
@@ -681,12 +1080,20 @@
     "set_code": "CRMS-EN018",
     "set_name": "Crimson Crisis",
     "rarity": "Common",
-    "base_price": 0.26,
+    "base_price": 0.27,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.27,
+      "EX": 0.24,
+      "GD": 0.28,
+      "LP": 0.16,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 28124263,
@@ -694,12 +1101,20 @@
     "set_code": "CSOC-EN010",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.14,
+    "base_price": 0.27,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.27,
+      "EX": 0.23,
+      "GD": 0.23,
+      "LP": 0.31,
+      "PO": 0.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 85101228,
@@ -712,7 +1127,15 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.18,
+      "GD": 0.29,
+      "LP": 0.23,
+      "PO": 0.36
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 56074358,
@@ -720,12 +1143,20 @@
     "set_code": "CRMS-EN050",
     "set_name": "Crimson Crisis",
     "rarity": "Common",
-    "base_price": 0.23,
+    "base_price": 0.41,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.41,
+      "EX": 0.29,
+      "GD": 0.19,
+      "LP": 0.24,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 77229910,
@@ -733,12 +1164,20 @@
     "set_code": "CRMS-EN072",
     "set_name": "Crimson Crisis",
     "rarity": "Common",
-    "base_price": 0.02,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.17,
+      "GD": 0.17,
+      "LP": 0.28,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 71060915,
@@ -746,12 +1185,20 @@
     "set_code": "EEN-EN058",
     "set_name": "Elemental Energy",
     "rarity": "Common",
-    "base_price": 0.15,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.16,
+      "GD": 0.21,
+      "LP": 0.27,
+      "PO": 0.14
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 7030340,
@@ -759,12 +1206,20 @@
     "set_code": "CSOC-EN049",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.13,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.12,
+      "GD": 0.14,
+      "LP": 0.24,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 82639107,
@@ -772,12 +1227,20 @@
     "set_code": "DP06-EN016",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.17,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.19,
+      "GD": 0.8,
+      "LP": 0.24,
+      "PO": 0.18
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 70074904,
@@ -785,12 +1248,19 @@
     "set_code": "SDDE-EN017",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 2.62,
+    "base_price": 3.51,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 3.51,
+      "EX": 6.51,
+      "GD": 4.9,
+      "LP": 4.3
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 17732278,
@@ -798,12 +1268,20 @@
     "set_code": "STON-EN006",
     "set_name": "Strike of Neos",
     "rarity": "Common",
-    "base_price": 0.2,
+    "base_price": 0.11,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.11,
+      "EX": 0.23,
+      "GD": 0.11,
+      "LP": 0.21,
+      "PO": 0.24
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 54497620,
@@ -811,12 +1289,20 @@
     "set_code": "CSOC-EN014",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.09,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.18,
+      "GD": 0.14,
+      "LP": 0.14,
+      "PO": 0.21
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 45945685,
@@ -824,12 +1310,20 @@
     "set_code": "CRV-EN001",
     "set_name": "Cybernetic Revolution",
     "rarity": "Common",
-    "base_price": 0.09,
+    "base_price": 0.24,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.18,
+      "GD": 0.11,
+      "LP": 0.19,
+      "PO": 0.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 24268052,
@@ -837,12 +1331,19 @@
     "set_code": "DP08-EN023",
     "set_name": "Duelist Pack: Yusei",
     "rarity": "Common",
-    "base_price": 0.08,
+    "base_price": 0.65,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.65,
+      "EX": 0.72,
+      "GD": 0.29,
+      "PO": 0.32
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 42015635,
@@ -850,12 +1351,20 @@
     "set_code": "POTD-EN046",
     "set_name": "Power of the Duelist",
     "rarity": "Rare",
-    "base_price": 0.46,
+    "base_price": 0.71,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.71,
+      "EX": 0.67,
+      "GD": 0.54,
+      "LP": 0.68,
+      "PO": 0.68
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 47596607,
@@ -863,12 +1372,20 @@
     "set_code": "STON-EN048",
     "set_name": "Strike of Neos",
     "rarity": "Super Rare",
-    "base_price": 0.16,
+    "base_price": 0.98,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.98,
+      "EX": 0.82,
+      "GD": 0.77,
+      "LP": 1.11,
+      "PO": 0.7
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 21844576,
@@ -876,12 +1393,20 @@
     "set_code": "DP1-EN001",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Common",
-    "base_price": 0.15,
+    "base_price": 0.41,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.41,
+      "EX": 0.19,
+      "GD": 0.21,
+      "LP": 0.18,
+      "PO": 0.12
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 28284902,
@@ -889,12 +1414,18 @@
     "set_code": "CSOC-EN072",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.12,
+    "base_price": 0.24,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.19,
+      "GD": 0.15
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 14613029,
@@ -902,12 +1433,20 @@
     "set_code": "CRMS-EN073",
     "set_name": "Crimson Crisis",
     "rarity": "Common",
-    "base_price": 0.05,
+    "base_price": 0.19,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.16,
+      "GD": 0.17,
+      "LP": 0.28,
+      "PO": 0.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 95286165,
@@ -915,12 +1454,20 @@
     "set_code": "DP04-EN017",
     "set_name": "Duelist Pack: Zane Truesdale",
     "rarity": "Common",
-    "base_price": 0.12,
+    "base_price": 0.13,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.13,
+      "EX": 0.34,
+      "GD": 0.29,
+      "LP": 0.14,
+      "PO": 0.18
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 50684552,
@@ -928,12 +1475,20 @@
     "set_code": "POTD-EN055",
     "set_name": "Power of the Duelist",
     "rarity": "Common",
-    "base_price": 0.06,
+    "base_price": 0.22,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.22,
+      "EX": 0.11,
+      "GD": 0.18,
+      "LP": 0.13,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 19024706,
@@ -941,12 +1496,20 @@
     "set_code": "DP06-EN023",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.13,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.29,
+      "GD": 0.17,
+      "LP": 0.16,
+      "PO": 0.12
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 4206964,
@@ -954,12 +1517,20 @@
     "set_code": "SKE-042",
     "set_name": "Starter Deck: Kaiba Evolution",
     "rarity": "Common",
-    "base_price": 1.61,
+    "base_price": 0.28,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.28,
+      "EX": 0.23,
+      "GD": 0.26,
+      "LP": 0.19,
+      "PO": 0.17
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 17363041,
@@ -967,12 +1538,20 @@
     "set_code": "TAEV-EN008",
     "set_name": "Tactical Evolution",
     "rarity": "Common",
-    "base_price": 0.27,
+    "base_price": 0.26,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.26,
+      "EX": 0.23,
+      "GD": 0.24,
+      "LP": 0.38,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 29246354,
@@ -980,12 +1559,20 @@
     "set_code": "TAEV-EN009",
     "set_name": "Tactical Evolution",
     "rarity": "Common",
-    "base_price": 0.25,
+    "base_price": 0.68,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.68,
+      "EX": 0.23,
+      "GD": 0.19,
+      "LP": 0.24,
+      "PO": 0.14
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 49469105,
@@ -993,12 +1580,20 @@
     "set_code": "DP06-EN020",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Rare",
-    "base_price": 1.19,
+    "base_price": 0.75,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.75,
+      "EX": 0.49,
+      "GD": 0.11,
+      "LP": 0.19,
+      "PO": 0.34
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 10489311,
@@ -1006,12 +1601,19 @@
     "set_code": "DP06-EN021",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.15,
+    "base_price": 0.38,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.38,
+      "EX": 0.19,
+      "GD": 0.69,
+      "LP": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 18302224,
@@ -1019,12 +1621,20 @@
     "set_code": "DP06-EN015",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.12,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.4,
+      "GD": 0.19,
+      "LP": 0.24,
+      "PO": 1.29
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 77565204,
@@ -1032,12 +1642,20 @@
     "set_code": "POTD-EN044",
     "set_name": "Power of the Duelist",
     "rarity": "Rare",
-    "base_price": 0.16,
+    "base_price": 2.9,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 2.9,
+      "EX": 1.72,
+      "GD": 1.58,
+      "LP": 0.14,
+      "PO": 1.58
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 44676200,
@@ -1045,12 +1663,20 @@
     "set_code": "DP03-EN027",
     "set_name": "Duelist Pack: Jaden Yuki 2",
     "rarity": "Common",
-    "base_price": 0.26,
+    "base_price": 0.27,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.27,
+      "EX": 0.61,
+      "GD": 0.67,
+      "LP": 0.41,
+      "PO": 0.12
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 77414722,
@@ -1063,7 +1689,14 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "EX": 0.5,
+      "GD": 0.43,
+      "LP": 0.23,
+      "PO": 0.37
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 28002611,
@@ -1071,12 +1704,19 @@
     "set_code": "CSOC-EN013",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.12,
+    "base_price": 0.34,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.34,
+      "EX": 0.18,
+      "GD": 0.17,
+      "LP": 0.14
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 42682609,
@@ -1084,12 +1724,20 @@
     "set_code": "POTD-EN006",
     "set_name": "Power of the Duelist",
     "rarity": "Common",
-    "base_price": 0.26,
+    "base_price": 0.41,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.41,
+      "EX": 0.18,
+      "GD": 0.19,
+      "LP": 0.13,
+      "PO": 0.18
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 79979666,
@@ -1097,12 +1745,20 @@
     "set_code": "DP1-EN009",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Common",
-    "base_price": 0.09,
+    "base_price": 0.79,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.79,
+      "EX": 0.33,
+      "GD": 0.11,
+      "LP": 0.14,
+      "PO": 0.16
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 90239723,
@@ -1110,12 +1766,19 @@
     "set_code": "RGBT-EN054",
     "set_name": "Raging Battle",
     "rarity": "Common",
-    "base_price": 0.31,
+    "base_price": 0.55,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.55,
+      "EX": 0.28,
+      "GD": 0.26,
+      "LP": 0.72
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 51043243,
@@ -1123,12 +1786,20 @@
     "set_code": "HA01-EN019",
     "set_name": "Hidden Arsenal",
     "rarity": "Super Rare",
-    "base_price": 0.23,
+    "base_price": 0.18,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.24,
+      "GD": 0.24,
+      "LP": 0.31,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 88650530,
@@ -1136,12 +1807,20 @@
     "set_code": "HA01-EN017",
     "set_name": "Hidden Arsenal",
     "rarity": "Super Rare",
-    "base_price": 0.09,
+    "base_price": 0.24,
     "quantity": 3,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.16,
+      "GD": 0.14,
+      "LP": 0.11,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 70231910,
@@ -1154,7 +1833,14 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "EX": 0.86,
+      "GD": 0.77,
+      "LP": 0.19,
+      "PO": 0.67
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 61127349,
@@ -1162,12 +1848,19 @@
     "set_code": "SDDE-EN024",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.25,
+    "base_price": 0.97,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.97,
+      "EX": 1.44,
+      "GD": 0.19,
+      "LP": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 9126351,
@@ -1175,12 +1868,20 @@
     "set_code": "SOVR-EN034",
     "set_name": "Stardust Overdrive",
     "rarity": "Common",
-    "base_price": 0.2,
+    "base_price": 0.98,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.98,
+      "EX": 1.08,
+      "GD": 1.03,
+      "LP": 0.33,
+      "PO": 0.64
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 60999392,
@@ -1188,12 +1889,19 @@
     "set_code": "SDMM-EN006",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 1.36,
+    "base_price": 0.28,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.28,
+      "EX": 0.14,
+      "GD": 0.21,
+      "LP": 0.15
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 80769747,
@@ -1201,12 +1909,19 @@
     "set_code": "CSOC-EN018",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.17,
+    "base_price": 0.31,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.31,
+      "EX": 0.18,
+      "GD": 0.18,
+      "LP": 0.37
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 31281980,
@@ -1214,12 +1929,20 @@
     "set_code": "CSOC-EN001",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.04,
+    "base_price": 0.19,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.18,
+      "GD": 0.16,
+      "LP": 0.32,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 65622692,
@@ -1227,12 +1950,20 @@
     "set_code": "DP2-EN006",
     "set_name": "Duelist Pack: Chazz Princeton",
     "rarity": "Common",
-    "base_price": 0.12,
+    "base_price": 0.55,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.55,
+      "EX": 0.38,
+      "GD": 0.12,
+      "LP": 0.18,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 64500000,
@@ -1240,12 +1971,20 @@
     "set_code": "DP2-EN007",
     "set_name": "Duelist Pack: Chazz Princeton",
     "rarity": "Common",
-    "base_price": 0.1,
+    "base_price": 0.4,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.4,
+      "EX": 0.11,
+      "GD": 0.26,
+      "LP": 0.11,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 86188410,
@@ -1253,12 +1992,20 @@
     "set_code": "DP03-EN003",
     "set_name": "Duelist Pack: Jaden Yuki 2",
     "rarity": "Common",
-    "base_price": 0.09,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.26,
+      "GD": 0.17,
+      "LP": 0.18,
+      "PO": 0.21
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 6480253,
@@ -1266,12 +2013,20 @@
     "set_code": "DP1-EN007",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Common",
-    "base_price": 0.07,
+    "base_price": 0.36,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.36,
+      "EX": 0.33,
+      "GD": 0.14,
+      "LP": 0.11,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 69884162,
@@ -1279,12 +2034,20 @@
     "set_code": "DP06-EN005",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.1,
+    "base_price": 0.19,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.45,
+      "GD": 0.41,
+      "LP": 0.41,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 84327329,
@@ -1292,12 +2055,20 @@
     "set_code": "YSD-EN009",
     "set_name": "Starter Deck 2006",
     "rarity": "Common",
-    "base_price": 0.17,
+    "base_price": 0.44,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.44,
+      "EX": 0.73,
+      "GD": 0.21,
+      "LP": 0.41,
+      "PO": 0.52
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 41436536,
@@ -1310,7 +2081,12 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "EX": 1.58,
+      "LP": 2.05
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 61204971,
@@ -1318,12 +2094,20 @@
     "set_code": "DP1-EN011",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Rare",
-    "base_price": 0.19,
+    "base_price": 1.69,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.69,
+      "EX": 0.69,
+      "GD": 0.84,
+      "LP": 0.4,
+      "PO": 0.38
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 14225239,
@@ -1331,12 +2115,20 @@
     "set_code": "EOJ-EN034",
     "set_name": "Enemy of Justice",
     "rarity": "Common",
-    "base_price": 0.12,
+    "base_price": 0.35,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.35,
+      "EX": 0.62,
+      "GD": 0.63,
+      "LP": 0.41,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 25119460,
@@ -1344,12 +2136,19 @@
     "set_code": "DR1-EN109",
     "set_name": "Dark Revelation Volume 1",
     "rarity": "Rare",
-    "base_price": 0.27,
+    "base_price": 5.27,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 5.27,
+      "EX": 1.58,
+      "LP": 1.09,
+      "PO": 0.84
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 18325492,
@@ -1357,12 +2156,20 @@
     "set_code": "CRV-EN007",
     "set_name": "Cybernetic Revolution",
     "rarity": "Common",
-    "base_price": 0.05,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.15,
+      "GD": 0.19,
+      "LP": 0.13,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 27870033,
@@ -1370,12 +2177,20 @@
     "set_code": "CSOC-EN016",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.13,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.14,
+      "GD": 0.17,
+      "LP": 0.41,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 20721928,
@@ -1383,12 +2198,20 @@
     "set_code": "YSD-EN010",
     "set_name": "Starter Deck 2006",
     "rarity": "Common",
-    "base_price": 0.02,
+    "base_price": 0.27,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.27,
+      "EX": 0.54,
+      "GD": 0.49,
+      "LP": 0.4,
+      "PO": 0.45
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 68005187,
@@ -1396,12 +2219,20 @@
     "set_code": "SDRL-EN021",
     "set_name": "Rise of the Dragon Lords Structure Deck",
     "rarity": "Common",
-    "base_price": 1.24,
+    "base_price": 0.27,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.27,
+      "EX": 0.19,
+      "GD": 0.5,
+      "LP": 0.29,
+      "PO": 0.45
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 81566151,
@@ -1409,12 +2240,20 @@
     "set_code": "DP03-EN013",
     "set_name": "Duelist Pack: Jaden Yuki 2",
     "rarity": "Rare",
-    "base_price": 1.63,
+    "base_price": 2.64,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 2.64,
+      "EX": 2.77,
+      "GD": 2.17,
+      "LP": 1.74,
+      "PO": 1.82
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 10526791,
@@ -1422,12 +2261,20 @@
     "set_code": "DP03-EN010",
     "set_name": "Duelist Pack: Jaden Yuki 2",
     "rarity": "Rare",
-    "base_price": 0.76,
+    "base_price": 3.79,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 3.79,
+      "EX": 1.95,
+      "GD": 1.71,
+      "LP": 1.44,
+      "PO": 1.99
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 47737087,
@@ -1435,12 +2282,20 @@
     "set_code": "DP1-EN012",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Rare",
-    "base_price": 0.19,
+    "base_price": 1.16,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.16,
+      "EX": 1.0,
+      "GD": 0.29,
+      "LP": 0.42,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 58932615,
@@ -1448,12 +2303,20 @@
     "set_code": "YSD-EN008",
     "set_name": "Starter Deck 2006",
     "rarity": "Common",
-    "base_price": 0.14,
+    "base_price": 0.27,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.27,
+      "EX": 0.72,
+      "GD": 0.33,
+      "LP": 0.29,
+      "PO": 0.24
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 43452193,
@@ -1461,12 +2324,20 @@
     "set_code": "DP06-EN022",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.2,
+    "base_price": 0.15,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.15,
+      "EX": 0.29,
+      "GD": 1.29,
+      "LP": 0.14,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 43237273,
@@ -1474,12 +2345,18 @@
     "set_code": "DP03-EN007",
     "set_name": "Duelist Pack: Jaden Yuki 2",
     "rarity": "Rare",
-    "base_price": 2.28,
+    "base_price": 7.13,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 7.13,
+      "GD": 1.1,
+      "LP": 2.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 63703130,
@@ -1487,12 +2364,20 @@
     "set_code": "EOJ-EN041",
     "set_name": "Enemy of Justice",
     "rarity": "Common",
-    "base_price": 0.02,
+    "base_price": 0.19,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.13,
+      "GD": 0.17,
+      "LP": 0.15,
+      "PO": 0.15
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 17955766,
@@ -1500,12 +2385,20 @@
     "set_code": "DP03-EN005",
     "set_name": "Duelist Pack: Jaden Yuki 2",
     "rarity": "Rare",
-    "base_price": 0.15,
+    "base_price": 1.5,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.5,
+      "EX": 0.75,
+      "GD": 0.71,
+      "LP": 0.34,
+      "PO": 0.59
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 95943058,
@@ -1513,12 +2406,20 @@
     "set_code": "DP06-EN007",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.09,
+    "base_price": 0.19,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.19,
+      "GD": 0.19,
+      "LP": 0.18,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 95281259,
@@ -1526,12 +2427,20 @@
     "set_code": "DP1-EN016",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Common",
-    "base_price": 0.03,
+    "base_price": 0.19,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.19,
+      "EX": 0.14,
+      "GD": 0.13,
+      "LP": 0.12,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 22020907,
@@ -1539,12 +2448,20 @@
     "set_code": "DP1-EN028",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Common",
-    "base_price": 0.06,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.22,
+      "GD": 0.14,
+      "LP": 0.13,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 58932615,
@@ -1552,12 +2469,20 @@
     "set_code": "DP1-EN002",
     "set_name": "Duelist Pack: Jaden Yuki",
     "rarity": "Common",
-    "base_price": 0.14,
+    "base_price": 0.94,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.94,
+      "EX": 0.28,
+      "GD": 0.3,
+      "LP": 0.18,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 36378213,
@@ -1565,12 +2490,20 @@
     "set_code": "POTD-EN009",
     "set_name": "Power of the Duelist",
     "rarity": "Common",
-    "base_price": 0.1,
+    "base_price": 0.2,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.2,
+      "EX": 0.18,
+      "GD": 0.11,
+      "LP": 0.13,
+      "PO": 0.18
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 77565204,
@@ -1578,12 +2511,20 @@
     "set_code": "DP04-EN023",
     "set_name": "Duelist Pack: Zane Truesdale",
     "rarity": "Common",
-    "base_price": 0.16,
+    "base_price": 0.11,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.11,
+      "EX": 0.72,
+      "GD": 0.19,
+      "LP": 0.34,
+      "PO": 0.32
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 23299957,
@@ -1591,12 +2532,20 @@
     "set_code": "POTD-EN040",
     "set_name": "Power of the Duelist",
     "rarity": "Common",
-    "base_price": 0.09,
+    "base_price": 0.27,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.27,
+      "EX": 0.19,
+      "GD": 0.17,
+      "LP": 0.13,
+      "PO": 0.24
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 98927491,
@@ -1604,12 +2553,20 @@
     "set_code": "POTD-EN035",
     "set_name": "Power of the Duelist",
     "rarity": "Common",
-    "base_price": 0.11,
+    "base_price": 0.4,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.4,
+      "EX": 0.23,
+      "GD": 0.17,
+      "LP": 0.19,
+      "PO": 0.17
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 71930383,
@@ -1622,7 +2579,15 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.19,
+      "GD": 0.19,
+      "LP": 0.28,
+      "PO": 0.15
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 92720564,
@@ -1635,7 +2600,11 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "GD": 1.06
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 99861526,
@@ -1643,12 +2612,20 @@
     "set_code": "POTD-EN008",
     "set_name": "Power of the Duelist",
     "rarity": "Rare",
-    "base_price": 0.13,
+    "base_price": 0.72,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.72,
+      "EX": 0.71,
+      "GD": 0.77,
+      "LP": 0.42,
+      "PO": 0.45
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 31467372,
@@ -1656,12 +2633,20 @@
     "set_code": "CSOC-EN060",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.13,
+    "base_price": 0.24,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.18,
+      "GD": 0.19,
+      "LP": 0.33,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 5973663,
@@ -1669,12 +2654,20 @@
     "set_code": "CSOC-EN059",
     "set_name": "Crossroads of Chaos",
     "rarity": "Rare",
-    "base_price": 0.37,
+    "base_price": 0.64,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.64,
+      "EX": 0.53,
+      "GD": 0.56,
+      "LP": 0.45,
+      "PO": 0.46
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 55144522,
@@ -1687,7 +2680,14 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "EX": 4.06,
+      "GD": 3.44,
+      "LP": 3.75,
+      "PO": 3.03
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 30241314,
@@ -1695,12 +2695,20 @@
     "set_code": "SDDE-EN036",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 4.21,
+    "base_price": 1.28,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.28,
+      "EX": 0.19,
+      "GD": 0.29,
+      "LP": 0.4,
+      "PO": 0.29
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 72237166,
@@ -1708,12 +2716,19 @@
     "set_code": "SDDE-EN003",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.21,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.21,
+      "GD": 0.11,
+      "LP": 0.14
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 36584821,
@@ -1721,12 +2736,20 @@
     "set_code": "SDDE-EN013",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 3.36,
+    "base_price": 0.45,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.45,
+      "EX": 0.41,
+      "GD": 0.16,
+      "LP": 0.29,
+      "PO": 0.4
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 4334811,
@@ -1734,12 +2757,19 @@
     "set_code": "SDMM-EN004",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 1.9,
+    "base_price": 1.95,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.95,
+      "EX": 1.76,
+      "GD": 0.72,
+      "PO": 0.61
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 37043180,
@@ -1747,12 +2777,19 @@
     "set_code": "SDDE-EN006",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.38,
+    "base_price": 0.21,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.21,
+      "EX": 0.54,
+      "GD": 0.5,
+      "LP": 0.73
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 40133511,
@@ -1760,12 +2797,20 @@
     "set_code": "SDDE-EN008",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.67,
+    "base_price": 0.18,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.29,
+      "GD": 0.35,
+      "LP": 0.19,
+      "PO": 0.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 48092532,
@@ -1773,12 +2818,20 @@
     "set_code": "SDDE-EN014",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.66,
+    "base_price": 0.4,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.4,
+      "EX": 0.19,
+      "GD": 0.28,
+      "LP": 0.19,
+      "PO": 0.28
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 23282832,
@@ -1786,12 +2839,20 @@
     "set_code": "DP06-EN024",
     "set_name": "Duelist Pack: Jaden Yuki 3",
     "rarity": "Common",
-    "base_price": 0.04,
+    "base_price": 0.17,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.17,
+      "EX": 0.18,
+      "GD": 0.15,
+      "LP": 0.19,
+      "PO": 0.18
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 67159705,
@@ -1799,12 +2860,20 @@
     "set_code": "PTDN-EN009",
     "set_name": "Phantom Darkness",
     "rarity": "Common",
-    "base_price": 0.03,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.15,
+      "GD": 0.18,
+      "LP": 0.24,
+      "PO": 0.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 50400231,
@@ -1812,12 +2881,17 @@
     "set_code": "TU01-EN007",
     "set_name": "Turbo Pack: Booster One",
     "rarity": "Rare",
-    "base_price": 0.06,
+    "base_price": 1.03,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.03,
+      "EX": 0.72
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 13093792,
@@ -1825,12 +2899,19 @@
     "set_code": "TU03-EN012",
     "set_name": "Turbo Pack: Booster Three",
     "rarity": "Common",
-    "base_price": 0.12,
+    "base_price": 0.24,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.34,
+      "GD": 0.34,
+      "LP": 0.41
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 27408609,
@@ -1838,12 +2919,20 @@
     "set_code": "SDDE-EN004",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.8,
+    "base_price": 0.77,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.77,
+      "EX": 0.6,
+      "GD": 0.19,
+      "LP": 0.19,
+      "PO": 0.49
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 64752646,
@@ -1851,12 +2940,18 @@
     "set_code": "GLD1-EN005",
     "set_name": "Gold Series",
     "rarity": "Common",
-    "base_price": 0.44,
+    "base_price": 1.5,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.5,
+      "EX": 0.6,
+      "GD": 0.29
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 9666558,
@@ -1864,12 +2959,19 @@
     "set_code": "TU06-EN019",
     "set_name": "Turbo Pack: Booster Six",
     "rarity": "Common",
-    "base_price": 0.84,
+    "base_price": 0.79,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.79,
+      "EX": 1.45,
+      "GD": 0.8,
+      "PO": 0.69
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 94853057,
@@ -1877,12 +2979,20 @@
     "set_code": "SDDE-EN016",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.77,
+    "base_price": 0.6,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.6,
+      "EX": 0.29,
+      "GD": 0.51,
+      "LP": 0.19,
+      "PO": 0.24
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 45985838,
@@ -1890,12 +3000,18 @@
     "set_code": "GLD1-EN019",
     "set_name": "Gold Series",
     "rarity": "Common",
-    "base_price": 0.15,
+    "base_price": 1.03,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 1.03,
+      "EX": 0.29,
+      "GD": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 23265594,
@@ -1903,12 +3019,20 @@
     "set_code": "SDMM-EN012",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 1.06,
+    "base_price": 0.13,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.13,
+      "EX": 0.13,
+      "GD": 0.15,
+      "LP": 0.14,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 67159705,
@@ -1916,12 +3040,20 @@
     "set_code": "SDMM-EN018",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 0.96,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.13,
+      "GD": 0.15,
+      "LP": 0.13,
+      "PO": 0.32
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 59575539,
@@ -1929,12 +3061,19 @@
     "set_code": "TDGS-EN018",
     "set_name": "The Duelist Genesis",
     "rarity": "Common",
-    "base_price": 0.26,
+    "base_price": 0.77,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.77,
+      "EX": 1.33,
+      "GD": 2.49,
+      "PO": 0.41
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 23771716,
@@ -1942,12 +3081,19 @@
     "set_code": "GLD1-EN001",
     "set_name": "Gold Series",
     "rarity": "Common",
-    "base_price": 0.08,
+    "base_price": 0.41,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.41,
+      "EX": 0.19,
+      "GD": 0.19,
+      "LP": 0.49
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 22666164,
@@ -1955,12 +3101,20 @@
     "set_code": "SDMM-EN005",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 1.18,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.17,
+      "GD": 0.12,
+      "LP": 0.19,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 25771826,
@@ -1968,12 +3122,20 @@
     "set_code": "HA01-EN015",
     "set_name": "Hidden Arsenal",
     "rarity": "Super Rare",
-    "base_price": 0.04,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.14,
+      "GD": 0.12,
+      "LP": 0.27,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 89386122,
@@ -1981,12 +3143,20 @@
     "set_code": "HA01-EN014",
     "set_name": "Hidden Arsenal",
     "rarity": "Super Rare",
-    "base_price": 0.03,
+    "base_price": 0.17,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.17,
+      "EX": 0.14,
+      "GD": 0.12,
+      "LP": 0.12,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 21615956,
@@ -1994,12 +3164,20 @@
     "set_code": "HA01-EN009",
     "set_name": "Hidden Arsenal",
     "rarity": "Super Rare",
-    "base_price": 0.1,
+    "base_price": 0.79,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.79,
+      "EX": 0.5,
+      "GD": 0.52,
+      "LP": 0.46,
+      "PO": 0.52
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 68226653,
@@ -2007,12 +3185,20 @@
     "set_code": "HA01-EN007",
     "set_name": "Hidden Arsenal",
     "rarity": "Super Rare",
-    "base_price": 0.05,
+    "base_price": 0.16,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.16,
+      "EX": 0.14,
+      "GD": 0.11,
+      "LP": 0.18,
+      "PO": 0.16
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 52265835,
@@ -2020,12 +3206,20 @@
     "set_code": "HA01-EN016",
     "set_name": "Hidden Arsenal",
     "rarity": "Super Rare",
-    "base_price": 0.07,
+    "base_price": 0.17,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.17,
+      "EX": 0.17,
+      "GD": 0.19,
+      "LP": 0.12,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 16191953,
@@ -2038,7 +3232,9 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": null,
+    "price_source": null
   },
   {
     "id": 20450925,
@@ -2046,12 +3242,19 @@
     "set_code": "CSOC-EN034",
     "set_name": "Crossroads of Chaos",
     "rarity": "Super Rare",
-    "base_price": 0.07,
+    "base_price": 0.67,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.67,
+      "EX": 0.78,
+      "GD": 0.88,
+      "LP": 0.9
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 74131780,
@@ -2059,12 +3262,18 @@
     "set_code": "SDDE-EN009",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 1.44,
+    "base_price": 0.75,
     "quantity": 2,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.75,
+      "GD": 0.56,
+      "LP": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 33248692,
@@ -2072,12 +3281,20 @@
     "set_code": "SOI-EN058",
     "set_name": "Shadow of Infinity",
     "rarity": "Rare",
-    "base_price": 0.17,
+    "base_price": 0.24,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.24,
+      "EX": 0.27,
+      "GD": 0.25,
+      "LP": 0.18,
+      "PO": 0.19
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 36256625,
@@ -2085,12 +3302,20 @@
     "set_code": "POTD-EN036",
     "set_name": "Power of the Duelist",
     "rarity": "Super Rare",
-    "base_price": 0.12,
+    "base_price": 0.8,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.8,
+      "EX": 3.09,
+      "GD": 1.05,
+      "LP": 1.1,
+      "PO": 0.45
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 70423794,
@@ -2098,12 +3323,20 @@
     "set_code": "CSOC-EN051",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.05,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.19,
+      "GD": 0.18,
+      "LP": 0.19,
+      "PO": 0.26
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 93369354,
@@ -2111,12 +3344,18 @@
     "set_code": "ANPR-EN027",
     "set_name": "Ancient Prophecy",
     "rarity": "Common",
-    "base_price": 0.28,
+    "base_price": 0.33,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.33,
+      "EX": 5.11,
+      "GD": 4.1
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 18511384,
@@ -2124,12 +3363,20 @@
     "set_code": "CRV-EN038",
     "set_name": "Cybernetic Revolution",
     "rarity": "Common",
-    "base_price": 0.1,
+    "base_price": 0.52,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.52,
+      "EX": 0.21,
+      "GD": 0.11,
+      "LP": 0.19,
+      "PO": 0.18
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 26302522,
@@ -2137,12 +3384,20 @@
     "set_code": "SDMM-EN011",
     "set_name": "Machina Mayhem Structure Deck",
     "rarity": "Common",
-    "base_price": 1.32,
+    "base_price": 0.32,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.32,
+      "EX": 0.43,
+      "GD": 0.34,
+      "LP": 0.14,
+      "PO": 1.29
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 44424095,
@@ -2150,12 +3405,16 @@
     "set_code": "CSOC-EN050",
     "set_name": "Crossroads of Chaos",
     "rarity": "Rare",
-    "base_price": 1.05,
+    "base_price": 2.85,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 2.85
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 53582587,
@@ -2163,12 +3422,20 @@
     "set_code": "SDDE-EN031",
     "set_name": "The Dark Emperor Structure Deck",
     "rarity": "Common",
-    "base_price": 2.51,
+    "base_price": 4.26,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 4.26,
+      "EX": 0.34,
+      "GD": 0.64,
+      "LP": 0.6,
+      "PO": 0.34
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 51638941,
@@ -2176,12 +3443,20 @@
     "set_code": "DP2-EN001",
     "set_name": "Duelist Pack: Chazz Princeton",
     "rarity": "Common",
-    "base_price": 0.15,
+    "base_price": 0.25,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.25,
+      "EX": 0.14,
+      "GD": 0.24,
+      "LP": 0.11,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 66331855,
@@ -2189,12 +3464,20 @@
     "set_code": "CSOC-EN008",
     "set_name": "Crossroads of Chaos",
     "rarity": "Common",
-    "base_price": 0.1,
+    "base_price": 0.18,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.18,
+      "EX": 0.18,
+      "GD": 0.16,
+      "LP": 0.41,
+      "PO": 0.27
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 96300057,
@@ -2202,12 +3485,20 @@
     "set_code": "DP2-EN008",
     "set_name": "Duelist Pack: Chazz Princeton",
     "rarity": "Common",
-    "base_price": 0.15,
+    "base_price": 0.14,
     "quantity": 1,
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "NM": 0.14,
+      "EX": 0.11,
+      "GD": 0.11,
+      "LP": 0.11,
+      "PO": 0.11
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 9622164,
@@ -2220,7 +3511,14 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": {
+      "EX": 1.29,
+      "GD": 1.34,
+      "LP": 0.4,
+      "PO": 1.29
+    },
+    "price_source": "cardtrader"
   },
   {
     "id": 14936691,
@@ -2233,6 +3531,8 @@
     "added_at": null,
     "grade": null,
     "condition": null,
-    "grade_breakdown": null
+    "grade_breakdown": null,
+    "real_condition_prices": null,
+    "price_source": null
   }
 ]

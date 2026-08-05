@@ -57,16 +57,16 @@ come possibile evoluzione futura se si vuole eliminare la dipendenza da YGOPRODe
 
 Qualsiasi eccezione in qualunque punto della catena (rete, token invalido, nessun match, nessuna
 inserzione) viene catturata e la funzione ritorna `None` — **mai propagata**, per non rompere mai
-il flusso di aggiunta/refresh della collezione in `ui/app.py`.
+il flusso di aggiunta/refresh della collezione in `web/state.py`/`web/routers/*.py`.
 
 ## Come i prezzi arrivano in `CollectionItem`
 
-`ui/app.py`:
-- `add_card_to_collection_logic` (chiamata da "Aggiungi Carta", "Aggiunta Bulk", salvataggio del
-  Grading): `base_price` parte da `0.0`; se `find_real_prices` trova un match, imposta
-  `real_condition_prices`, `price_source = "cardtrader"`, e `base_price = real_prices["NM"]` se
-  presente.
-- `refresh_all_prices`: stessa logica per ogni `CollectionItem` già in collezione; notifica
+- `AppState.add_card_to_collection` (`web/state.py`, chiamata dai router `add_card.py`,
+  `bulk_add.py`, `grading.py`): `base_price` parte da `0.0`; se `find_real_prices` trova un
+  match, imposta `real_condition_prices`, `price_source = "cardtrader"`, e
+  `base_price = real_prices["NM"]` se presente.
+- `POST /collection/refresh-prices` (`web/routers/collection.py`): stessa logica per ogni
+  `CollectionItem` già in collezione; notifica
   finale col conteggio "prezzi reali trovati per X/Y carte".
 
 `models.CollectionItem.get_price_for_condition(condition)` preferisce sempre

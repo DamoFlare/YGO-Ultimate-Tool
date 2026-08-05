@@ -19,6 +19,34 @@ YGOPRODeck resta nel progetto ma **solo per la ricerca/identificazione delle car
 campo di prezzo viene più mostrato o usato in un calcolo. Dettagli completi in
 [08-pricing-cardtrader.md](08-pricing-cardtrader.md).
 
+## Cronologia: da TUI Textual a web app (FastAPI + htmx)
+
+Il modulo di Grading (foto + overlay di analisi) ha esposto un limite di fondo della TUI: il
+rendering di immagini da terminale (`textual-image`) ha causato **due bug non banali** in
+sessione:
+1. Sovrapposizione visiva tra il box di analisi e il box "Collega il grade" — causa reale: i
+   contenitori con bordo (`.box_panel`) non avevano mai una `height` esplicita in CSS, quindi
+   Textual li trattava come `1fr` (dividono lo spazio disponibile in parti uguali con i
+   fratelli, non si adattano al contenuto). Con contenuti piccoli non si notava; aggiungendo la
+   riga di immagini il box ha superato la sua "quota" e la sua coda veniva scritta sotto al box
+   successivo. Diagnosticato misurando le `region` dei widget con `run_test()` a diverse
+   dimensioni di terminale: il punto di rottura scalava esattamente con metà altezza schermo, non
+   col contenuto — prova decisiva che non era un problema di misura ma di distribuzione spazio.
+   Fix applicato (`height: auto` su `.box_panel`) e funzionante.
+2. Subito dopo, un secondo bug: le immagini mostrate non venivano scalate per adattarsi al box —
+   si vedeva solo una porzione ritagliata a risoluzione nativa (edge case di `textual-image` con
+   assegnazione dinamica dell'immagine dopo il mount del widget, non risolvibile con un fix
+   rapido lato nostro codice).
+
+A quel punto l'utente ha deciso di ritirare la TUI e costruire un front-end web, accettando il
+lavoro di ricostruzione in cambio di un rendering immagini affidabile (i browser gestiscono lo
+scaling nativamente, senza bisogno di alcun protocollo grafico da terminale). Migrazione
+eseguita nella stessa sessione: **tutta la logica di business (`services/`, `models.py`,
+`config.py`) è stata riusata senza modifiche** — è stato ricostruito solo il livello di
+controllo/presentazione, da `ui/app.py` + `ui/views/*.py` (Textual, rimossi) a `web/` (FastAPI +
+Jinja2 + htmx). Vedi [02-architettura.md](02-architettura.md) e [05-ui.md](05-ui.md) per
+l'architettura attuale.
+
 ## Limite architetturale: Grading e quantità in stack (`CollectionItem`)
 
 `CollectionItem` rappresenta uno **stack** di N copie identiche (stesso id/set_code/rarity) con
@@ -27,9 +55,10 @@ fisica specifica, il che è concettualmente in tensione col modello a stack.
 
 **Soluzione adottata** (minima, reversibile, senza refactor esteso): le carte con un `grade`
 impostato non vengono più unite ad altri stack con lo stesso id/set_code/rarity ma **grade
-diverso** — la chiave di match in `add_card_to_collection_logic` (`ui/app.py`) include anche il
-grade. Le carte non gradate (`grade=None`, il caso normale per Aggiungi Carta / Bulk) continuano
-a comportarsi esattamente come prima.
+diverso** — la chiave di match in `AppState.add_card_to_collection` (`web/state.py`, porting
+della vecchia `add_card_to_collection_logic` di `ui/app.py`) include anche il grade. Le carte non
+gradate (`grade=None`, il caso normale per Aggiungi Carta / Bulk) continuano a comportarsi
+esattamente come prima.
 
 **Perché**: evitare un refactor esteso del modello dati (tracking per-copia fisica invece che
 per-stack), che avrebbe richiesto rivedere storage, CSV export, bulk-add e collection_view, non
@@ -42,11 +71,11 @@ rivalutato il modello dati da zero.
 
 ## Dipendenza dal server Ollama locale
 
-Il tab "🩺 Grading Carta" richiede il server Ollama attivo (`docker compose up -d`, vedi
+La pagina "🩺 Grading Carta" richiede il server Ollama attivo (`docker compose up -d`, vedi
 [01-stack-e-setup.md](01-stack-e-setup.md)). Se non è in esecuzione, l'analisi fallisce con un
-`InspectorAgentError` mostrato in UI (non un crash) — le altre tab dell'app restano
-completamente funzionanti. Il primo avvio del container richiede il pull del modello `llava`
-(alcuni GB): può richiedere qualche minuto la prima volta.
+`InspectorAgentError` mostrato nel partial di risposta (non un crash) — le altre pagine dell'app
+restano completamente funzionanti. Il primo avvio del container richiede il pull del modello
+`llava` (alcuni GB): può richiedere qualche minuto la prima volta.
 
 ## Formula di grading tarabile
 
@@ -84,22 +113,26 @@ di aggiungere `.gitignore` per questi file se in futuro si vuole separare dati u
 
 ## Cosa manca strutturalmente
 
-- Nessun test automatizzato, nessuna cartella `tests/`
+- Nessun test automatizzato "formale" (no `pytest`, no cartella `tests/`) — verifica fatta con
+  script ad-hoc/`TestClient` durante lo sviluppo, non con una suite persistente nel repo.
 - Nessuna CI/CD (`.github/workflows/` assente)
 - Nessun `LICENSE`
 - Gestione errori "silenziosa": `ygoprodeck_api.py`/`storage.py` usano `try/except` ampi con
   `print()` verso stdout, non eccezioni propagate né un modulo di logging strutturato. Il modulo
   di Grading (`services/grading/`) devia intenzionalmente da questa convenzione: solleva
   eccezioni tipizzate (`CardDetectionError`, `InspectorAgentError`) con messaggi comprensibili,
-  catturate e mostrate in UI da `ui/app.py` — preferire questo pattern per nuovo codice.
+  catturate e mostrate nel partial di risposta da `web/routers/grading.py` — preferire questo
+  pattern per nuovo codice.
 
 ## Convenzioni di codice osservate (per restare coerenti in modifiche future)
 
 - Docstring descrittiva in testa a ogni modulo
 - `snake_case` per funzioni/variabili, `PascalCase` per classi
-- ID widget Textual in `snake_case` con prefissi semantici (`btn_`, `input_`, `#metric_`, ecc.)
 - Type hints sistematici (`typing.List`, `Optional`, `Dict`)
 - Modelli dati sempre via Pydantic `BaseModel` con default espliciti
 - Codici condizione carta standardizzati a 2 lettere maiuscole (`NM`, `EX`, `GD`, `LP`, `PO`),
-  usati coerentemente in `config.py`, `models.py` e nella UI
+  usati coerentemente in `config.py`, `models.py` e nei template
 - Testi/notifiche UI in italiano, commenti nel codice in inglese
+- Ogni pagina web ha un template "pieno" + uno o più partial (prefisso `_`) riusati sia al primo
+  caricamento sia come risposta agli endpoint richiamati da htmx — vedi
+  [05-ui.md](05-ui.md).

@@ -24,8 +24,8 @@ documentata da YGOPRODeck ed erano risultati molto distanti dai prezzi di mercat
 - `get_cards_by_set_name(set_name)` — ricerca per nome set risolto
 - `_parse_card_json(...)` — trasforma il JSON raw dell'API in `CardSearchResult` (vedi
   [03-modelli-dati.md](03-modelli-dati.md))
-- `close()` — chiude la sessione httpx; chiamato da `YGOValuerApp.action_quit` all'uscita
-  dell'app per evitare connessioni pendenti
+- `close()` — chiude la sessione httpx; chiamato dal `lifespan` di `web/app.py`
+  (`await app.state.ygo.close()`) allo shutdown del server per evitare connessioni pendenti
 
 ## `services/cardtrader_api.py` — classe `CardTraderAPI` (unica fonte di prezzo)
 

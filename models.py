@@ -100,6 +100,7 @@ class GradingResult(BaseModel):
     # Final result
     final_grade: float = 0.0
     condition: str = "PO"
+    explanation: str = ""  # deterministic "why this grade" narrative, see grader._build_explanation
 
 
 class CardSearchResult(BaseModel):

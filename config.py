@@ -7,6 +7,11 @@ from dotenv import load_dotenv
 
 load_dotenv()  # reads .env in the project root, if present; never overrides real env vars
 
+# Web server (FastAPI) — bind to localhost only, this process holds the CardTrader token and
+# reads/writes local files, it must never be reachable from the network.
+WEB_HOST = "127.0.0.1"
+WEB_PORT = 8000
+
 # API Configuration
 YGOPRODECK_BASE_URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
 API_RATE_LIMIT_DELAY = 0.05  # Delay between requests to respect 20 req/sec limit
@@ -127,8 +132,9 @@ GRADE_TO_CONDITION = [
 ]
 GRADE_TO_CONDITION_FALLBACK = "PO"
 
-# System prompt sent to the VLM Inspector Agent. Kept verbatim as authored — do not tweak the
-# JSON schema without updating services/grading/ai_agent.py's parsing accordingly.
+# System prompt sent to the VLM Inspector Agent. Do not tweak the JSON schema (the key names and
+# types) without updating services/grading/ai_agent.py's parsing accordingly — the "details"
+# field's requested length/content can be adjusted freely, it's free text.
 INSPECTOR_SYSTEM_PROMPT = (
     "You are an expert trading card grading assistant specializing in Yu-Gi-Oh! cards. Your "
     "ONLY task is to analyze the surface of the card provided. The image is perfectly cropped. "
@@ -136,5 +142,7 @@ INSPECTOR_SYSTEM_PROMPT = (
     "and holographic foil. Look for scratches and creases. Respond ONLY with a valid JSON "
     "object using this schema: {\"has_scratches\": bool, \"scratch_severity\": \"none\" | "
     "\"light\" | \"heavy\", \"has_creases\": bool, \"crease_severity\": \"none\" | \"light\" | "
-    "\"heavy\", \"details\": \"1-sentence description\"}"
+    "\"heavy\", \"details\": \"2-3 sentence description explaining exactly what you observed and "
+    "roughly where on the card (e.g. top-left corner, center artwork, holographic foil), and how "
+    "confident you are in that assessment\"}"
 )

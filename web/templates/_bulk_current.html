@@ -1,0 +1,55 @@
+<div id="bulk-current">
+  {% if flash %}<p class="description">{{ flash }}</p>{% endif %}
+  {% if not queue %}
+    <p class="description">Carica dei codici per iniziare.</p>
+  {% elif index >= queue|length %}
+    <div class="result-box">
+      ✅ Coda completata: {{ added_count }} aggiunte, {{ skipped_count }} saltate su {{ queue|length }}.
+      <div class="action-bar">
+        <button class="btn-success" hx-post="/bulk/save-all" hx-target="#bulk-current" hx-swap="outerHTML">💾 Salva Tutto in Collezione</button>
+      </div>
+    </div>
+  {% else %}
+    {% set current = queue[index] %}
+    <p class="description">Carta {{ index + 1 }} di {{ queue|length }} — Codice: <b>{{ current.query }}</b></p>
+    {% if not current.results %}
+      <p class="result-box error">❌ Nessun risultato trovato per questo codice.</p>
+      <button class="btn" hx-post="/bulk/skip" hx-target="#bulk-current" hx-swap="outerHTML">⏭️ Avanti</button>
+    {% else %}
+      {% set card = current.results[0] %}
+      <p><b>{{ card.name }}</b></p>
+      <div class="table-scroll">
+      <table>
+        <thead><tr><th>Set Code</th><th>Rarità</th><th>Nome Set</th><th></th></tr></thead>
+        <tbody>
+        {% for cset in card.card_sets %}
+        <tr>
+          <td>{{ cset.set_code }}</td>
+          <td>{{ cset.set_rarity }}</td>
+          <td>{{ cset.set_name }}</td>
+          <td>
+            <form hx-post="/bulk/confirm" hx-target="#bulk-current" hx-swap="outerHTML" style="display:flex; gap:0.4rem; align-items:center;">
+              <input type="hidden" name="set_code" value="{{ cset.set_code }}">
+              <input type="number" name="qty" value="1" min="1" style="width:60px;">
+              <button class="btn-success" type="submit">✅ Aggiungi</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    {% endif %}
+    <button class="btn" hx-post="/bulk/skip" hx-target="#bulk-current" hx-swap="outerHTML">⏭️ Salta questa carta</button>
+  {% endif %}
+  {% if queue %}
+  <ul class="description">
+    {% for item in queue %}
+    <li>
+      {{ item.query }} —
+      {% if item.added %}✅ aggiunta{% elif item.skipped %}⏭️ saltata{% elif loop.index0 == index %}👉 corrente{% else %}in attesa{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>

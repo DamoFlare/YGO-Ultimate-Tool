@@ -74,10 +74,14 @@ def normalize_card_image(image_path: Path) -> np.ndarray:
     return cv2.warpPerspective(image, matrix, (dst_w, dst_h))
 
 
-def calculate_edge_wear(normalized_img: np.ndarray) -> float:
+def calculate_edge_wear(normalized_img: np.ndarray) -> tuple:
     """
     Extract a thin outer perimeter and return the % of pixels that deviate from the expected
     (undamaged) border color, sampled from a slightly deeper reference ring.
+
+    Returns (damaged_pct, damaged_mask), where damaged_mask is a boolean (h, w) array marking
+    exactly which pixels in the outer perimeter were flagged as worn — used by
+    build_annotated_image() to visualize what the geometric agent actually detected.
     """
     h, w = normalized_img.shape[:2]
     border = config.EDGE_WEAR_BORDER_PX
@@ -96,11 +100,12 @@ def calculate_edge_wear(normalized_img: np.ndarray) -> float:
     ref_mask[:, -(ref_offset + border):-ref_offset] = True
 
     reference_color = np.median(normalized_img[ref_mask].reshape(-1, 3), axis=0)
-    outer_pixels = normalized_img[outer_mask].reshape(-1, 3).astype("float32")
 
-    distances = np.linalg.norm(outer_pixels - reference_color, axis=1)
-    damaged_ratio = float(np.mean(distances > config.EDGE_WEAR_COLOR_DISTANCE_THRESHOLD))
-    return round(damaged_ratio * 100.0, 2)
+    distances = np.linalg.norm(normalized_img.astype("float32") - reference_color, axis=2)
+    damaged_mask = outer_mask & (distances > config.EDGE_WEAR_COLOR_DISTANCE_THRESHOLD)
+
+    damaged_ratio = float(np.count_nonzero(damaged_mask)) / float(np.count_nonzero(outer_mask))
+    return round(damaged_ratio * 100.0, 2), damaged_mask
 
 
 def calculate_centering(normalized_img: np.ndarray) -> dict:
@@ -130,7 +135,7 @@ def calculate_centering(normalized_img: np.ndarray) -> dict:
             best_area = area
 
     if best is None:
-        return {"horizontal": 50.0, "vertical": 50.0, "detected": False}
+        return {"horizontal": 50.0, "vertical": 50.0, "detected": False, "bbox": None}
 
     x, y, cw, ch = best
     left, right = x, w - (x + cw)
@@ -138,4 +143,29 @@ def calculate_centering(normalized_img: np.ndarray) -> dict:
 
     horizontal = 50.0 if (left + right) == 0 else round(left / (left + right) * 100.0, 2)
     vertical = 50.0 if (top + bottom) == 0 else round(top / (top + bottom) * 100.0, 2)
-    return {"horizontal": horizontal, "vertical": vertical, "detected": True}
+    return {"horizontal": horizontal, "vertical": vertical, "detected": True, "bbox": best}
+
+
+def build_annotated_image(normalized_img: np.ndarray, damaged_mask: np.ndarray, centering: dict) -> np.ndarray:
+    """
+    Draw a visual debug overlay on top of the normalized card image, showing exactly what the
+    geometric agent measured: the perimeter band checked for edge wear (yellow), the pixels
+    actually flagged as worn within it (red), and the detected centering frame (cyan).
+    """
+    annotated = normalized_img.copy()
+    h, w = annotated.shape[:2]
+    border = config.EDGE_WEAR_BORDER_PX
+
+    # Yellow outline of the perimeter band inspected for wear.
+    cv2.rectangle(annotated, (border, border), (w - border, h - border), (0, 255, 255), 1)
+
+    # Red highlight on pixels actually flagged as damaged.
+    annotated[damaged_mask] = (0, 0, 255)
+
+    # Cyan rectangle on the detected centering frame, if any.
+    bbox = centering.get("bbox")
+    if centering.get("detected") and bbox:
+        x, y, cw, ch = bbox
+        cv2.rectangle(annotated, (x, y), (x + cw, y + ch), (255, 255, 0), 2)
+
+    return annotated

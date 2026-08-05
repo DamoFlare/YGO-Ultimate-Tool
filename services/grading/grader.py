@@ -6,17 +6,30 @@ Known scope limitation: real BGS grades 4 subgrades (Centering, Corners, Edges, 
 grader only computes 3 (Centering, Edges, Surface) — corner-specific wear detection isn't
 implemented by either agent. See .CLAUDE/07-grading.md.
 """
+from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Tuple
+from typing import Dict, List, Tuple
+
+import cv2
+from PIL import Image
 
 import config
 from models import GradingResult
 from services.grading.ai_agent import InspectorAgent
 from services.grading.geometric_agent import (
+    build_annotated_image,
     calculate_centering,
     calculate_edge_wear,
     normalize_card_image,
 )
+
+
+@dataclass
+class DebugImages:
+    """Images for the Grading tab's transparency panel. Not a Pydantic model — PIL Images
+    aren't JSON-serializable and don't need to be, they're never persisted to collection.json."""
+    original: Image.Image
+    annotated: Image.Image
 
 
 def _lookup_subgrade(value: float, thresholds: List[Tuple[float, float]], min_subgrade: float) -> float:
@@ -27,16 +40,62 @@ def _lookup_subgrade(value: float, thresholds: List[Tuple[float, float]], min_su
     return min_subgrade
 
 
+def _bgr_to_pil(img) -> Image.Image:
+    return Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+
+
+def _build_explanation(
+    centering_subgrade: float,
+    edges_subgrade: float,
+    surface_subgrade: float,
+    edge_wear_pct: float,
+    centering: Dict,
+    surface_details: Dict,
+) -> str:
+    """Compose a deterministic, human-readable explanation of why the final grade came out as it
+    did — grounded in the actual numbers/formula, not just re-stating the VLM's own prose."""
+    subgrades = {"Centering": centering_subgrade, "Edges": edges_subgrade, "Surface": surface_subgrade}
+    bottleneck_name = min(subgrades, key=subgrades.get)
+    bottleneck_value = subgrades[bottleneck_name]
+    cap = round(bottleneck_value + 1.0, 1)
+
+    if bottleneck_name == "Centering":
+        reason = (
+            f"la centratura rilevata (H {centering.get('horizontal', 50):.0f}/"
+            f"{100 - centering.get('horizontal', 50):.0f}, V {centering.get('vertical', 50):.0f}/"
+            f"{100 - centering.get('vertical', 50):.0f}) è lontana dal 50/50 ideale"
+            if centering.get("detected")
+            else "la centratura non è stata rilevata con sicurezza, quindi è stato usato un valore prudenziale"
+        )
+    elif bottleneck_name == "Edges":
+        reason = f"il {edge_wear_pct:.1f}% del bordo mostra segni di usura rispetto al colore atteso"
+    else:
+        scratch = surface_details.get("scratch_severity", "none")
+        crease = surface_details.get("crease_severity", "none")
+        reason = f"l'AI ha rilevato graffi '{scratch}' e pieghe '{crease}' sulla superficie"
+
+    return (
+        f"Il sotto-voto più basso è {bottleneck_name} ({bottleneck_value:.1f}/10), perché {reason}. "
+        f"Per regola stile BGS, il grade finale non può superare il sotto-voto peggiore + 1.0 "
+        f"({cap:.1f}/10), anche se la media pesata dei tre sotto-voti sarebbe più alta."
+    )
+
+
 class CardGrader:
     """Runs both agents on a card photo and computes the final weighted/capped grade."""
 
     def __init__(self):
         self.inspector = InspectorAgent()
 
-    async def grade_card(self, image_path: Path) -> GradingResult:
+    async def grade_card(self, image_path: Path) -> Tuple[GradingResult, DebugImages]:
+        # 0. Keep the original photo for the transparency panel (separate read from the one
+        # inside normalize_card_image — a second decode of one image is cheap and avoids
+        # touching that function's signature).
+        original = cv2.imread(str(image_path))
+
         # 1. Geometric Agent — deterministic, synchronous, no AI involved.
         normalized = normalize_card_image(image_path)
-        edge_wear_pct = calculate_edge_wear(normalized)
+        edge_wear_pct, damaged_mask = calculate_edge_wear(normalized)
         centering = calculate_centering(normalized)
 
         # 2. Inspector Agent — local VLM, asynchronous.
@@ -82,7 +141,11 @@ class CardGrader:
                 condition = bucket
                 break
 
-        return GradingResult(
+        explanation = _build_explanation(
+            centering_subgrade, edges_subgrade, surface_subgrade, edge_wear_pct, centering, surface_details
+        )
+
+        result = GradingResult(
             centering_ratio={"horizontal": centering["horizontal"], "vertical": centering["vertical"]},
             edge_wear_pct=edge_wear_pct,
             surface_details=surface_details,
@@ -91,7 +154,13 @@ class CardGrader:
             surface_subgrade=surface_subgrade,
             final_grade=final_grade,
             condition=condition,
+            explanation=explanation,
         )
+
+        annotated = build_annotated_image(normalized, damaged_mask, centering)
+        debug_images = DebugImages(original=_bgr_to_pil(original), annotated=_bgr_to_pil(annotated))
+
+        return result, debug_images
 
     async def close(self) -> None:
         await self.inspector.close()

@@ -25,17 +25,22 @@ invece:
    (`config.EDGE_WEAR_BORDER_PX`, default 8px) con un anello di riferimento più interno
    (`config.EDGE_WEAR_REFERENCE_OFFSET_PX`, default 24px), calcolando la % di pixel che si
    discostano per colore oltre `config.EDGE_WEAR_COLOR_DISTANCE_THRESHOLD` (default 40.0, distanza
-   euclidea in BGR).
+   euclidea in BGR). Ritorna una tupla `(pct, damaged_mask)`: `damaged_mask` è una maschera
+   booleana (h,w) con esattamente i pixel segnalati come usurati, usata per l'overlay visivo (vedi
+   sezione "Trasparenza" sotto).
 3. `geometric_agent.calculate_centering(img)` — cerca un contorno quadrilatero la cui area rientra
    in `config.CENTERING_FRAME_AREA_RATIO_RANGE` (default 0.55-0.95 dell'area totale della carta) e
    ne misura i margini rispetto ai bordi fisici, ritornando i rapporti orizzontale/verticale
-   (50/50 = perfetto) e un flag `detected`.
+   (50/50 = perfetto), un flag `detected`, e `bbox` (x,y,w,h del frame rilevato, `None` se non
+   rilevato) — anche questo usato solo per l'overlay visivo, non per il calcolo del sotto-voto.
 4. `ai_agent.InspectorAgent.analyze_surface(img)` — invia l'immagine **già normalizzata** al
    modello `llava` via Ollama locale (`config.OLLAMA_BASE_URL`), con
-   `config.INSPECTOR_SYSTEM_PROMPT` (fisso, fornito dall'utente in fase di design — non
-   modificarne lo schema JSON senza aggiornare anche il parsing in `ai_agent.py`), `format="json"`,
-   `temperature=0.1`. Ritorna `has_scratches`, `scratch_severity`, `has_creases`,
-   `crease_severity`, `details`.
+   `config.INSPECTOR_SYSTEM_PROMPT` (fisso nello schema JSON — non modificarlo senza aggiornare
+   anche il parsing in `ai_agent.py`; il contenuto testuale richiesto per `details` è invece
+   liberamente modificabile), `format="json"`, `temperature=0.1`. Ritorna `has_scratches`,
+   `scratch_severity`, `has_creases`, `crease_severity`, `details` (2-3 frasi che descrivono cosa
+   è stato osservato, dove sulla carta, e il livello di confidenza — esteso da "1 frase" per dare
+   più contesto nella UI).
 
 ## Calcolo dei sotto-voti (1-10)
 
@@ -90,6 +95,41 @@ Tutte le soglie/pesi sono costanti nominate in `config.py` (sezione "Grading Mod
 `geometric_agent.py`. Se il grade percepito è sistematicamente troppo alto/basso rispetto a
 carte fisiche note, il primo posto dove intervenire sono i pesi in
 `config.GRADE_SUBGRADE_WEIGHTS` o le soglie `*_TO_SUBGRADE`.
+
+## Trasparenza: immagini di debug e spiegazione del grade
+
+Aggiunto dopo che l'utente ha chiesto di poter vedere la foto caricata, come viene ritagliata, e
+capire perché si ottiene un certo grade (non solo i numeri nudi).
+
+- `CardGrader.grade_card()` ritorna **una tupla** `(GradingResult, DebugImages)`, non solo
+  `GradingResult` — attenzione se si aggiungono nuovi call site. `DebugImages` (dataclass in
+  `grader.py`, non Pydantic — contiene `PIL.Image.Image`, non serializzabili e non persistite in
+  `collection.json`) ha due campi:
+  - `original` — la foto così com'è stata caricata, nessuna elaborazione.
+  - `annotated` — l'immagine normalizzata (`normalize_card_image`) con overlay disegnati da
+    `geometric_agent.build_annotated_image(normalized_img, damaged_mask, centering)`: rettangolo
+    giallo sulla banda perimetrale controllata per l'usura, pixel rossi esattamente dove
+    `damaged_mask` è `True`, rettangolo ciano sul frame di centratura rilevato (`centering["bbox"]`,
+    solo se `detected=True`). Una singola immagine risponde quindi sia a "come viene
+    ritagliata/centrata" sia a "quali analisi vengono fatte".
+- Mostrate nella pagina web (`web/routers/grading.py` + `templates/_grading_result.html`) come
+  `<img src="data:image/png;base64,...">` — `web.state.image_to_data_uri(pil_image)` codifica
+  ogni `PIL.Image` in PNG e la incorpora direttamente nell'HTML di risposta. Nessun file
+  temporaneo da servire, nessun protocollo grafico, scaling gestito nativamente dal browser via
+  CSS (`max-width: 100%` su `.grading-images img`).
+- `GradingResult.explanation` (campo stringa) — spiegazione deterministica generata da
+  `grader._build_explanation()`: identifica quale sotto-voto è il "collo di bottiglia" (il
+  minimo dei tre, quello che determina il cap `peggiore + 1.0`) e compone 2-3 frasi in italiano
+  che collegano numero→causa→effetto sul grade finale. Distinta dal testo libero del VLM
+  (`surface_details["details"]`), mostrato separatamente come "Cosa ha visto l'AI".
+
+Nota storica: la prima versione di questa sezione mostrava le immagini in una TUI Textual
+tramite la libreria `textual-image`. Ha causato due bug di libreria non banali (sovrapposizione
+di layout, poi immagini non scalate correttamente al box) — è stata la ragione diretta per cui
+l'intera app è stata ricostruita come web app. Vedi
+[06-note-e-discrepanze.md](06-note-e-discrepanze.md) per la cronologia completa. Il problema è
+del tutto assente nell'implementazione web attuale: un `<img>` con `max-width: 100%` non ha
+questi edge case.
 
 ## Limiti noti (scope dichiarato in fase di design)
 
