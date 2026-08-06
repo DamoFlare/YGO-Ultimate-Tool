@@ -5,19 +5,35 @@
   <h2>🩺 Grading Carta (Computer Vision + AI locale)</h2>
   <p class="description">
     Analizza una foto della carta fisica per stimare un grade oggettivo 1-10, stile PSA/BGS:
-    <b>Centering</b> ed <b>Edges</b> sono misurati in modo deterministico (OpenCV), <b>Surface</b>
-    (graffi/pieghe) da un modello Vision locale (Ollama + llava, nessun dato lascia il tuo PC).
+    <b>Centering</b>, <b>Edges</b> e <b>Corners</b> sono misurati in modo deterministico (OpenCV),
+    <b>Surface</b> (graffi/pieghe) da un modello Vision locale (Ollama + llava, nessun dato lascia
+    il tuo PC).
   </p>
-  <p class="warning-note">⚠️ Limite noto: a differenza del PSA/BGS reale, non viene calcolato un sotto-voto separato per i Corners (angoli).</p>
+  <p class="warning-note">⚠️ Limite noto: Centering non viene quasi mai rilevato con sicurezza sulle foto reali (usa un valore prudenziale) e le soglie di Edges/Corners non sono ancora tarate su un dataset di carte con condizione nota. Vedi .CLAUDE/07-grading.md.</p>
 
-  <form hx-post="/grading/analyze" hx-target="#grading-result" hx-swap="outerHTML" hx-encoding="multipart/form-data" hx-indicator="#analyze-indicator" class="action-bar">
-    <input type="file" name="image" accept="image/*" required>
-    <button class="btn-primary" type="submit">🩺 Analizza Carta</button>
-    <span id="analyze-indicator" class="htmx-indicator">Analisi in corso (può richiedere qualche secondo)...</span>
+  <form hx-post="/grading/analyze" hx-target="#grading-result" hx-swap="outerHTML" hx-encoding="multipart/form-data" hx-indicator="#analyze-indicator" class="action-bar" style="flex-direction: column; align-items: stretch;">
+    <div class="action-bar">
+      <input type="file" id="grading-image-input" name="image" accept="image/*" required>
+      <button class="btn-primary" type="submit">🩺 Analizza Carta</button>
+      <span id="analyze-indicator" class="htmx-indicator">Analisi in corso (può richiedere qualche secondo)...</span>
+    </div>
+    <input type="hidden" id="grading-corners-input" name="corners" value="">
+    <div id="cropper-wrap" style="display: none;">
+      <p class="description">✂️ Trascina i 4 angoli esattamente sui vertici fisici della carta, poi premi "Analizza Carta".</p>
+      <div class="cropper-container" id="cropper-container">
+        <img id="cropper-image" alt="Anteprima della foto caricata, da ritagliare">
+        <svg class="cropper-svg"><polygon id="cropper-poly" class="cropper-poly"></polygon></svg>
+        <div class="cropper-magnifier" id="cropper-magnifier"></div>
+        <div class="cropper-handle" data-idx="0" title="Alto-sinistra"></div>
+        <div class="cropper-handle" data-idx="1" title="Alto-destra"></div>
+        <div class="cropper-handle" data-idx="2" title="Basso-destra"></div>
+        <div class="cropper-handle" data-idx="3" title="Basso-sinistra"></div>
+      </div>
+    </div>
   </form>
 
   <div id="grading-result">
-    <p class="description">Carica una foto e premi "Analizza Carta" per iniziare.</p>
+    <p class="description">Carica una foto, ritaglia la carta trascinando i 4 angoli, poi premi "Analizza Carta".</p>
   </div>
 </div>
 
@@ -31,4 +47,5 @@
   <div id="grading-feedback"></div>
   {% include "_grading_search_results.html" %}
 </div>
+<script src="/static/corner-picker.js"></script>
 {% endblock %}

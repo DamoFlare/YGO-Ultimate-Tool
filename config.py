@@ -64,12 +64,26 @@ OLLAMA_BASE_URL = "http://localhost:11434"
 OLLAMA_VISION_MODEL = "llava"
 
 # Geometric Agent — image processing tunables (services/grading/geometric_agent.py)
+# NOTE: the card outline is no longer auto-detected — the user crops it manually in the web UI
+# (drags the 4 corners over the uploaded photo) and normalize_card_image() just perspective-warps
+# those user-supplied points. Several rounds of automatic detection (Canny, HSV saturation, shape
+# validation, border-expansion) all still cropped imprecisely on some real photos — see
+# "Cronologia: indagine precisione CV" in .CLAUDE/07-grading.md for the full history.
 NORMALIZED_CARD_WIDTH = 750
 NORMALIZED_CARD_HEIGHT = 1047  # standard TCG card ratio 63mm x 88mm
-CARD_SATURATION_THRESHOLD = 60  # HSV saturation above which a pixel counts as "card" vs background
-EDGE_WEAR_BORDER_PX = 8            # thin outer perimeter strip inspected for wear
-EDGE_WEAR_REFERENCE_OFFSET_PX = 24  # inner ring used as the "expected border color" baseline
-EDGE_WEAR_COLOR_DISTANCE_THRESHOLD = 40.0  # BGR distance beyond which a pixel counts as "worn"
+CARD_GRAYSCALE_WHITENESS_THRESHOLD = 180.0  # grayscale value (0-255) above which a pixel counts
+                                             # as "whitened" (chipped black border/corner exposing
+                                             # the white cardstock beneath) — an absolute physical
+                                             # threshold, not a color-distance-to-reference one, so
+                                             # it needs no reference ring and isn't thrown off by a
+                                             # directional light source. Shared by edge wear and
+                                             # corner whitening below.
+EDGE_WEAR_BORDER_PX = 5             # outer perimeter strip inspected for whitening
+EDGE_WEAR_SKIN_PX = 2               # pixels closest to the crop boundary skipped: the perspective
+                                     # warp in normalize_card_image() leaves a couple of blended/
+                                     # anti-aliased pixels right at the boundary that would
+                                     # otherwise be misread as whitening
+CORNER_ROI_PX = 50                  # size (px) of the square ROI inspected at each of the 4 corners
 CENTERING_FRAME_AREA_RATIO_RANGE = (0.55, 0.95)  # expected print-frame area vs. full card area
 CENTERING_FALLBACK_SUBGRADE = 7.0  # used when the print frame can't be confidently detected
 
@@ -88,7 +102,7 @@ CENTERING_DEVIATION_TO_SUBGRADE = [
 ]
 CENTERING_MIN_SUBGRADE = 1.0
 
-# Edges: % of the thin border perimeter flagged as worn/damaged, mapped to a 1-10 subgrade.
+# Edges: % of the thin border perimeter flagged as whitened, mapped to a 1-10 subgrade.
 EDGE_WEAR_PCT_TO_SUBGRADE = [
     (2.0, 10.0),
     (5.0, 9.0),
@@ -102,6 +116,22 @@ EDGE_WEAR_PCT_TO_SUBGRADE = [
 ]
 EDGE_WEAR_MIN_SUBGRADE = 1.0
 
+# Corners: % of the 4 corner ROIs flagged as whitened, mapped to a 1-10 subgrade. Same ladder
+# shape as edge wear (same underlying measurement, just a different region) — not yet validated
+# against real photos of worn corners, see .CLAUDE/07-grading.md.
+CORNER_WHITENESS_PCT_TO_SUBGRADE = [
+    (2.0, 10.0),
+    (5.0, 9.0),
+    (10.0, 8.0),
+    (15.0, 7.0),
+    (25.0, 6.0),
+    (35.0, 5.0),
+    (50.0, 4.0),
+    (65.0, 3.0),
+    (80.0, 2.0),
+]
+CORNER_MIN_SUBGRADE = 1.0
+
 # Surface: VLM-reported defect severity mapped to a 1-10 subgrade.
 SEVERITY_TO_SUBGRADE = {
     "none": 10.0,
@@ -110,17 +140,19 @@ SEVERITY_TO_SUBGRADE = {
 }
 UNKNOWN_SEVERITY_FALLBACK_SUBGRADE = 7.0  # used if the VLM returns an unexpected severity string
 
-# Final grade = weighted average of the 3 subgrades, then capped at min(subgrades) + 1.0
+# Final grade = weighted average of the 4 subgrades, then capped at min(subgrades) + 1.0
 # (BGS-style: a single bad subgrade drags the overall grade down), rounded to the nearest 0.5.
 # Surface defects are weighted highest since they most affect perceived/resale value; centering
 # is weighted lowest since minor miscentering rarely changes a card's market condition bucket.
-# NOTE: known scope limitation — real BGS also grades Corners separately; this system does not
-# (neither the geometric agent nor the VLM prompt cover corner-specific wear). See
-# .CLAUDE/07-grading.md.
+# Corners was added after centering/edges/surface were already weighted 20/30/50 — rather than
+# picking a fresh split by feel, the original three were scaled down proportionally (x0.8) to
+# make room for corners at 0.20, preserving their relative weighting. Not validated against real
+# graded cards, see .CLAUDE/07-grading.md.
 GRADE_SUBGRADE_WEIGHTS = {
-    "centering": 0.20,
-    "edges": 0.30,
-    "surface": 0.50,
+    "centering": 0.16,
+    "edges": 0.24,
+    "corners": 0.20,
+    "surface": 0.40,
 }
 
 # Maps the final 1-10 grade onto the existing NM/EX/GD/LP/PO market condition buckets so a

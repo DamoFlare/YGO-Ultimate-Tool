@@ -88,6 +88,7 @@ class GradingResult(BaseModel):
     # Geometric Agent (OpenCV) raw measurements
     centering_ratio: Dict[str, float] = Field(default_factory=dict)  # e.g. {"horizontal": 55.0, "vertical": 50.0}
     edge_wear_pct: float = 0.0
+    corner_whitening_pct: float = 0.0
 
     # Inspector Agent (VLM) raw response
     surface_details: Dict[str, Any] = Field(default_factory=dict)  # raw parsed JSON from the VLM
@@ -95,6 +96,7 @@ class GradingResult(BaseModel):
     # Computed 1-10 subgrades
     centering_subgrade: float = 0.0
     edges_subgrade: float = 0.0
+    corners_subgrade: float = 0.0
     surface_subgrade: float = 0.0
 
     # Final result

@@ -120,7 +120,7 @@ di aggiungere `.gitignore` per questi file se in futuro si vuole separare dati u
 - Gestione errori "silenziosa": `ygoprodeck_api.py`/`storage.py` usano `try/except` ampi con
   `print()` verso stdout, non eccezioni propagate né un modulo di logging strutturato. Il modulo
   di Grading (`services/grading/`) devia intenzionalmente da questa convenzione: solleva
-  eccezioni tipizzate (`CardDetectionError`, `InspectorAgentError`) con messaggi comprensibili,
+  eccezioni tipizzate (`CardCropError`, `InspectorAgentError`) con messaggi comprensibili,
   catturate e mostrate nel partial di risposta da `web/routers/grading.py` — preferire questo
   pattern per nuovo codice.
 

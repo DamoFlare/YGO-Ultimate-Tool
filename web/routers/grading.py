@@ -7,7 +7,12 @@ data URIs in the HTML response — no terminal graphics protocol, no temporary i
 manage, scaling handled natively by the browser's own CSS. This is the whole reason this
 feature moved off the TUI — see .CLAUDE/06-note-e-discrepanze.md for the two Textual/
 textual-image bugs that motivated the move.
+
+The card outline is no longer auto-detected: the user drags 4 corner handles over the uploaded
+photo (web/static/corner-picker.js) and submits their coordinates as a JSON string in the
+`corners` field, alongside the image file. See .CLAUDE/07-grading.md.
 """
+import json
 import tempfile
 from pathlib import Path
 
@@ -15,7 +20,7 @@ from fastapi import APIRouter, Depends, File, Form, Request, UploadFile
 from fastapi.responses import HTMLResponse
 
 from services.grading.ai_agent import InspectorAgentError
-from services.grading.geometric_agent import CardDetectionError
+from services.grading.geometric_agent import CardCropError
 from web.deps import get_state, render
 from web.state import AppState, image_to_data_uri
 
@@ -24,25 +29,40 @@ router = APIRouter()
 
 @router.get("/grading", response_class=HTMLResponse)
 async def grading_page(request: Request):
-    return render(request, 
+    return render(request,
         "grading.html",
         {"request": request, "active_tab": "grading", "cards": [], "searched": False},
     )
 
 
 @router.post("/grading/analyze", response_class=HTMLResponse)
-async def grading_analyze(request: Request, image: UploadFile = File(...), state: AppState = Depends(get_state)):
+async def grading_analyze(
+    request: Request,
+    image: UploadFile = File(...),
+    corners: str = Form(...),
+    state: AppState = Depends(get_state),
+):
+    try:
+        corner_points = json.loads(corners)
+        if not (isinstance(corner_points, list) and len(corner_points) == 4):
+            raise ValueError("expected 4 points")
+    except (json.JSONDecodeError, ValueError):
+        return render(request,
+            "_grading_result.html",
+            {"request": request, "error": "Ritaglia la carta trascinando i 4 angoli prima di analizzare."},
+        )
+
     suffix = Path(image.filename or "upload.jpg").suffix or ".jpg"
     with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
         tmp.write(await image.read())
         tmp_path = Path(tmp.name)
 
     try:
-        result, debug_images = await state.grader.grade_card(tmp_path)
-    except CardDetectionError as e:
-        return render(request, 
+        result, debug_images = await state.grader.grade_card(tmp_path, corner_points)
+    except CardCropError as e:
+        return render(request,
             "_grading_result.html",
-            {"request": request, "error": f"Impossibile rilevare la carta nell'immagine: {e}"},
+            {"request": request, "error": f"Ritaglio non valido: {e}"},
         )
     except InspectorAgentError as e:
         return render(request, "_grading_result.html", {"request": request, "error": str(e)})
@@ -102,6 +122,7 @@ async def grading_save(
     grade_breakdown = {
         "centering": r.centering_subgrade,
         "edges": r.edges_subgrade,
+        "corners": r.corners_subgrade,
         "surface": r.surface_subgrade,
     }
 

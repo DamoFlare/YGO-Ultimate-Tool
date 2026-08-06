@@ -18,7 +18,8 @@
         <li><b>Centering</b>: {{ '%.1f'|format(result.centering_subgrade) }}/10
           (H {{ '%.1f'|format(result.centering_ratio.get('horizontal', 50)) }}/{{ '%.1f'|format(100 - result.centering_ratio.get('horizontal', 50)) }},
           V {{ '%.1f'|format(result.centering_ratio.get('vertical', 50)) }}/{{ '%.1f'|format(100 - result.centering_ratio.get('vertical', 50)) }})</li>
-        <li><b>Edges</b>: {{ '%.1f'|format(result.edges_subgrade) }}/10 (usura bordo: {{ '%.1f'|format(result.edge_wear_pct) }}%)</li>
+        <li><b>Edges</b>: {{ '%.1f'|format(result.edges_subgrade) }}/10 (sbiancamento bordo: {{ '%.1f'|format(result.edge_wear_pct) }}%)</li>
+        <li><b>Corners</b>: {{ '%.1f'|format(result.corners_subgrade) }}/10 (sbiancamento angoli: {{ '%.1f'|format(result.corner_whitening_pct) }}%)</li>
         <li><b>Surface</b>: {{ '%.1f'|format(result.surface_subgrade) }}/10
           (graffi: {{ result.surface_details.get('scratch_severity', 'none') }}, pieghe: {{ result.surface_details.get('crease_severity', 'none') }})</li>
       </ul>

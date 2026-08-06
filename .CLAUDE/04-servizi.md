@@ -64,18 +64,23 @@ codice.
 - **`geometric_agent.py`** — zero dipendenze AI, solo `cv2`/`numpy`. Dettagli e cronologia
   dell'indagine sulla precisione (crop, edge wear, centering) in
   [07-grading.md](07-grading.md); qui solo un riepilogo:
-  - `normalize_card_image(path)` — rileva il contorno della carta con doppia strategia
-    (`_foreground_contour`, segmentazione per saturazione HSV — primaria, robusta su sfondi con
-    texture come il legno; `_largest_contour`, Canny + contorno più grande — fallback), valida il
-    quadrilatero risultante (`_quad_is_plausible`, proporzioni/angoli) prima di fidarsi del
-    perspective warp altrimenti usa `minAreaRect`, e produce un rettangolo canonico
-    (`config.NORMALIZED_CARD_WIDTH/HEIGHT`). Solleva `CardDetectionError` se non trova proprio
-    nessun contorno.
-  - `calculate_edge_wear(img)` — % di pixel del perimetro sottile che si discostano (per colore)
-    da un anello di riferimento più interno, calcolato **separatamente per ciascuno dei 4 lati**
-    (non un unico riferimento per tutta la carta, per non confondere un gradiente di luce con
-    usura reale); ritorna una percentuale di "usura". Calibrazione dell'offset in mm→pixel non
-    ancora validata su foto reali (limite noto, vedi 07-grading.md).
+  - `normalize_card_image(path, corners)` — **non rileva più nulla automaticamente**: fa
+    perspective warp del quadrilatero passato da chi chiama (i 4 angoli scelti a mano dall'utente
+    in `web/static/corner-picker.js`) verso un rettangolo canonico
+    (`config.NORMALIZED_CARD_WIDTH/HEIGHT`). Quattro round di rilevamento automatico (Canny,
+    segmentazione per saturazione HSV, validazione di forma, espansione del bordo) sono stati
+    tentati e abbandonati nella stessa sessione — vedi cronologia in 07-grading.md. Solleva
+    `CardCropError` (rinominata da `CardDetectionError` — il significato è cambiato) se l'immagine
+    non si apre o se `corners` non ha esattamente 4 punti.
+  - `calculate_edge_wear(img)` — % di pixel del perimetro sottile con luminosità sopra una
+    **soglia assoluta di sbiancamento** (`config.CARD_GRAYSCALE_WHITENESS_THRESHOLD`), non più
+    una distanza relativa da un anello di riferimento (versione precedente, abbandonata per un
+    problema di calibrazione — vedi cronologia in 07-grading.md); ritorna una percentuale di
+    "usura". Soglia verificata solo su carte in buono stato (percentuali vicine a 0 come atteso),
+    non ancora su una carta con usura reale — limite noto, vedi 07-grading.md.
+  - `calculate_corner_whitening(img)` — stessa soglia assoluta di `calculate_edge_wear`, applicata
+    a una ROI 50×50px per ciascuno dei 4 angoli. Misura solo lo sbiancamento, non l'arrotondamento
+    geometrico dell'angolo (perso per costruzione dal perspective warp) — vedi 07-grading.md.
   - `calculate_centering(img)` — cerca il frame stampato interno (contorno quadrilatero convesso,
     non a contatto coi bordi immagine, area in un range plausibile) e misura i margini rispetto ai
     bordi fisici della carta, ritornando i rapporti orizzontale/verticale (50/50 = perfetto) più

@@ -1,14 +1,11 @@
 """
 CardGrader: orchestrator that merges the Geometric Agent (deterministic CV) and the Inspector
-Agent (local VLM) into a single 1-10 grade with PSA/BGS-style subgrades.
-
-Known scope limitation: real BGS grades 4 subgrades (Centering, Corners, Edges, Surface). This
-grader only computes 3 (Centering, Edges, Surface) — corner-specific wear detection isn't
-implemented by either agent. See .CLAUDE/07-grading.md.
+Agent (local VLM) into a single 1-10 grade with PSA/BGS-style subgrades (Centering, Edges,
+Corners, Surface).
 """
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Union
 
 import cv2
 from PIL import Image
@@ -19,6 +16,7 @@ from services.grading.ai_agent import InspectorAgent
 from services.grading.geometric_agent import (
     build_annotated_image,
     calculate_centering,
+    calculate_corner_whitening,
     calculate_edge_wear,
     normalize_card_image,
 )
@@ -47,14 +45,21 @@ def _bgr_to_pil(img) -> Image.Image:
 def _build_explanation(
     centering_subgrade: float,
     edges_subgrade: float,
+    corners_subgrade: float,
     surface_subgrade: float,
     edge_wear_pct: float,
+    corner_whitening_pct: float,
     centering: Dict,
     surface_details: Dict,
 ) -> str:
     """Compose a deterministic, human-readable explanation of why the final grade came out as it
     did — grounded in the actual numbers/formula, not just re-stating the VLM's own prose."""
-    subgrades = {"Centering": centering_subgrade, "Edges": edges_subgrade, "Surface": surface_subgrade}
+    subgrades = {
+        "Centering": centering_subgrade,
+        "Edges": edges_subgrade,
+        "Corners": corners_subgrade,
+        "Surface": surface_subgrade,
+    }
     bottleneck_name = min(subgrades, key=subgrades.get)
     bottleneck_value = subgrades[bottleneck_name]
     cap = round(bottleneck_value + 1.0, 1)
@@ -68,7 +73,9 @@ def _build_explanation(
             else "la centratura non è stata rilevata con sicurezza, quindi è stato usato un valore prudenziale"
         )
     elif bottleneck_name == "Edges":
-        reason = f"il {edge_wear_pct:.1f}% del bordo mostra segni di usura rispetto al colore atteso"
+        reason = f"il {edge_wear_pct:.1f}% del bordo mostra segni di sbiancamento/usura"
+    elif bottleneck_name == "Corners":
+        reason = f"il {corner_whitening_pct:.1f}% dell'area dei 4 angoli mostra segni di sbiancamento"
     else:
         scratch = surface_details.get("scratch_severity", "none")
         crease = surface_details.get("crease_severity", "none")
@@ -77,7 +84,7 @@ def _build_explanation(
     return (
         f"Il sotto-voto più basso è {bottleneck_name} ({bottleneck_value:.1f}/10), perché {reason}. "
         f"Per regola stile BGS, il grade finale non può superare il sotto-voto peggiore + 1.0 "
-        f"({cap:.1f}/10), anche se la media pesata dei tre sotto-voti sarebbe più alta."
+        f"({cap:.1f}/10), anche se la media pesata dei quattro sotto-voti sarebbe più alta."
     )
 
 
@@ -87,15 +94,21 @@ class CardGrader:
     def __init__(self):
         self.inspector = InspectorAgent()
 
-    async def grade_card(self, image_path: Path) -> Tuple[GradingResult, DebugImages]:
+    async def grade_card(
+        self, image_path: Path, corners: List[Union[Tuple[float, float], List[float]]]
+    ) -> Tuple[GradingResult, DebugImages]:
+        """`corners` are the 4 card corners in original-photo pixel coordinates, picked manually
+        by the user in the web UI (see .CLAUDE/07-grading.md — the outline is no longer
+        auto-detected)."""
         # 0. Keep the original photo for the transparency panel (separate read from the one
         # inside normalize_card_image — a second decode of one image is cheap and avoids
         # touching that function's signature).
         original = cv2.imread(str(image_path))
 
         # 1. Geometric Agent — deterministic, synchronous, no AI involved.
-        normalized = normalize_card_image(image_path)
+        normalized = normalize_card_image(image_path, corners)
         edge_wear_pct, damaged_mask = calculate_edge_wear(normalized)
+        corner_whitening_pct, corner_damaged_mask = calculate_corner_whitening(normalized)
         centering = calculate_centering(normalized)
 
         # 2. Inspector Agent — local VLM, asynchronous.
@@ -114,6 +127,10 @@ class CardGrader:
             edge_wear_pct, config.EDGE_WEAR_PCT_TO_SUBGRADE, config.EDGE_WEAR_MIN_SUBGRADE
         )
 
+        corners_subgrade = _lookup_subgrade(
+            corner_whitening_pct, config.CORNER_WHITENESS_PCT_TO_SUBGRADE, config.CORNER_MIN_SUBGRADE
+        )
+
         scratch_subgrade = config.SEVERITY_TO_SUBGRADE.get(
             surface_details["scratch_severity"], config.UNKNOWN_SEVERITY_FALLBACK_SUBGRADE
         )
@@ -127,9 +144,10 @@ class CardGrader:
         weighted_avg = (
             centering_subgrade * weights["centering"]
             + edges_subgrade * weights["edges"]
+            + corners_subgrade * weights["corners"]
             + surface_subgrade * weights["surface"]
         )
-        worst_subgrade = min(centering_subgrade, edges_subgrade, surface_subgrade)
+        worst_subgrade = min(centering_subgrade, edges_subgrade, corners_subgrade, surface_subgrade)
         final_grade = min(weighted_avg, worst_subgrade + 1.0)
         final_grade = round(final_grade * 2) / 2.0  # nearest 0.5
         final_grade = max(1.0, min(10.0, final_grade))
@@ -142,22 +160,31 @@ class CardGrader:
                 break
 
         explanation = _build_explanation(
-            centering_subgrade, edges_subgrade, surface_subgrade, edge_wear_pct, centering, surface_details
+            centering_subgrade,
+            edges_subgrade,
+            corners_subgrade,
+            surface_subgrade,
+            edge_wear_pct,
+            corner_whitening_pct,
+            centering,
+            surface_details,
         )
 
         result = GradingResult(
             centering_ratio={"horizontal": centering["horizontal"], "vertical": centering["vertical"]},
             edge_wear_pct=edge_wear_pct,
+            corner_whitening_pct=corner_whitening_pct,
             surface_details=surface_details,
             centering_subgrade=centering_subgrade,
             edges_subgrade=edges_subgrade,
+            corners_subgrade=corners_subgrade,
             surface_subgrade=surface_subgrade,
             final_grade=final_grade,
             condition=condition,
             explanation=explanation,
         )
 
-        annotated = build_annotated_image(normalized, damaged_mask, centering)
+        annotated = build_annotated_image(normalized, damaged_mask, centering, corner_damaged_mask)
         debug_images = DebugImages(original=_bgr_to_pil(original), annotated=_bgr_to_pil(annotated))
 
         return result, debug_images
