@@ -1,0 +1,28 @@
+<div id="grading-pending" {{ 'hx-swap-oob="true"' if oob else '' }}>
+  {% if flash %}<p class="result-box{{ ' error' if flash_error else '' }}" style="margin-bottom:0.75rem;">{{ flash }}</p>{% endif %}
+  {% if pending %}
+  <div class="table-scroll">
+  <table>
+    <thead><tr><th>Foto</th><th>Grade</th><th>Condizione</th><th></th></tr></thead>
+    <tbody>
+    {% for p in pending %}
+      <tr>
+        <td><img src="{{ p.thumb_src }}" alt="{{ p.filename }}" style="max-width:56px; max-height:78px; border-radius:4px; display:block;"></td>
+        <td>{{ '%.1f'|format(p.result.final_grade) }}/10</td>
+        <td>{{ p.result.condition }}</td>
+        <td style="white-space:nowrap;">
+          <button class="btn" hx-get="/grading/pending/{{ p.id }}/link" hx-target="#pending-link-{{ p.id }}" hx-swap="innerHTML">🔗 Collega</button>
+          <button class="btn-error" hx-post="/grading/pending/{{ p.id }}/discard" hx-target="#grading-pending" hx-swap="outerHTML" hx-confirm="Scartare questa carta gradata? Il grade calcolato andrà perso.">🗑️</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4"><div id="pending-link-{{ p.id }}"></div></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% else %}
+  <p class="description">Nessuna carta gradata in attesa di collegamento.</p>
+  {% endif %}
+</div>

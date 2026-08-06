@@ -1,0 +1,6 @@
+<form class="action-bar" hx-post="/grading/search" hx-target="#grading-search-results-{{ pending_id }}" hx-swap="outerHTML">
+  <input type="hidden" name="pending_id" value="{{ pending_id }}">
+  <input type="text" name="query" placeholder="Cerca per nome, ID o codice set..." required>
+  <button class="btn-primary" type="submit">🔎 Cerca</button>
+</form>
+<div id="grading-search-results-{{ pending_id }}"></div>

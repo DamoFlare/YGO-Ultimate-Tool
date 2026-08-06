@@ -121,14 +121,19 @@ dependency `web.deps.get_state`). Limite noto e accettato, non un difetto di des
    `item.get_price_for_condition(cond)` per ogni condizione (prezzi reali CardTrader con
    fallback ai moltiplicatori di `config.CONDITION_MULTIPLIERS` solo dove manca un'inserzione
    attiva), calcolano le metriche aggregate, e renderizzano `_collection_content.html`.
-6. **Grading**: `POST /grading/analyze` (upload multipart `image`) salva il file in un temp path,
-   chiama `CardGrader.grade_card()` (che ritorna `(GradingResult, DebugImages)`), poi **cancella
-   il file temporaneo** e incorpora le due immagini (`DebugImages.original`/`.annotated`) come
-   PNG base64 direttamente nell'HTML di risposta (`web.state.image_to_data_uri`) — niente
-   protocollo grafico da terminale, niente file da servire via una route statica. Il risultato
-   resta in `AppState.last_grading_result`/`last_debug_images` (un solo slot) finché
-   `POST /grading/save` non lo collega a una carta della collezione (stesso schema
-   ricerca-e-conferma-stateless del punto 2). Dettagli completi in [07-grading.md](07-grading.md).
+6. **Grading**: il ritaglio della carta è manuale (l'utente trascina 4 angoli sulla foto caricata,
+   `web/static/corner-picker.js`), non più auto-rilevato — vedi [07-grading.md](07-grading.md) per
+   perché. `POST /grading/analyze` (upload multipart `image` + `corners`) salva il file in un
+   temp path, chiama `CardGrader.grade_card(path, corners)` (che ritorna `(GradingResult,
+   DebugImages)`), poi **cancella il file temporaneo** e incorpora le due immagini
+   (`DebugImages.original`/`.annotated`) come PNG base64 direttamente nell'HTML di risposta
+   (`web.state.image_to_data_uri`) — niente protocollo grafico da terminale, niente file da
+   servire via una route statica. Il risultato entra in `AppState.pending_gradings` (una lista,
+   non più un singolo slot — serve a più carte gradate in attesa contemporaneamente, sia da foto
+   singola sia da **Grading Bulk**: più foto/una cartella, stesso ritaglio manuale applicato una
+   alla volta, stessa `/grading/analyze` chiamata via `fetch()` da un sequencer client-side)
+   finché `POST /grading/save` (con un `pending_id` esplicito) non lo collega a una carta della
+   collezione. Dettagli completi in [07-grading.md](07-grading.md) e [05-ui.md](05-ui.md).
 
 ## Concorrenza
 

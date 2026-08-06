@@ -3,16 +3,19 @@ Shared application state for the web app — single-process, single-user, in-mem
 
 Mirrors what used to live as instance attributes on the Textual App (the retired ui/app.py):
 one shared YGOProDeckAPI/CardTraderAPI/StorageService/CardGrader instance, the collection loaded
-once at startup and mutated in place, plus the transient state needed by the two multi-step
-flows (Bulk Add's queue, Grading's last analyzed result). No per-user sessions — a deliberate
-simplification for this single-user local tool, see .CLAUDE/06-note-e-discrepanze.md.
+once at startup and mutated in place, plus the transient state needed by the multi-step flows
+(Bulk Add's queue, Grading's pending-gradings inbox — the latter persisted to
+config.DEFAULT_PENDING_GRADINGS_FILE, see PendingGrading below). No per-user sessions — a
+deliberate simplification for this single-user local tool, see .CLAUDE/06-note-e-discrepanze.md.
 """
 import base64
 import io
-from typing import Dict, List, Optional
+import json
+from typing import Any, Dict, List, Optional
 
 from PIL import Image
 
+import config
 from models import CardSearchResult, CardSetInfo, CollectionItem, GradingResult
 from services.cardtrader_api import CardTraderAPI
 from services.grading.grader import CardGrader, DebugImages
@@ -30,6 +33,47 @@ class BulkQueueItem:
         self.skipped = False
 
 
+class PendingGrading:
+    """
+    One analyzed-but-not-yet-linked graded card, awaiting a "Collega" action from the user
+    (single-photo Grading and Bulk Grading both feed the same list — see .CLAUDE/07-grading.md).
+
+    Persisted to config.DEFAULT_PENDING_GRADINGS_FILE (a plain JSON file, one entry per pending
+    card, images embedded as base64 — same encoding as image_to_data_uri) so a server restart
+    doesn't lose cards already photographed/cropped/analyzed but not yet linked to the
+    collection. Kept in a separate file from collection.json rather than folded into it: this
+    holds full-size photos (base64), collection.json holds only pricing/condition data — mixing
+    them would make every collection save/load drag along megabytes of unrelated image data.
+    """
+
+    def __init__(self, pending_id: int, filename: str, result: GradingResult, debug_images: DebugImages):
+        self.id = pending_id
+        self.filename = filename
+        self.result = result
+        self.debug_images = debug_images
+
+    def to_dict(self) -> Dict[str, Any]:
+        # JPEG rather than PNG for the on-disk copy: these are photographs (not the sharp-edged
+        # UI graphics PNG is good at), and lossless PNG made a single pending card ~4MB — with a
+        # dozen or more queued from a bulk session before linking, that adds up fast. Quality 85
+        # is visually indistinguishable for "is this the right card" reference purposes.
+        return {
+            "id": self.id,
+            "filename": self.filename,
+            "result": self.result.model_dump(),
+            "original": image_to_data_uri(self.debug_images.original, fmt="JPEG", quality=85),
+            "annotated": image_to_data_uri(self.debug_images.annotated, fmt="JPEG", quality=85),
+        }
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "PendingGrading":
+        debug_images = DebugImages(
+            original=data_uri_to_image(data["original"]),
+            annotated=data_uri_to_image(data["annotated"]),
+        )
+        return cls(data["id"], data["filename"], GradingResult(**data["result"]), debug_images)
+
+
 class AppState:
     """Single shared instance, created at FastAPI startup and closed at shutdown."""
 
@@ -44,9 +88,50 @@ class AppState:
         self.bulk_queue: List[BulkQueueItem] = []
         self.bulk_index: int = -1
 
-        # Grading flow — the single most-recent analysis, referenced by "Save with Grade"
-        self.last_grading_result: Optional[GradingResult] = None
-        self.last_debug_images: Optional[DebugImages] = None
+        # Grading flow — every analyzed card (single-photo or bulk) lands here until the user
+        # links it to a collection item (or discards it). Loaded from disk so a restart doesn't
+        # lose cards already analyzed but not yet linked.
+        self.pending_gradings: List[PendingGrading] = self._load_pending_gradings()
+        self._pending_grading_counter: int = max((p.id for p in self.pending_gradings), default=0)
+
+    def _load_pending_gradings(self) -> List[PendingGrading]:
+        path = config.DEFAULT_PENDING_GRADINGS_FILE
+        if not path.exists():
+            return []
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return [PendingGrading.from_dict(item) for item in data]
+        except Exception as e:
+            print(f"Error loading pending gradings: {e}")
+            return []
+
+    def _save_pending_gradings(self) -> None:
+        path = config.DEFAULT_PENDING_GRADINGS_FILE
+        try:
+            data = [p.to_dict() for p in self.pending_gradings]
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(data, f)
+        except Exception as e:
+            print(f"Error saving pending gradings: {e}")
+
+    def add_pending_grading(self, filename: str, result: GradingResult, debug_images: DebugImages) -> PendingGrading:
+        self._pending_grading_counter += 1
+        pending = PendingGrading(self._pending_grading_counter, filename, result, debug_images)
+        self.pending_gradings.append(pending)
+        self._save_pending_gradings()
+        return pending
+
+    def get_pending_grading(self, pending_id: int) -> Optional[PendingGrading]:
+        return next((p for p in self.pending_gradings if p.id == pending_id), None)
+
+    def remove_pending_grading(self, pending_id: int) -> bool:
+        pending = self.get_pending_grading(pending_id)
+        if pending is None:
+            return False
+        self.pending_gradings.remove(pending)
+        self._save_pending_gradings()
+        return True
 
     async def add_card_to_collection(
         self,
@@ -116,9 +201,19 @@ class AppState:
         await self.grader.close()
 
 
-def image_to_data_uri(image: Image.Image) -> str:
-    """Encode a PIL Image as a base64 PNG data URI, embeddable directly in an <img src=...>."""
+def image_to_data_uri(image: Image.Image, fmt: str = "PNG", quality: Optional[int] = None) -> str:
+    """Encode a PIL Image as a base64 data URI, embeddable directly in an <img src=...>. Default
+    PNG (lossless, right for the live-session grading views); PendingGrading.to_dict() passes
+    JPEG for the on-disk copy, where file size matters more than pixel-perfect fidelity."""
     buffer = io.BytesIO()
-    image.save(buffer, format="PNG")
+    save_kwargs = {"quality": quality} if quality is not None else {}
+    image.convert("RGB").save(buffer, format=fmt, **save_kwargs) if fmt == "JPEG" else image.save(buffer, format=fmt)
     encoded = base64.b64encode(buffer.getvalue()).decode("ascii")
-    return f"data:image/png;base64,{encoded}"
+    mime = "jpeg" if fmt == "JPEG" else fmt.lower()
+    return f"data:image/{mime};base64,{encoded}"
+
+
+def data_uri_to_image(data_uri: str) -> Image.Image:
+    """Inverse of image_to_data_uri — used to reload PendingGrading images from disk."""
+    encoded = data_uri.split(",", 1)[1]
+    return Image.open(io.BytesIO(base64.b64decode(encoded)))

@@ -1,4 +1,4 @@
-<div id="grading-search-results">
+<div id="grading-search-results-{{ pending_id }}">
   {% if searched and not cards %}
     <p class="description">Nessuna carta trovata con questo termine.</p>
   {% endif %}
@@ -16,7 +16,8 @@
         <td>{{ cset.set_rarity }}</td>
         <td>{{ cset.set_name }}</td>
         <td>
-          <form hx-post="/grading/save" hx-target="#grading-feedback" hx-swap="innerHTML" style="display:flex; gap:0.4rem; align-items:center;">
+          <form hx-post="/grading/save" hx-target="#grading-pending" hx-swap="outerHTML" style="display:flex; gap:0.4rem; align-items:center;">
+            <input type="hidden" name="pending_id" value="{{ pending_id }}">
             <input type="hidden" name="card_id" value="{{ card.id }}">
             <input type="hidden" name="set_code" value="{{ cset.set_code }}">
             <input type="hidden" name="rarity" value="{{ cset.set_rarity }}">
@@ -30,7 +31,8 @@
     </table>
     </div>
     {% else %}
-    <form hx-post="/grading/save" hx-target="#grading-feedback" hx-swap="innerHTML" class="action-bar">
+    <form hx-post="/grading/save" hx-target="#grading-pending" hx-swap="outerHTML" class="action-bar">
+      <input type="hidden" name="pending_id" value="{{ pending_id }}">
       <input type="hidden" name="card_id" value="{{ card.id }}">
       <input type="number" name="qty" value="1" min="1" style="width:60px;">
       <button class="btn-success" type="submit">✅ Salva con Grade</button>

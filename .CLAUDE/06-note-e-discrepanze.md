@@ -99,6 +99,12 @@ nel repository (non sono in `.gitignore`). Nel workflow attuale quindi git tracc
 della collezione personale — utile saperlo prima di fare commit "puliti" di solo codice, o prima
 di aggiungere `.gitignore` per questi file se in futuro si vuole separare dati utente da codice.
 
+Trattamento diverso e deliberato per `pending_gradings.json` (l'inbox del modulo Grading, vedi
+[07-grading.md](07-grading.md)): **è** in `.gitignore`, perché contiene foto delle carte in
+base64 (centinaia di KB per carta) — committarlo avrebbe gonfiato il repository con dati binari
+in un modo che `collection.json`/`.csv` (solo testo/numeri) non fanno. Nessuna incoerenza voluta
+con la scelta sopra, solo una valutazione diversa caso per caso.
+
 ## Vincoli operativi importanti
 
 - **Rate limit YGOPRODeck**: `config.API_RATE_LIMIT_DELAY = 0.05` (secondi). Il README avvisa

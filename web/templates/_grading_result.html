@@ -25,8 +25,12 @@
       </ul>
       <p class="explanation">🧠 <b>Perché questo grade:</b> {{ result.explanation }}</p>
       <p>ℹ️ <b>Cosa ha visto l'AI sulla superficie:</b> {{ result.surface_details.get('details', '') }}</p>
+      <p class="description">Trovi questa carta nella lista "📦 Carte gradate in attesa di collegamento" qui sotto per collegarla a una carta della collezione.</p>
     </div>
   {% else %}
     <p class="description">Carica una foto e premi "Analizza Carta" per iniziare.</p>
   {% endif %}
 </div>
+{% if pending is defined %}
+{% include "_grading_pending.html" %}
+{% endif %}

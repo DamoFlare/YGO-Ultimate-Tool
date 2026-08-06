@@ -26,7 +26,9 @@ def _ctx(state: AppState, request: Request, flash: str = ""):
 @router.get("/bulk", response_class=HTMLResponse)
 async def bulk_page(request: Request, state: AppState = Depends(get_state)):
     ctx = _ctx(state, request)
-    ctx["active_tab"] = "bulk"
+    # Bulk Add is reached via a button inside the "Aggiungi Carta" tab, not its own nav tab
+    # (see .CLAUDE/05-ui.md) — keep that tab highlighted so the nav still makes sense here.
+    ctx["active_tab"] = "add"
     return render(request, "bulk_add.html", ctx)
 
 

@@ -7,9 +7,9 @@
     Analizza una foto della carta fisica per stimare un grade oggettivo 1-10, stile PSA/BGS:
     <b>Centering</b>, <b>Edges</b> e <b>Corners</b> sono misurati in modo deterministico (OpenCV),
     <b>Surface</b> (graffi/pieghe) da un modello Vision locale (Ollama + llava, nessun dato lascia
-    il tuo PC).
+    il tuo PC). Il ritaglio della carta è manuale: trascina i 4 angoli sulla foto caricata.
   </p>
-  <p class="warning-note">⚠️ Limite noto: Centering non viene quasi mai rilevato con sicurezza sulle foto reali (usa un valore prudenziale) e le soglie di Edges/Corners non sono ancora tarate su un dataset di carte con condizione nota. Vedi .CLAUDE/07-grading.md.</p>
+  <p class="warning-note">⚠️ Limite noto: Centering non viene sempre rilevato con sicurezza sulle foto reali (usa un valore prudenziale) e le soglie di Edges/Corners non sono ancora tarate su un dataset di carte con condizione nota. Vedi .CLAUDE/07-grading.md.</p>
 
   <form hx-post="/grading/analyze" hx-target="#grading-result" hx-swap="outerHTML" hx-encoding="multipart/form-data" hx-indicator="#analyze-indicator" class="action-bar" style="flex-direction: column; align-items: stretch;">
     <div class="action-bar">
@@ -38,14 +38,47 @@
 </div>
 
 <div class="panel">
-  <h2>🔗 Collega il grade a una carta della collezione</h2>
-  <form class="action-bar" hx-post="/grading/search" hx-target="#grading-search-results" hx-swap="outerHTML" hx-indicator="#grading-search-indicator">
-    <input type="text" name="query" placeholder="Cerca per nome, ID o codice set..." required>
-    <button class="btn-primary" type="submit">🔎 Cerca</button>
-    <span id="grading-search-indicator" class="htmx-indicator">Ricerca in corso...</span>
-  </form>
-  <div id="grading-feedback"></div>
-  {% include "_grading_search_results.html" %}
+  <h2>📸 Grading Bulk (più foto)</h2>
+  <p class="description">
+    Seleziona più foto o un'intera cartella: prima si ritagliano <b>tutte</b> le carte, una alla
+    volta (stesso ritaglio manuale di sopra) — nessuna analisi finché non hai confermato l'ultimo
+    ritaglio, così non devi aspettare davanti allo schermo tra una carta e l'altra. Solo dopo
+    l'analisi parte in sequenza su tutte le foto ritagliate; puoi lasciarla andare in background
+    (finché questa scheda del browser resta aperta). Ogni carta analizzata finisce nella lista
+    "📦 Carte gradate in attesa di collegamento" qui sotto.
+  </p>
+  <div class="action-bar">
+    <label class="btn">📁 Seleziona più foto<input type="file" id="bulk-grading-input" accept="image/*" multiple style="display:none;"></label>
+    <label class="btn">🗂️ Seleziona una cartella<input type="file" id="bulk-grading-folder-input" accept="image/*" multiple webkitdirectory directory style="display:none;"></label>
+  </div>
+  <p id="bulk-grading-progress" class="description"></p>
+  <div id="bulk-cropper-wrap" style="display: none;">
+    <div class="cropper-container" id="bulk-cropper-container">
+      <img id="bulk-cropper-image" alt="Anteprima della foto corrente da ritagliare">
+      <svg class="cropper-svg"><polygon id="bulk-cropper-poly" class="cropper-poly"></polygon></svg>
+      <div class="cropper-magnifier" id="bulk-cropper-magnifier"></div>
+      <div class="cropper-handle" data-idx="0" title="Alto-sinistra"></div>
+      <div class="cropper-handle" data-idx="1" title="Alto-destra"></div>
+      <div class="cropper-handle" data-idx="2" title="Basso-destra"></div>
+      <div class="cropper-handle" data-idx="3" title="Basso-sinistra"></div>
+    </div>
+    <div class="action-bar">
+      <button class="btn-primary" type="button" id="bulk-confirm-btn">✅ Conferma ritaglio</button>
+      <button class="btn" type="button" id="bulk-skip-btn">⏭️ Salta questa foto</button>
+    </div>
+  </div>
+  <div id="bulk-grading-log"></div>
+</div>
+
+<div class="panel">
+  <h2>📦 Carte gradate in attesa di collegamento</h2>
+  <p class="description">
+    Le carte analizzate (singole o in bulk) restano qui finché non le collegui a una carta della
+    collezione — non toccano <code>collection.json</code> prima di quel momento. Se il server
+    viene riavviato prima di collegarle vanno perse (nessuna persistenza su disco per questa
+    lista, vedi .CLAUDE/07-grading.md).
+  </p>
+  {% include "_grading_pending.html" %}
 </div>
 <script src="/static/corner-picker.js"></script>
 {% endblock %}

@@ -137,6 +137,45 @@ punto toccato (si sposta sotto se troppo vicina al margine superiore, per non fi
 fuori dall'anteprima), con un mirino al centro, per piazzare l'angolo con precisione sub-pixel
 senza che il cursore/dito coprano il punto esatto.
 
+## Grading Bulk e l'inbox "pending" (`AppState.pending_gradings`)
+
+L'utente ha chiesto di poter gradare più foto in sequenza (selezionando più file o un'intera
+cartella), ritagliando ognuna a mano come nel flusso singolo, **e** di poter recuperare le carte
+gradate in un secondo momento per collegarle alla collezione — non necessariamente subito dopo
+l'analisi.
+
+Questo ha richiesto un cambio architetturale, non solo "aggiungere un ciclo": prima esisteva
+`AppState.last_grading_result`/`last_debug_images`, un singolo slot che assumeva "c'è sempre al
+più un'analisi in attesa di collegamento". Con più foto analizzate una dopo l'altra, serve invece
+una **lista**: `AppState.pending_gradings` (`List[PendingGrading]`, ognuna con `id`/`filename`/
+`result`/`debug_images`), popolata sia dal flusso a foto singola sia da quello bulk — un solo
+"inbox" per entrambi, non due meccanismi paralleli. `add_pending_grading`/`get_pending_grading`/
+`remove_pending_grading` in `web/state.py` sono i soli punti che la toccano.
+
+**Persistita su file** (`config.DEFAULT_PENDING_GRADINGS_FILE`, `pending_gradings.json`,
+gitignored — a differenza di `collection.json` contiene foto), non solo in memoria: l'utente ha
+gradato più carte in bulk e vuole poterle collegare con calma in un secondo momento, anche dopo
+un riavvio del server, senza dover ripetere foto+ritaglio+analisi. `PendingGrading.to_dict()`/
+`from_dict()` serializzano anche le due immagini (`DebugImages`, altrimenti non JSON-
+serializzabili) come **JPEG** base64, non PNG: sono fotografie, non grafica con contorni netti,
+e PNG lossless portava una singola carta pendente a ~4.3MB — con una dozzina in coda da una
+sessione bulk prima di collegarle, il file cresceva rapidamente. JPEG qualità 85 porta lo stesso
+caso a ~740KB (misurato), pixel-perfetto non necessario per uno scopo "che carta è questa".
+`AppState._load_pending_gradings()`/`_save_pending_gradings()` fanno I/O sincrono ad ogni
+add/remove (stesso pattern try/except-con-print di `services/storage.py`, non eccezioni tipizzate
+— coerente con quella convenzione, diversa da quella del resto del modulo Grading, perché questa
+è persistenza generica in `web/state.py`, non logica di grading).
+
+Conseguenza sul flusso "Collega a una carta": non è più un box di ricerca unico e implicito
+("collega l'ultima analizzata"), ma un'azione per riga nella lista pending
+(`_grading_pending.html`, "🔗 Collega" → box di ricerca scoped su quell'`id` →
+`POST /grading/save` con `pending_id` esplicito) — necessario perché con più carte in coda
+contemporaneamente non esiste più un'unica "ultima" su cui operare implicitamente. Dettagli di
+routing/template completi in [05-ui.md](05-ui.md); qui il punto architetturale: la Grading Bulk
+non duplica la logica di analisi/salvataggio, riusa esattamente `POST /grading/analyze` (una
+chiamata per foto, via `fetch()` dal sequencer client-side in `corner-picker.js`) e
+`POST /grading/save` (una chiamata per collegamento) della foto singola.
+
 - `CardGrader.grade_card()` ritorna **una tupla** `(GradingResult, DebugImages)`, non solo
   `GradingResult` — attenzione se si aggiungono nuovi call site. `DebugImages` (dataclass in
   `grader.py`, non Pydantic — contiene `PIL.Image.Image`, non serializzabili e non persistite in
@@ -306,6 +345,30 @@ stato scartato e perché, prima di riprovare le stesse strade.
    centering detection (punto 6, mai risolta) a volte scatta correttamente ora, probabilmente
    perché un crop più preciso rende il contorno del frame interno più regolare — non garantito,
    resta un limite noto.
+13. **Aggiunta la Grading Bulk + inbox condivisa "pending".** Su richiesta dell'utente: selezione
+   di più foto/una cartella, stesso ritaglio manuale a 4 angoli applicato una foto alla volta,
+   analisi automatica dopo ogni conferma. Ha richiesto sostituire lo slot singolo
+   `last_grading_result`/`last_debug_images` con una lista (`AppState.pending_gradings`) condivisa
+   dal flusso singolo e da quello bulk, e spostare "Collega a una carta" da un box di ricerca
+   implicito ("l'ultima analizzata") a un'azione esplicita per riga (`pending_id`) — necessario
+   con più carte in coda contemporaneamente. Vedi "Grading Bulk e l'inbox pending" più sopra e
+   [05-ui.md](05-ui.md) per i dettagli di routing/template. **Verificato** con `TestClient`: due
+   analisi consecutive popolano l'inbox con 2 righe indipendenti, ricerca+salvataggio scoped su un
+   `pending_id` specifico rimuove solo quella entry, scarto di un `pending_id` inesistente
+   ritorna un messaggio d'errore invece di un 500.
+14. **Grading Bulk: ritaglio e analisi separati in due fasi** (su richiesta dell'utente, dopo
+   aver provato la v1). Nella prima versione ogni conferma di ritaglio lanciava subito l'analisi
+   della stessa foto, costringendo ad aspettare (analisi VLM incluso, qualche secondo) prima di
+   poter ritagliare la foto successiva — l'utente doveva restare davanti allo schermo per tutta
+   la coda. Ridisegnato in due fasi lato client (`corner-picker.js`): si ritagliano **tutte** le
+   foto della coda una dopo l'altra senza nessuna chiamata di rete, poi — a ritaglio completato —
+   parte l'analisi in sequenza su tutte le foto ritagliate, senza altro input dell'utente (una
+   sola richiesta `fetch()` alla volta verso `/grading/analyze`, invariato lato server). L'utente
+   può allontanarsi durante la fase di analisi; il limite è che il ciclo vive nel tab del browser,
+   quindi si ferma se il tab viene chiuso (non è un job lato server) — vedi "Limiti noti" sotto.
+   **Nella stessa richiesta**, l'inbox pending è stata resa persistente su file (vedi sezione
+   dedicata sopra), per la stessa esigenza di fondo: gradare tante carte in una sessione bulk e
+   poterle collegare con calma, anche a distanza di un riavvio del server.
 
 ### Prossimo passo (non ancora fatto)
 
@@ -335,3 +398,13 @@ quando disponibili.
   calibrate su un dataset di carte gradate professionalmente (vedi "Prossimo passo" sopra).
 - **Dipendenza da Ollama locale**: se il server non è raggiungibile, l'intera pipeline fallisce
   con `InspectorAgentError` (nessun grade parziale calcolato senza il giudizio di superficie).
+- **Inbox "pending" persistita ma non versionata**: `pending_gradings.json` sopravvive a un
+  riavvio del server (vedi sezione dedicata sopra), ma è gitignored e scritta con un semplice
+  `json.dump` sincrono a ogni add/remove — nessun backup, nessuna migrazione se il formato
+  cambiasse in futuro, nessun lock se (ipoteticamente) più processi ci scrivessero insieme
+  (non succede in questo tool a singolo processo, ma va detto esplicitamente).
+- **Grading Bulk: il ciclo di analisi vive nel tab del browser**, non lato server — se il tab
+  viene chiuso durante la fase di analisi (dopo aver ritagliato tutte le foto), le analisi non
+  ancora avviate non partono. Quelle già completate restano nell'inbox (persistita, non perse).
+  Non una coda/job lato server: per un tool personale a singolo utente non sembrava
+  giustificato costruirne una solo per questo.

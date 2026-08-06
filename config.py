@@ -56,6 +56,9 @@ CONDITION_NAMES = {
 # Storage Defaults
 DEFAULT_COLLECTION_FILE = Path("collection.json")
 DEFAULT_CSV_EXPORT_FILE = Path("collection.csv")
+# Grading "pending" inbox (cards analyzed but not yet linked to a collection item) — persisted
+# separately from collection.json since it holds base64-encoded photos, not collection data.
+DEFAULT_PENDING_GRADINGS_FILE = Path("pending_gradings.json")
 
 # --- Grading Module (Hybrid CV + VLM) ---
 
