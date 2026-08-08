@@ -32,6 +32,11 @@ Costanti globali applicative:
   `coolstuffinc_price` (idem: parsati ma non più usati per il pricing reale, vedi
   [06-note-e-discrepanze.md](06-note-e-discrepanze.md) per la storia)
 - **`CollectionItem`** — elemento persistito nella collezione utente:
+  - `row_id` (`Optional[int]`, default `None`) — chiave primaria surrogata SQLite
+    (`services/storage.py`), assegnata al primo salvataggio e poi stabile nel tempo (upsert, mai
+    ricreata da zero). Non fa parte dell'identità di business (vedi sotto), pensata per essere il
+    futuro target FK di una tabella `listings` (vendita CardTrader, non ancora implementata — vedi
+    [06-note-e-discrepanze.md](06-note-e-discrepanze.md)).
   - campi: `id`/passcode, `name`, `set_code`, `set_name`, `rarity`, `base_price`, `quantity`,
     `added_at`
   - campi opzionali del modulo Grading (default `None`, retro-compatibili): `grade` (float 1-10),
@@ -41,6 +46,12 @@ Costanti globali applicative:
     `real_condition_prices` (dict `{"NM": 15.89, "EX": 12.4, ...}`, solo i bucket con inserzioni
     reali trovate) e `price_source` (`"cardtrader"` se trovato un match, altrimenti `None` — mai
     `"ygoprodeck"`, quella fonte è stata rimossa dal pricing)
+  - campi opzionali della feature vendita (default `None`): `cardtrader_blueprint_id`/
+    `cardtrader_blueprint_image_url` — a differenza di `real_condition_prices`/`price_source`
+    (ricalcolati liberamente a ogni refresh, un match sbagliato è solo un prezzo storto), questi
+    vengono risolti **una volta sola** e mai più ricalcolati: un match sbagliato qui deciderebbe
+    quale carta fisica si promette di spedire a un compratore. Vedi
+    [06-note-e-discrepanze.md](06-note-e-discrepanze.md).
   - metodo `get_price_for_condition(condition)` — **ritorna il prezzo reale da
     `real_condition_prices` se presente per quella condizione; altrimenti stima da `base_price *
     CONDITION_MULTIPLIERS[condition]`** (fallback, non più la via primaria)
@@ -58,19 +69,38 @@ Costanti globali applicative:
   grezze (`centering_ratio`, `edge_wear_pct`, `surface_details` dal VLM), i 3 sotto-voti
   (`centering_subgrade`, `edges_subgrade`, `surface_subgrade`), e il risultato finale
   (`final_grade`, `condition`). Vedi [07-grading.md](07-grading.md) per la formula completa.
+- **`Listing`** — un annuncio di vendita CardTrader (persistito nella tabella `listings`, vedi
+  [04-servizi.md](04-servizi.md)): `id` (PK SQLite), `collection_row_id` (riferimento a
+  `CollectionItem.row_id`, non imposto a livello DB), `cardtrader_blueprint_id`,
+  `cardtrader_product_id` (id assegnato da CardTrader alla creazione), `condition`, `language`
+  (scelta manualmente per riga in fase di vendita, mai dedotta da `set_code` — vedi
+  [06-note-e-discrepanze.md](06-note-e-discrepanze.md)), `price_eur`, `quantity`, `status`
+  (`active`/`sold`/`cancelled`, `config.LISTING_STATUS_*`), `created_at`/`updated_at`/`sold_at`
+  (timestamp ISO), `error_message`. Creare/cancellare un `Listing` non tocca mai
+  `CollectionItem.quantity` — la riconciliazione resta manuale.
 
 ## Formati di persistenza
 
-- **`collection.json`** — array di `CollectionItem` serializzati (`model_dump()`), è la fonte di
-  verità della collezione. Nel repo attuale contiene dati reali di test/sviluppo (~1700 righe).
+- **`collection.db`** (SQLite) — **fonte di verità attuale** della collezione, tabella
+  `collection_items` (vedi [04-servizi.md](04-servizi.md) per schema e strategia di scrittura).
+  In `.gitignore` (mai committato). Introdotta al posto di `collection.json` — vedi cronologia in
+  [06-note-e-discrepanze.md](06-note-e-discrepanze.md).
+- **`collection.json`** — **legacy**: non più letto/scritto dall'app in esecuzione. Resta sul
+  disco solo come backup prodotto dalla migrazione una-tantum (`scripts/migrate_to_sqlite.py`) e
+  resta committato in git con l'ultimo stato noto prima della migrazione (dati reali di
+  test/sviluppo, ~1700 righe) — è uno snapshot congelato, non va più considerato aggiornato.
 - **`collection.csv`** — export leggibile generato da `StorageService.export_to_csv()`, colonne:
   `id, name, set_code, set_name, rarity, grade, condition, quantity, base_price_NM, price_EX,
-  price_GD, price_LP, price_PO, total_NM_value, total_effective_value, price_source`.
+  price_GD, price_LP, price_PO, total_NM_value, total_effective_value, price_source`. Logica
+  invariata dalla migrazione (dipende solo dal ricevere una `List[CollectionItem]`, non da come è
+  stata prodotta).
 - **`test_col.json` / `test_col.csv`** — file di esempio minimale (una sola carta: Dark Magician,
   set `RA01-EN001`, rarità Ultra Rare, prezzo base 2.5€, quantità 2), verosimilmente usati per
-  test manuali rapidi durante lo sviluppo.
+  test manuali rapidi durante lo sviluppo. Non collegati alla migrazione SQLite.
 
-⚠️ Nota: `collection.json`/`collection.csv` sono descritti come "auto-generati" ma sono
-effettivamente **committati in git con dati reali** — nel workflow attuale non vengono trattati
-come artefatti da escludere (non sono in `.gitignore`). Da tenere a mente se si decide di pulire
-il repository o aggiungere dati di test diversi.
+⚠️ Nota: `collection.json`/`collection.csv` sono ancora **committati in git** (non in
+`.gitignore`), mentre il vero store attivo (`collection.db`) lo è — inconsistenza preesistente
+alla migrazione (era già così quando l'unica fonte era `collection.json`), non risolta
+unilateralmente in questo step. Da rivalutare se si decide di pulire il repository: oggi
+`collection.json`/`.csv` in git sono solo uno snapshot storico, non più generato/aggiornato da
+alcun flusso applicativo.

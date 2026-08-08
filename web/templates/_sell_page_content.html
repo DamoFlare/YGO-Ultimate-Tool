@@ -1,0 +1,21 @@
+<div id="sell-page-content">
+  {% if flash %}<p class="result-box{{ ' error' if flash_error else '' }}" style="margin-bottom:0.75rem;">{{ flash }}</p>{% endif %}
+  <div class="panel">
+    <h2>🧺 Carte in revisione</h2>
+    <p class="description">
+      Seleziona carte dalla <a href="/">pagina Collezione</a> (checkbox + "💰 Vendi selezionate", o
+      il bottone "💰 Vendi" su una singola riga) per metterle qui in revisione. Nessun annuncio
+      viene creato finché non premi "Conferma" qui sotto.
+    </p>
+    {% include "_sell_staging.html" %}
+  </div>
+  <div class="panel">
+    <h2>📋 Annunci su CardTrader</h2>
+    <p class="description">
+      Nessuna notifica automatica di vendita: CardTrader non espone webhook, quindi lo stato
+      "Venduto" si aggiorna solo premendo "🔄 Controlla vendite" qui sotto. Una vendita rilevata
+      non modifica la quantità posseduta in Collezione (va aggiornata a mano).
+    </p>
+    {% include "_sell_listings.html" %}
+  </div>
+</div>

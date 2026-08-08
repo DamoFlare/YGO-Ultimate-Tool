@@ -74,6 +74,41 @@ class PendingGrading:
         return cls(data["id"], data["filename"], GradingResult(**data["result"]), debug_images)
 
 
+class SellStagingItem:
+    """
+    One row awaiting sale confirmation on the /sell page. In-memory only — unlike PendingGrading
+    (which embeds expensive-to-recreate photos and is persisted to its own JSON file), a staged
+    sell item is just a reference to an existing CollectionItem plus a price/condition/quantity
+    the user hasn't confirmed yet, cheap to reconstruct — so a restart simply loses unconfirmed
+    staging, mirroring bulk_queue's "cheap to redo" reasoning rather than pending_gradings' extra
+    persistence machinery.
+    """
+
+    def __init__(self, staging_id: int, collection_row_id: int):
+        self.id = staging_id
+        self.collection_row_id = collection_row_id
+        # Denormalized display fields, copied at staging time
+        self.name: str = ""
+        self.set_code: str = ""
+        self.rarity: str = ""
+        self.collection_quantity: int = 0
+        # Blueprint resolution outcome (see CardTraderAPI.resolve_blueprint_for_sale)
+        self.blueprint_id: Optional[int] = None
+        self.blueprint_image_url: Optional[str] = None
+        self.blueprint_name: Optional[str] = None
+        self.candidates: List[dict] = []      # populated only while ambiguous
+        # User-editable sale fields
+        self.condition: str = ""              # "" = required, not yet chosen (never default to NM)
+        self.price: Optional[float] = None
+        self.quantity: int = 1
+        # Not derived from set_code (unreliable — see config.DEFAULT_SELL_LANGUAGE), always
+        # explicitly editable per row since YGOPRODeck search only ever surfaces English set
+        # data even for physically non-English copies.
+        self.language: str = config.DEFAULT_SELL_LANGUAGE
+        # Status
+        self.error: Optional[str] = None
+
+
 class AppState:
     """Single shared instance, created at FastAPI startup and closed at shutdown."""
 
@@ -93,6 +128,11 @@ class AppState:
         # lose cards already analyzed but not yet linked.
         self.pending_gradings: List[PendingGrading] = self._load_pending_gradings()
         self._pending_grading_counter: int = max((p.id for p in self.pending_gradings), default=0)
+
+        # Sell flow — staged cards awaiting review/confirmation on the /sell page. Pure in-memory,
+        # never persisted (see SellStagingItem docstring).
+        self.sell_staging: List[SellStagingItem] = []
+        self._sell_staging_counter: int = 0
 
     def _load_pending_gradings(self) -> List[PendingGrading]:
         path = config.DEFAULT_PENDING_GRADINGS_FILE
@@ -132,6 +172,25 @@ class AppState:
         self.pending_gradings.remove(pending)
         self._save_pending_gradings()
         return True
+
+    def add_staging_item(self, collection_row_id: int) -> SellStagingItem:
+        self._sell_staging_counter += 1
+        item = SellStagingItem(self._sell_staging_counter, collection_row_id)
+        self.sell_staging.append(item)
+        return item
+
+    def get_staging_item(self, staging_id: int) -> Optional[SellStagingItem]:
+        return next((s for s in self.sell_staging if s.id == staging_id), None)
+
+    def remove_staging_item(self, staging_id: int) -> bool:
+        item = self.get_staging_item(staging_id)
+        if item is None:
+            return False
+        self.sell_staging.remove(item)
+        return True
+
+    def find_staging_item_by_row(self, collection_row_id: int) -> Optional[SellStagingItem]:
+        return next((s for s in self.sell_staging if s.collection_row_id == collection_row_id), None)
 
     async def add_card_to_collection(
         self,

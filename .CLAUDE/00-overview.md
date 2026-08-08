@@ -24,20 +24,36 @@ Repository GitHub: `DamoFlare/YGO-Ultimate-Tool` (remote `origin`), branch unico
    (inserzioni live, non aggregati/storici) per ciascuna condizione (NM/EX/GD/LP/PO), con stima
    a moltiplicatore solo come fallback quando manca un'inserzione reale per quella condizione.
    Vedi [08-pricing-cardtrader.md](08-pricing-cardtrader.md).
-4. Persiste la collezione su `collection.json` ed esporta in `collection.csv`.
+4. Persiste la collezione in **SQLite** (`collection.db`) ed esporta su richiesta in
+   `collection.csv`. `collection.json` è ora solo un backup storico pre-migrazione, non più letto
+   né scritto dall'app — vedi [06-note-e-discrepanze.md](06-note-e-discrepanze.md).
 5. Offre una modalità di inserimento massivo ("Aggiunta Bulk") per incollare molti set-code in
    una volta e confermarli uno a uno.
 6. **Grada automaticamente** una carta fisica da una foto: un'architettura ibrida CV (OpenCV,
    deterministica) + VLM locale (Ollama/`llava`, self-hosted via Docker) calcola un grade 1-10
    stile PSA/BGS e lo mappa sulla condizione NM/EX/GD/LP/PO esistente. Vedi
    [07-grading.md](07-grading.md). Ha sostituito il precedente scanner OCR placeholder.
+7. **Vende carte su CardTrader** (bulk o singola): seleziona carte dalla collezione, revisiona
+   condizione/prezzo/quantità in una pagina dedicata (con foto della stampa esatta risolta su
+   CardTrader per un controllo visivo anti-mismatch), conferma per creare annunci reali via
+   `POST /products`. Nessuna sincronizzazione automatica delle vendite (niente webhook
+   CardTrader) — stato aggiornato solo con un controllo manuale. Vedi
+   [06-note-e-discrepanze.md](06-note-e-discrepanze.md).
 
 ## Stato del progetto
 
-- Repository giovane, sviluppato quasi interamente in un'unica lunga sessione: partito da 2
-  commit iniziali (`First commit`, poi `Update .gitignore and add pyvenv configuration file`),
-  poi TUI Textual → modulo di Grading (CV+VLM) → migrazione prezzi a CardTrader → **migrazione
-  completa da TUI a web app** (FastAPI + htmx), tutte nella stessa sessione di lavoro.
+- Repository giovane: partito da 2 commit iniziali (`First commit`, poi `Update .gitignore and
+  add pyvenv configuration file`), poi TUI Textual → modulo di Grading (CV+VLM) → migrazione
+  prezzi a CardTrader → migrazione completa da TUI a web app (FastAPI + htmx) → migrazione
+  persistenza collezione da JSON a SQLite → **feature di vendita carte su CardTrader** (bulk +
+  singola, stessa sessione della migrazione SQLite, fatta apposta per darle un `row_id` stabile —
+  vedi [06-note-e-discrepanze.md](06-note-e-discrepanze.md)).
+- La feature di vendita ha richiesto un test dal vivo con creazione/cancellazione immediata di un
+  annuncio reale (confermato esplicitamente dall'utente prima di procedere) per scoprire due
+  scostamenti reali dalla documentazione ufficiale di CardTrader (id del prodotto annidato in
+  `resource.id`, property lingua chiamata `yugioh_language` non `language`) — vedi
+  [06-note-e-discrepanze.md](06-note-e-discrepanze.md) per i dettagli, utile prima di modificare
+  ulteriormente `services/cardtrader_api.py::create_listing`.
 - Nessun test automatizzato "formale" (no `pytest`/`tests/`), ma ogni feature è stata verificata
   end-to-end con chiamate reali ai servizi esterni (YGOPRODeck, CardTrader, Ollama) durante lo
   sviluppo. Nessuna CI/CD, nessuna licenza dichiarata.

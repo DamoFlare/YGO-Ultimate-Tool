@@ -11,3 +11,4 @@ lib64
 pyvenv.cfg
 .env
 pending_gradings.json
+collection.db

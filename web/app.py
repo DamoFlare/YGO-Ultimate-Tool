@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from web.deps import BASE_DIR
-from web.routers import add_card, bulk_add, collection, grading
+from web.routers import add_card, bulk_add, collection, grading, sell
 from web.state import AppState
 
 
@@ -28,3 +28,4 @@ app.include_router(collection.router)
 app.include_router(add_card.router)
 app.include_router(bulk_add.router)
 app.include_router(grading.router)
+app.include_router(sell.router)

@@ -35,6 +35,44 @@ CARDTRADER_CONDITION_MAP = {
     "PO": ["Poor"],
 }
 
+# Reverse of CARDTRADER_CONDITION_MAP for SELLING (services/cardtrader_api.py create_listing):
+# POST /products needs exactly one CardTrader condition string per bucket, not a list of
+# acceptable-on-read values.
+CARDTRADER_SELL_CONDITION = {
+    "NM": "Near Mint",
+    "EX": "Slightly Played",
+    "GD": "Moderately Played",
+    "LP": "Played",
+    "PO": "Poor",
+}
+
+# Languages selectable when creating a listing (services/cardtrader_api.py create_listing's
+# `language` param -> CardTrader's `yugioh_language` product property). NOT derived from
+# CollectionItem.set_code's language suffix: YGOPRODeck's search only ever returns English set
+# data during Add Card (see .claude/06-note-e-discrepanze.md), so a set_code like "RA01-EN001"
+# does not reliably reflect which language the user's physical copy actually is — the sell
+# staging UI lets the user pick it explicitly per row instead.
+CARDTRADER_SELL_LANGUAGES = [
+    ("it", "Italiano"),
+    ("en", "Inglese"),
+    ("fr", "Francese"),
+    ("de", "Tedesco"),
+    ("es", "Spagnolo"),
+]
+DEFAULT_SELL_LANGUAGE = "it"  # this collection is entirely Italian physical copies
+
+# Suggested listing price = CollectionItem.get_price_for_condition(condition) * (1 - this), shown
+# as an editable pre-filled value in the sell staging form (web/routers/sell.py) whenever a
+# condition is selected/pre-selected — undercutting the app's own displayed value to price
+# competitively against existing real listings, never enforced (the price field stays editable).
+SELL_SUGGESTED_PRICE_DISCOUNT = 0.10
+
+# Local listing lifecycle (services/storage.py `listings` table) — our own bookkeeping state,
+# never sent to or read from CardTrader directly.
+LISTING_STATUS_ACTIVE = "active"
+LISTING_STATUS_SOLD = "sold"
+LISTING_STATUS_CANCELLED = "cancelled"
+
 # Cardmarket Condition Multipliers (Cardmarket Standards) — fallback estimate used only when
 # CardTrader has no real marketplace listing for a given condition (see CollectionItem.get_price_for_condition).
 CONDITION_MULTIPLIERS = {
@@ -54,7 +92,11 @@ CONDITION_NAMES = {
 }
 
 # Storage Defaults
+# DEFAULT_COLLECTION_FILE is the legacy JSON store — the running app no longer reads it directly
+# (see services/storage.py, SQLite-backed), only scripts/migrate_to_sqlite.py does, and it's left
+# on disk untouched afterward as a manual backup.
 DEFAULT_COLLECTION_FILE = Path("collection.json")
+DEFAULT_COLLECTION_DB_FILE = Path("collection.db")
 DEFAULT_CSV_EXPORT_FILE = Path("collection.csv")
 # Grading "pending" inbox (cards analyzed but not yet linked to a collection item) — persisted
 # separately from collection.json since it holds base64-encoded photos, not collection data.

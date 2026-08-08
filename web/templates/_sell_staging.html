@@ -1,0 +1,75 @@
+{% if staging %}
+<form hx-post="/sell/confirm" hx-target="#sell-page-content" hx-swap="outerHTML">
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>Carta</th>
+      <th>Set / Rarità</th>
+      <th>Qtà posseduta</th>
+      <th>Lingua</th>
+      <th>Condizione</th>
+      <th>Prezzo (€)</th>
+      <th>Qtà in vendita</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in staging %}
+    <tr>
+      <td style="white-space:nowrap;">
+        {% if s.blueprint_image_url %}
+        <img src="{{ s.blueprint_image_url }}" alt="{{ s.blueprint_name or s.name }}" style="max-width:56px; max-height:78px; border-radius:4px; display:block; margin-bottom:0.3rem;">
+        {% endif %}
+        {{ s.name }}
+      </td>
+      <td>{{ s.set_code }} — {{ s.rarity }}</td>
+      <td>{{ s.collection_quantity }}</td>
+      {% if s.error %}
+      <td colspan="4"><span class="result-box error" style="display:block;">{{ s.error }}</span></td>
+      {% elif s.candidates %}
+      <td colspan="4">
+        <p class="description" style="margin:0 0 0.5rem 0;">⚠️ Match ambiguo su CardTrader — scegli la stampa corretta (confronta l'immagine con la carta fisica):</p>
+        {% for c in s.candidates %}
+        <button type="button" class="btn" style="margin:0.2rem;"
+          hx-post="/sell/staging/{{ s.id }}/resolve" hx-vals='{"blueprint_id": {{ c.id }}}'
+          hx-target="#sell-page-content" hx-swap="outerHTML">
+          {% if c.image_url %}<img src="{{ c.image_url }}" alt="{{ c.name }}" style="max-width:32px; max-height:44px; border-radius:3px; vertical-align:middle; margin-right:0.4rem;">{% endif %}
+          {{ c.name }} ({{ c.rarity }})
+        </button>
+        {% endfor %}
+      </td>
+      {% else %}
+      <td>
+        <select name="language_{{ s.id }}">
+          {% for code, label in config.CARDTRADER_SELL_LANGUAGES %}
+          <option value="{{ code }}" {{ 'selected' if s.language == code else '' }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </td>
+      <td>
+        <select name="condition_{{ s.id }}" data-prices='{{ suggested_prices.get(s.id, {}) | tojson }}'>
+          <option value="" {{ 'selected' if not s.condition else '' }}>-- seleziona --</option>
+          {% for code, label in [("NM","Near Mint"), ("EX","Excellent"), ("GD","Good"), ("LP","Light Played"), ("PO","Poor")] %}
+          <option value="{{ code }}" {{ 'selected' if s.condition == code else '' }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </td>
+      <td><input type="number" step="0.01" min="0.01" name="price_{{ s.id }}" value="{{ '%.2f'|format(s.price) if s.price is not none else '' }}" style="width:6rem;"></td>
+      <td><input type="number" min="1" max="{{ s.collection_quantity }}" name="quantity_{{ s.id }}" value="{{ s.quantity }}" style="width:5rem;"></td>
+      {% endif %}
+      <td>
+        <button type="button" class="btn-error" hx-post="/sell/staging/{{ s.id }}/remove" hx-target="#sell-page-content" hx-swap="outerHTML">🗑️</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<div class="action-bar">
+  <button type="submit" class="btn-primary">✅ Conferma e crea annunci su CardTrader</button>
+</div>
+</form>
+{% else %}
+<p class="description">Nessuna carta in revisione.</p>
+{% endif %}

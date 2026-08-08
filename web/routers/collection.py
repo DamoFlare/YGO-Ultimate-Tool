@@ -5,6 +5,7 @@ related handlers from ui/app.py (refresh_all_prices, delete_selected_card, expor
 from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import FileResponse, HTMLResponse
 
+import config
 from web.deps import get_state, render
 from web.state import AppState
 
@@ -51,8 +52,23 @@ def _build_context(state: AppState, filter_text: str = "", min_price_str: str = 
             return "desc"
         return "asc"
 
+    # Row highlight for cards currently listed/sold on CardTrader (services/storage.py's
+    # `listings` table) — active wins over a stale sold record if somehow both exist for the
+    # same row_id, cancelled listings are ignored entirely (a cancelled listing means the card
+    # is back to being just a normal collection item).
+    row_status_class = {}
+    statuses_by_row = {}
+    for listing in state.storage.load_listings():
+        statuses_by_row.setdefault(listing.collection_row_id, set()).add(listing.status)
+    for row_id, statuses in statuses_by_row.items():
+        if config.LISTING_STATUS_ACTIVE in statuses:
+            row_status_class[row_id] = "row-listed"
+        elif config.LISTING_STATUS_SOLD in statuses:
+            row_status_class[row_id] = "row-sold"
+
     return {
         "items": filtered,
+        "row_status_class": row_status_class,
         "filter_text": filter_text,
         "min_price_str": min_price_str,
         "sort": sort,
@@ -125,6 +141,25 @@ async def delete_item(
     state: AppState = Depends(get_state),
 ):
     grade_val = float(grade) if grade.strip() else None
+    target = next(
+        (
+            item for item in state.collection
+            if item.id == id and item.set_code == set_code and item.rarity == rarity and item.grade == grade_val
+        ),
+        None,
+    )
+    # A stack with an active CardTrader listing can't be removed here — listings.collection_row_id
+    # has no DB-enforced FK (this app never turns on PRAGMA foreign_keys), so deleting the item
+    # would silently orphan that listing row instead of raising an error. Cancel it from the
+    # Vendi page first.
+    if target is not None and target.row_id is not None and state.storage.get_active_listing_for_row(target.row_id):
+        ctx = _build_context(
+            state,
+            flash="Impossibile eliminare: la carta ha un annuncio attivo su CardTrader. Annullalo prima dalla pagina Vendi.",
+        )
+        ctx.update({"request": request})
+        return render(request, "_collection_content.html", ctx)
+
     state.collection = [
         item for item in state.collection
         if not (item.id == id and item.set_code == set_code and item.rarity == rarity and item.grade == grade_val)

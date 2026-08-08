@@ -88,6 +88,10 @@ th, td { padding: 0.45rem 0.6rem; text-align: left; border-bottom: 1px solid var
 th { color: var(--text-dim); font-weight: 600; position: sticky; top: 0; background: var(--panel); }
 th a { color: inherit; text-decoration: none; }
 tr:hover td { background: rgba(255, 255, 255, 0.03); }
+tr.row-listed td { background: rgba(96, 165, 250, 0.08); }
+tr.row-sold td { background: rgba(74, 222, 128, 0.08); }
+tr.row-listed:hover td { background: rgba(96, 165, 250, 0.14); }
+tr.row-sold:hover td { background: rgba(74, 222, 128, 0.14); }
 
 input, textarea, select {
     background: #0d0f16;

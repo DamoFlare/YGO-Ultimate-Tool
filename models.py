@@ -26,6 +26,10 @@ class CardPrices(BaseModel):
 
 class CollectionItem(BaseModel):
     """Represents an item stored in the user's collection."""
+    # SQLite surrogate primary key (services/storage.py) — None until first persisted. Not part
+    # of business identity (see id/set_code/rarity/grade, used for merge/lookup/delete), exists
+    # so future features (e.g. marketplace listings) can reference a specific stack stably.
+    row_id: Optional[int] = None
     id: int                              # Passcode / YGOPRODeck ID
     name: str                            # English Name
     set_code: str                        # Specific set code (e.g. RA01-EN001)
@@ -48,6 +52,15 @@ class CollectionItem(BaseModel):
     # CardTrader match was found at all, so base_price stays 0.0 (unknown, not estimated).
     real_condition_prices: Optional[Dict[str, float]] = None  # e.g. {"NM": 15.89, "EX": 12.4}
     price_source: Optional[str] = None   # "cardtrader" if matched, else None (no real price known)
+
+    # Resolved once by services/cardtrader_api.py's blueprint-matching logic (see
+    # resolve_blueprint_for_sale) and then persisted forever — unlike real_condition_prices/
+    # price_source (which find_real_prices happily re-resolves on every refresh, tolerating a
+    # wrong match since the cost is just a slightly-off displayed price), a blueprint match
+    # decides which physical printing gets promised to a real buyer when selling, so it is
+    # resolved/disambiguated once and never silently re-guessed afterward.
+    cardtrader_blueprint_id: Optional[int] = None
+    cardtrader_blueprint_image_url: Optional[str] = None
 
     def get_price_for_condition(self, condition: str) -> float:
         """Real CardTrader marketplace price for this condition if known, else an estimate."""
@@ -115,3 +128,25 @@ class CardSearchResult(BaseModel):
     attribute: Optional[str] = None
     card_sets: List[CardSetInfo] = Field(default_factory=list)
     card_prices: List[CardPrices] = Field(default_factory=list)
+
+
+class Listing(BaseModel):
+    """
+    One local record of a CardTrader marketplace listing (services/storage.py, `listings` table).
+    Bookkeeping only — creating/cancelling a Listing never changes CollectionItem.quantity; the
+    two are reconciled only by the user via /sell/poll-orders (see web/routers/sell.py), a known
+    limitation (no CardTrader webhooks exist, see .claude/06-note-e-discrepanze.md).
+    """
+    id: Optional[int] = None                     # SQLite PK, None until first persisted
+    collection_row_id: int                       # FK -> CollectionItem.row_id (not DB-enforced)
+    cardtrader_blueprint_id: int
+    cardtrader_product_id: Optional[int] = None   # CardTrader's own id, set once create succeeds
+    condition: str                                # NM/EX/GD/LP/PO bucket actually listed
+    language: str = "it"                          # CardTrader yugioh_language code actually listed
+    price_eur: float
+    quantity: int
+    status: str = "active"                        # config.LISTING_STATUS_*
+    created_at: str                               # ISO timestamp
+    updated_at: str                               # ISO timestamp
+    sold_at: Optional[str] = None
+    error_message: Optional[str] = None

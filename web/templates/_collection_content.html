@@ -10,6 +10,8 @@
     <span class="cond-badge">Stima GD: €{{ '%.2f'|format(total_gd_val) }}</span>
     <span class="cond-badge">Stima LP: €{{ '%.2f'|format(total_lp_val) }}</span>
     <span class="cond-badge">Stima PO: €{{ '%.2f'|format(total_po_val) }}</span>
+    <span class="cond-badge" style="border-color:#60a5fa; background:rgba(96,165,250,0.12);">🟦 In vendita</span>
+    <span class="cond-badge" style="border-color:#4ade80; background:rgba(74,222,128,0.12);">🟩 Venduta</span>
   </div>
   <div class="action-bar">
     <input type="text" name="q" placeholder="🔍 Filtra per nome o set code..." value="{{ filter_text }}"
@@ -19,11 +21,13 @@
     <button class="btn-primary" hx-post="/collection/refresh-prices" hx-target="#collection-content" hx-swap="outerHTML" hx-indicator="#refresh-indicator">🔄 Aggiorna Prezzi</button>
     <span id="refresh-indicator" class="htmx-indicator">Aggiornamento in corso (può richiedere qualche minuto su collezioni grandi)...</span>
     <a class="btn btn-success" href="/collection/export-csv">📥 Esporta CSV</a>
+    <button class="btn btn-primary" hx-post="/sell/stage" hx-include="[name='row_ids']:checked" hx-swap="none">💰 Vendi selezionate</button>
   </div>
   <div class="table-scroll">
   <table>
     <thead>
       <tr>
+        <th></th>
         {% for key, label in [("id","ID / Passcode"), ("name","Nome (EN)"), ("set_code","Set Code"), ("rarity","Rarità"), ("grade","Grade"), ("quantity","Qtà"), ("base_price","Base NM (€)"), ("ex","EX (€)"), ("gd","GD (€)"), ("lp","LP (€)"), ("po","PO (€)"), ("total","Totale NM (€)"), ("effective","Valore Reale (€)")] %}
         <th>
           <a href="#" hx-get="/collection/table?sort={{ key }}&amp;dir={{ next_dir(key) }}&amp;q={{ filter_text|urlencode }}&amp;min_price={{ min_price_str|urlencode }}" hx-target="#collection-content" hx-swap="outerHTML">
@@ -36,7 +40,8 @@
     </thead>
     <tbody>
       {% for item in items %}
-      <tr>
+      <tr class="{{ row_status_class.get(item.row_id, '') }}">
+        <td><input type="checkbox" name="row_ids" value="{{ item.row_id }}"></td>
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.set_code }}</td>
@@ -51,13 +56,15 @@
         <td>€{{ '%.2f'|format(item.total_nm_price) }}</td>
         <td>€{{ '%.2f'|format(item.total_effective_price) }}</td>
         <td>
+          <button class="btn btn-primary" hx-post="/sell/stage" hx-swap="none"
+            hx-vals='{"row_id": {{ item.row_id }}}'>💰 Vendi</button>
           <button class="btn-error" hx-post="/collection/delete" hx-target="#collection-content" hx-swap="outerHTML"
             hx-vals='{"id": {{ item.id }}, "set_code": "{{ item.set_code }}", "rarity": "{{ item.rarity or "Standard" }}", "grade": "{{ item.grade if item.grade is not none else "" }}"}'
             hx-confirm="Eliminare questa carta dalla collezione?">🗑️</button>
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="14">Nessuna carta in collezione.</td></tr>
+      <tr><td colspan="15">Nessuna carta in collezione.</td></tr>
       {% endfor %}
     </tbody>
   </table>

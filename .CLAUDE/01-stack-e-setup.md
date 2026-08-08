@@ -20,8 +20,11 @@ python-dotenv>=1.0.0            # carica .env (CARDTRADER_TOKEN) in config.py
 pillow>=10.0.0                  # conversione immagini CV → PNG per l'embed base64 nell'HTML
 ```
 
-Nessun database: la persistenza resta `collection.json`/`.csv` su file (vedi
-[03-modelli-dati.md](03-modelli-dati.md)). L'interfaccia è servita via browser da un server
+La collezione è persistita in **SQLite** (`collection.db`, via il modulo stdlib `sqlite3` — nessuna
+nuova dipendenza in `requirements.txt`), non più su `collection.json` (vedi
+[03-modelli-dati.md](03-modelli-dati.md) e la cronologia della migrazione in
+[06-note-e-discrepanze.md](06-note-e-discrepanze.md)). `collection.csv` resta un export leggibile
+rigenerato su richiesta, non una fonte di dati. L'interfaccia è servita via browser da un server
 FastAPI locale (`web/`) — niente Textual/TUI, niente npm/build step JS (htmx è vendorizzato come
 singolo file in `web/static/`).
 
