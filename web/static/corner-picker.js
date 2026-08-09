@@ -163,10 +163,10 @@ function createCornerPicker(ids) {
   }
 
   // --- Bulk flow, two phases:
-  // 1) Ritaglio: pick N files (or a whole folder), crop them one at a time — no network calls,
+  // 1) Cropping: pick N files (or a whole folder), crop them one at a time — no network calls,
   //    each confirmed crop is just stashed client-side ({file, corners}). The user doesn't wait
   //    on anything here; cropping N photos back-to-back is as fast as they can drag.
-  // 2) Analisi: once every photo has been cropped (or skipped), POST each stashed crop to
+  // 2) Analysis: once every photo has been cropped (or skipped), POST each stashed crop to
   //    /grading/analyze in sequence via fetch (not htmx — needs imperative "wait for this one,
   //    then start the next"), refreshing the pending-gradings inbox after each. The user can
   //    walk away during this phase; nothing here requires their input. Note this loop is driven
@@ -207,7 +207,7 @@ function createCornerPicker(ids) {
         return;
       }
       bulkProgress.textContent =
-        `Ritaglio ${cropIndex + 1} di ${cropQueue.length}: "${cropQueue[cropIndex].name}" — trascina i 4 angoli, poi conferma.`;
+        `Cropping ${cropIndex + 1} of ${cropQueue.length}: "${cropQueue[cropIndex].name}" — drag the 4 corners, then confirm.`;
       picker.loadFile(cropQueue[cropIndex], () => {});
     }
 
@@ -219,11 +219,11 @@ function createCornerPicker(ids) {
       const total = cropped.length;
       bulkConfirmBtn.disabled = true;
       bulkSkipBtn.disabled = true;
-      logLine(`— Ritaglio completato, avvio analisi di ${total} fot${total === 1 ? "o" : "o"} —`);
+      logLine(`— Cropping complete, starting analysis of ${total} photo${total === 1 ? "" : "s"} —`);
 
       for (let i = 0; i < cropped.length; i++) {
         const { file, corners } = cropped[i];
-        bulkProgress.textContent = `Analisi ${i + 1} di ${total}: "${file.name}" (può richiedere qualche secondo)...`;
+        bulkProgress.textContent = `Analyzing ${i + 1} of ${total}: "${file.name}" (may take a few seconds)...`;
         try {
           const formData = new FormData();
           formData.append("image", file, file.name);
@@ -232,12 +232,12 @@ function createCornerPicker(ids) {
           const html = await res.text();
           const errorEl = new DOMParser().parseFromString(html, "text/html").querySelector(".result-box.error");
           if (res.ok && !errorEl) {
-            logLine(`✅ ${file.name} analizzata.`);
+            logLine(`✅ ${file.name} analyzed.`);
           } else {
-            logLine(`❌ ${file.name}: ${errorEl ? errorEl.textContent.trim() : "analisi non riuscita."}`);
+            logLine(`❌ ${file.name}: ${errorEl ? errorEl.textContent.trim() : "analysis failed."}`);
           }
         } catch (err) {
-          logLine(`❌ ${file.name}: errore di rete (${err}).`);
+          logLine(`❌ ${file.name}: network error (${err}).`);
         }
         // Refresh the inbox after each analysis, not just at the end, so progress is visible
         // live if the user is still watching (and already there once they come back if not).
@@ -246,8 +246,8 @@ function createCornerPicker(ids) {
         }
       }
 
-      logLine(`— Analisi completata: ${total} fot${total === 1 ? "o" : "o"} —`);
-      bulkProgress.textContent = `Completato: ${total} fot${total === 1 ? "o" : "o"} analizzate.`;
+      logLine(`— Analysis complete: ${total} photo${total === 1 ? "" : "s"} —`);
+      bulkProgress.textContent = `Done: ${total} photo${total === 1 ? "" : "s"} analyzed.`;
       cropped = [];
       bulkConfirmBtn.disabled = false;
       bulkSkipBtn.disabled = false;
@@ -259,7 +259,7 @@ function createCornerPicker(ids) {
       cropped = [];
       bulkLog.innerHTML = "";
       if (!cropQueue.length) {
-        bulkProgress.textContent = "Nessuna immagine trovata nella selezione.";
+        bulkProgress.textContent = "No images found in the selection.";
         return;
       }
       showCurrentCrop();
@@ -282,7 +282,7 @@ function createCornerPicker(ids) {
     });
 
     bulkSkipBtn.addEventListener("click", () => {
-      if (cropIndex < cropQueue.length) logLine(`⏭️ ${cropQueue[cropIndex].name} saltata dal ritaglio.`);
+      if (cropIndex < cropQueue.length) logLine(`⏭️ ${cropQueue[cropIndex].name} skipped from cropping.`);
       cropIndex += 1;
       showCurrentCrop();
     });

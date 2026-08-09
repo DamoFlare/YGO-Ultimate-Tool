@@ -6,7 +6,7 @@ one shared YGOProDeckAPI/CardTraderAPI/StorageService/CardGrader instance, the c
 once at startup and mutated in place, plus the transient state needed by the multi-step flows
 (Bulk Add's queue, Grading's pending-gradings inbox — the latter persisted to
 config.DEFAULT_PENDING_GRADINGS_FILE, see PendingGrading below). No per-user sessions — a
-deliberate simplification for this single-user local tool, see .CLAUDE/06-note-e-discrepanze.md.
+deliberate simplification for this single-user local tool, see .CLAUDE/06-notes-and-discrepancies.md.
 """
 import base64
 import io

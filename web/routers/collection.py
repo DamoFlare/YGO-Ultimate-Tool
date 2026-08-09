@@ -125,7 +125,7 @@ async def refresh_prices(request: Request, state: AppState = Depends(get_state))
 
     ctx = _build_context(
         state,
-        flash=f"Prezzi reali CardTrader trovati per {real_price_count}/{len(state.collection)} carte.",
+        flash=f"Real CardTrader prices found for {real_price_count}/{len(state.collection)} cards.",
     )
     ctx.update({"request": request})
     return render(request, "_collection_content.html", ctx)
@@ -151,11 +151,11 @@ async def delete_item(
     # A stack with an active CardTrader listing can't be removed here — listings.collection_row_id
     # has no DB-enforced FK (this app never turns on PRAGMA foreign_keys), so deleting the item
     # would silently orphan that listing row instead of raising an error. Cancel it from the
-    # Vendi page first.
+    # Sell page first.
     if target is not None and target.row_id is not None and state.storage.get_active_listing_for_row(target.row_id):
         ctx = _build_context(
             state,
-            flash="Impossibile eliminare: la carta ha un annuncio attivo su CardTrader. Annullalo prima dalla pagina Vendi.",
+            flash="Cannot delete: this card has an active listing on CardTrader. Cancel it first from the Sell page.",
         )
         ctx.update({"request": request})
         return render(request, "_collection_content.html", ctx)
@@ -165,7 +165,7 @@ async def delete_item(
         if not (item.id == id and item.set_code == set_code and item.rarity == rarity and item.grade == grade_val)
     ]
     state.storage.save_collection(state.collection)
-    ctx = _build_context(state, flash="Carta rimossa dalla collezione.")
+    ctx = _build_context(state, flash="Card removed from the collection.")
     ctx.update({"request": request})
     return render(request, "_collection_content.html", ctx)
 
@@ -173,5 +173,5 @@ async def delete_item(
 @router.get("/collection/export-csv")
 async def export_csv(state: AppState = Depends(get_state)):
     if not state.storage.export_to_csv(state.collection):
-        return HTMLResponse("Errore durante l'esportazione CSV.", status_code=500)
+        return HTMLResponse("Error exporting CSV.", status_code=500)
     return FileResponse(str(state.storage.csv_path), filename="collection.csv", media_type="text/csv")

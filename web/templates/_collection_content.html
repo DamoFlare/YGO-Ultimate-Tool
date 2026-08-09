@@ -1,34 +1,34 @@
 <div id="collection-content">
   {% if flash %}<p class="description">{{ flash }}</p>{% endif %}
   <div class="metrics-bar">
-    <div class="metric-card">📊 Carte Uniche: <b>{{ total_unique }}</b></div>
-    <div class="metric-card">Totale Pezzi: <b>{{ total_pieces }}</b></div>
-    <div class="metric-card highlight">Valore NM Totale: <b>€{{ '%.2f'|format(total_nm_val) }}</b></div>
+    <div class="metric-card">📊 Unique Cards: <b>{{ total_unique }}</b></div>
+    <div class="metric-card">Total Pieces: <b>{{ total_pieces }}</b></div>
+    <div class="metric-card highlight">Total NM Value: <b>€{{ '%.2f'|format(total_nm_val) }}</b></div>
   </div>
   <div class="condition-bar">
-    <span class="cond-badge">Stima EX: €{{ '%.2f'|format(total_ex_val) }}</span>
-    <span class="cond-badge">Stima GD: €{{ '%.2f'|format(total_gd_val) }}</span>
-    <span class="cond-badge">Stima LP: €{{ '%.2f'|format(total_lp_val) }}</span>
-    <span class="cond-badge">Stima PO: €{{ '%.2f'|format(total_po_val) }}</span>
-    <span class="cond-badge" style="border-color:#60a5fa; background:rgba(96,165,250,0.12);">🟦 In vendita</span>
-    <span class="cond-badge" style="border-color:#4ade80; background:rgba(74,222,128,0.12);">🟩 Venduta</span>
+    <span class="cond-badge">EX Estimate: €{{ '%.2f'|format(total_ex_val) }}</span>
+    <span class="cond-badge">GD Estimate: €{{ '%.2f'|format(total_gd_val) }}</span>
+    <span class="cond-badge">LP Estimate: €{{ '%.2f'|format(total_lp_val) }}</span>
+    <span class="cond-badge">PO Estimate: €{{ '%.2f'|format(total_po_val) }}</span>
+    <span class="cond-badge" style="border-color:#60a5fa; background:rgba(96,165,250,0.12);">🟦 For sale</span>
+    <span class="cond-badge" style="border-color:#4ade80; background:rgba(74,222,128,0.12);">🟩 Sold</span>
   </div>
   <div class="action-bar">
-    <input type="text" name="q" placeholder="🔍 Filtra per nome o set code..." value="{{ filter_text }}"
+    <input type="text" name="q" placeholder="🔍 Filter by name or set code..." value="{{ filter_text }}"
       hx-get="/collection/table" hx-trigger="keyup changed delay:300ms" hx-target="#collection-content" hx-swap="outerHTML" hx-include="[name='min_price']">
-    <input type="text" name="min_price" placeholder="💰 Prezzo minimo (€)" value="{{ min_price_str }}"
+    <input type="text" name="min_price" placeholder="💰 Minimum price (€)" value="{{ min_price_str }}"
       hx-get="/collection/table" hx-trigger="keyup changed delay:300ms" hx-target="#collection-content" hx-swap="outerHTML" hx-include="[name='q']">
-    <button class="btn-primary" hx-post="/collection/refresh-prices" hx-target="#collection-content" hx-swap="outerHTML" hx-indicator="#refresh-indicator">🔄 Aggiorna Prezzi</button>
-    <span id="refresh-indicator" class="htmx-indicator">Aggiornamento in corso (può richiedere qualche minuto su collezioni grandi)...</span>
-    <a class="btn btn-success" href="/collection/export-csv">📥 Esporta CSV</a>
-    <button class="btn btn-primary" hx-post="/sell/stage" hx-include="[name='row_ids']:checked" hx-swap="none">💰 Vendi selezionate</button>
+    <button class="btn-primary" hx-post="/collection/refresh-prices" hx-target="#collection-content" hx-swap="outerHTML" hx-indicator="#refresh-indicator">🔄 Refresh Prices</button>
+    <span id="refresh-indicator" class="htmx-indicator">Refreshing (can take a few minutes on large collections)...</span>
+    <a class="btn btn-success" href="/collection/export-csv">📥 Export CSV</a>
+    <button class="btn btn-primary" hx-post="/sell/stage" hx-include="[name='row_ids']:checked" hx-swap="none">💰 Sell selected</button>
   </div>
   <div class="table-scroll">
   <table>
     <thead>
       <tr>
         <th></th>
-        {% for key, label in [("id","ID / Passcode"), ("name","Nome (EN)"), ("set_code","Set Code"), ("rarity","Rarità"), ("grade","Grade"), ("quantity","Qtà"), ("base_price","Base NM (€)"), ("ex","EX (€)"), ("gd","GD (€)"), ("lp","LP (€)"), ("po","PO (€)"), ("total","Totale NM (€)"), ("effective","Valore Reale (€)")] %}
+        {% for key, label in [("id","ID / Passcode"), ("name","Name (EN)"), ("set_code","Set Code"), ("rarity","Rarity"), ("grade","Grade"), ("quantity","Qty"), ("base_price","Base NM (€)"), ("ex","EX (€)"), ("gd","GD (€)"), ("lp","LP (€)"), ("po","PO (€)"), ("total","Total NM (€)"), ("effective","Real Value (€)")] %}
         <th>
           <a href="#" hx-get="/collection/table?sort={{ key }}&amp;dir={{ next_dir(key) }}&amp;q={{ filter_text|urlencode }}&amp;min_price={{ min_price_str|urlencode }}" hx-target="#collection-content" hx-swap="outerHTML">
             {{ label }}{% if sort == key %}{{ ' ▲' if direction == 'asc' else ' ▼' }}{% endif %}
@@ -57,14 +57,14 @@
         <td>€{{ '%.2f'|format(item.total_effective_price) }}</td>
         <td>
           <button class="btn btn-primary" hx-post="/sell/stage" hx-swap="none"
-            hx-vals='{"row_id": {{ item.row_id }}}'>💰 Vendi</button>
+            hx-vals='{"row_id": {{ item.row_id }}}'>💰 Sell</button>
           <button class="btn-error" hx-post="/collection/delete" hx-target="#collection-content" hx-swap="outerHTML"
             hx-vals='{"id": {{ item.id }}, "set_code": "{{ item.set_code }}", "rarity": "{{ item.rarity or "Standard" }}", "grade": "{{ item.grade if item.grade is not none else "" }}"}'
-            hx-confirm="Eliminare questa carta dalla collezione?">🗑️</button>
+            hx-confirm="Remove this card from the collection?">🗑️</button>
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="15">Nessuna carta in collezione.</td></tr>
+      <tr><td colspan="15">No cards in the collection.</td></tr>
       {% endfor %}
     </tbody>
   </table>

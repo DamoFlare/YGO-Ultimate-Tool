@@ -2,7 +2,7 @@
 <div class="table-scroll">
 <table>
   <thead>
-    <tr><th>Carta</th><th>Set / Rarità</th><th>Lingua</th><th>Condizione</th><th>Prezzo (€)</th><th>Qtà</th><th>Stato</th><th>Creato</th><th>Venduto</th><th></th></tr>
+    <tr><th>Card</th><th>Set / Rarity</th><th>Language</th><th>Condition</th><th>Price (€)</th><th>Qty</th><th>Status</th><th>Created</th><th>Sold</th><th></th></tr>
   </thead>
   <tbody>
     {% for row in listings %}
@@ -11,7 +11,7 @@
         {% if row.item and row.item.cardtrader_blueprint_image_url %}
         <img src="{{ row.item.cardtrader_blueprint_image_url }}" alt="{{ row.item.name }}" style="max-width:48px; max-height:66px; border-radius:4px; display:block; margin-bottom:0.3rem;">
         {% endif %}
-        {{ row.item.name if row.item else 'Carta rimossa dalla collezione' }}
+        {{ row.item.name if row.item else 'Card removed from the collection' }}
       </td>
       <td>{{ row.item.set_code if row.item else '-' }} — {{ row.item.rarity if row.item else '-' }}</td>
       <td>{{ row.listing.language|upper }}</td>
@@ -19,15 +19,15 @@
       <td>€{{ '%.2f'|format(row.listing.price_eur) }}</td>
       <td>{{ row.listing.quantity }}</td>
       <td>
-        {% if row.listing.status == 'active' %}🟢 Attivo
-        {% elif row.listing.status == 'sold' %}✅ Venduto
-        {% else %}⚪ Annullato{% endif %}
+        {% if row.listing.status == 'active' %}🟢 Active
+        {% elif row.listing.status == 'sold' %}✅ Sold
+        {% else %}⚪ Cancelled{% endif %}
       </td>
       <td>{{ row.listing.created_at[:10] }}</td>
       <td>{{ row.listing.sold_at[:10] if row.listing.sold_at else '-' }}</td>
       <td>
         {% if row.listing.status == 'active' %}
-        <button class="btn-error" hx-post="/sell/listings/{{ row.listing.id }}/cancel" hx-target="#sell-page-content" hx-swap="outerHTML" hx-confirm="Annullare questo annuncio su CardTrader?">🗑️ Annulla</button>
+        <button class="btn-error" hx-post="/sell/listings/{{ row.listing.id }}/cancel" hx-target="#sell-page-content" hx-swap="outerHTML" hx-confirm="Cancel this listing on CardTrader?">🗑️ Cancel</button>
         {% endif %}
       </td>
     </tr>
@@ -36,10 +36,10 @@
 </table>
 </div>
 {% else %}
-<p class="description">Nessun annuncio creato finora.</p>
+<p class="description">No listings created yet.</p>
 {% endif %}
 <div class="action-bar">
-  <button class="btn" hx-post="/sell/poll-orders" hx-target="#sell-page-content" hx-swap="outerHTML">🔄 Controlla vendite</button>
+  <button class="btn" hx-post="/sell/poll-orders" hx-target="#sell-page-content" hx-swap="outerHTML">🔄 Check sales</button>
   <button class="btn" hx-post="/sell/listings/sync-prices" hx-target="#sell-page-content" hx-swap="outerHTML"
-    hx-confirm="Aggiornare il prezzo di tutti gli annunci attivi al valore corrente della collezione (con lo sconto suggerito)?">💶 Sincronizza prezzi</button>
+    hx-confirm="Update the price of all active listings to the collection's current value (with the suggested discount)?">💶 Sync prices</button>
 </div>

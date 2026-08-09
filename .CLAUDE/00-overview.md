@@ -1,82 +1,82 @@
-# YGO Ultimate Tool — Panoramica
+# YGO Ultimate Tool — Overview
 
-## Cos'è
+## What it is
 
-Applicazione web locale (Python, FastAPI + HTML server-side con htmx) per gestire e valutare una
-collezione di carte Yu-Gi-Oh! TCG. Nome descrittivo nel README: "Yu-Gi-Oh! TCG Valuer &
-Collection Tracker". La cartella storica/di progetto era `YGO-TGC-Valuer/`.
+Local web application (Python, FastAPI + server-side HTML with htmx) to manage and value a
+collection of Yu-Gi-Oh! TCG cards. Descriptive name in the README: "Yu-Gi-Oh! TCG Valuer &
+Collection Tracker". The historical/project folder was `YGO-TGC-Valuer/`.
 
-Un server locale (`python main.py`) espone l'interfaccia sul browser a
-`http://127.0.0.1:8000` — single-user, bindato solo su localhost, nessuna autenticazione (non
-serve: nessuno oltre al proprietario della macchina può raggiungerlo). **Era originariamente una
-TUI Textual**: è stata ritirata e ricostruita come web app perché il modulo di Grading aveva
-bisogno di mostrare foto in modo affidabile, cosa che il rendering grafico da terminale non
-garantiva (due bug non banali di libreria, vedi [06-note-e-discrepanze.md](06-note-e-discrepanze.md)).
+A local server (`python main.py`) exposes the interface in the browser at
+`http://127.0.0.1:8000` — single-user, bound only to localhost, no authentication (not
+needed: no one other than the machine's owner can reach it). **It was originally a
+Textual TUI**: it was retired and rebuilt as a web app because the Grading module needed
+to reliably display photos, something that terminal graphics rendering did not
+guarantee (two non-trivial library bugs, see [06-notes-and-discrepancies.md](06-notes-and-discrepancies.md)).
 
-Repository GitHub: `DamoFlare/YGO-Ultimate-Tool` (remote `origin`), branch unico `main`.
+GitHub repository: `DamoFlare/YGO-Ultimate-Tool` (remote `origin`), single branch `main`.
 
-## Cosa fa (in breve)
+## What it does (in brief)
 
-1. Cerca carte (per nome, per passcode/ID numerico, o per set code tipo `RA01-EN001`) tramite
-   l'API pubblica **YGOPRODeck** — usata solo per identificare la carta, mai per i prezzi.
-2. Aggiunge le carte trovate a una collezione personale, con quantità e prezzo reale.
-3. Calcola il valore della collezione usando **prezzi reali di mercato da CardTrader**
-   (inserzioni live, non aggregati/storici) per ciascuna condizione (NM/EX/GD/LP/PO), con stima
-   a moltiplicatore solo come fallback quando manca un'inserzione reale per quella condizione.
-   Vedi [08-pricing-cardtrader.md](08-pricing-cardtrader.md).
-4. Persiste la collezione in **SQLite** (`collection.db`) ed esporta su richiesta in
-   `collection.csv`. `collection.json` è ora solo un backup storico pre-migrazione, non più letto
-   né scritto dall'app — vedi [06-note-e-discrepanze.md](06-note-e-discrepanze.md).
-5. Offre una modalità di inserimento massivo ("Aggiunta Bulk") per incollare molti set-code in
-   una volta e confermarli uno a uno.
-6. **Grada automaticamente** una carta fisica da una foto: un'architettura ibrida CV (OpenCV,
-   deterministica) + VLM locale (Ollama/`llava`, self-hosted via Docker) calcola un grade 1-10
-   stile PSA/BGS e lo mappa sulla condizione NM/EX/GD/LP/PO esistente. Vedi
-   [07-grading.md](07-grading.md). Ha sostituito il precedente scanner OCR placeholder.
-7. **Vende carte su CardTrader** (bulk o singola): seleziona carte dalla collezione, revisiona
-   condizione/prezzo/quantità in una pagina dedicata (con foto della stampa esatta risolta su
-   CardTrader per un controllo visivo anti-mismatch), conferma per creare annunci reali via
-   `POST /products`. Nessuna sincronizzazione automatica delle vendite (niente webhook
-   CardTrader) — stato aggiornato solo con un controllo manuale. Vedi
-   [06-note-e-discrepanze.md](06-note-e-discrepanze.md).
+1. Searches for cards (by name, by passcode/numeric ID, or by set code like `RA01-EN001`) via
+   the public **YGOPRODeck** API — used only to identify the card, never for prices.
+2. Adds the cards found to a personal collection, with quantity and actual price.
+3. Calculates the collection's value using **real market prices from CardTrader**
+   (live listings, not aggregated/historical) for each condition (NM/EX/GD/LP/PO), with a
+   multiplier-based estimate only as a fallback when there is no real listing for that condition.
+   See [08-cardtrader-pricing.md](08-cardtrader-pricing.md).
+4. Persists the collection in **SQLite** (`collection.db`) and exports on request to
+   `collection.csv`. `collection.json` is now only a historical pre-migration backup, no longer
+   read nor written by the app — see [06-notes-and-discrepancies.md](06-notes-and-discrepancies.md).
+5. Offers a bulk-entry mode ("Bulk Add") to paste many set codes at once and confirm them
+   one by one.
+6. **Automatically grades** a physical card from a photo: a hybrid CV (OpenCV,
+   deterministic) + local VLM (Ollama/`llava`, self-hosted via Docker) architecture calculates a
+   1-10 grade in PSA/BGS style and maps it to the existing NM/EX/GD/LP/PO condition. See
+   [07-grading.md](07-grading.md). It replaced the previous placeholder OCR scanner.
+7. **Sells cards on CardTrader** (bulk or single): selects cards from the collection, reviews
+   condition/price/quantity on a dedicated page (with a photo of the exact printing resolved on
+   CardTrader for an anti-mismatch visual check), confirms to create real listings via
+   `POST /products`. No automatic sale synchronization (no CardTrader
+   webhook) — status is updated only with a manual check. See
+   [06-notes-and-discrepancies.md](06-notes-and-discrepancies.md).
 
-## Stato del progetto
+## Project status
 
-- Repository giovane: partito da 2 commit iniziali (`First commit`, poi `Update .gitignore and
-  add pyvenv configuration file`), poi TUI Textual → modulo di Grading (CV+VLM) → migrazione
-  prezzi a CardTrader → migrazione completa da TUI a web app (FastAPI + htmx) → migrazione
-  persistenza collezione da JSON a SQLite → **feature di vendita carte su CardTrader** (bulk +
-  singola, stessa sessione della migrazione SQLite, fatta apposta per darle un `row_id` stabile —
-  vedi [06-note-e-discrepanze.md](06-note-e-discrepanze.md)).
-- La feature di vendita ha richiesto un test dal vivo con creazione/cancellazione immediata di un
-  annuncio reale (confermato esplicitamente dall'utente prima di procedere) per scoprire due
-  scostamenti reali dalla documentazione ufficiale di CardTrader (id del prodotto annidato in
-  `resource.id`, property lingua chiamata `yugioh_language` non `language`) — vedi
-  [06-note-e-discrepanze.md](06-note-e-discrepanze.md) per i dettagli, utile prima di modificare
-  ulteriormente `services/cardtrader_api.py::create_listing`.
-- Nessun test automatizzato "formale" (no `pytest`/`tests/`), ma ogni feature è stata verificata
-  end-to-end con chiamate reali ai servizi esterni (YGOPRODeck, CardTrader, Ollama) durante lo
-  sviluppo. Nessuna CI/CD, nessuna licenza dichiarata.
-- Il README descrive le 4 pagine (Collezione, Aggiungi Carta, Aggiunta Bulk, Grading Carta) come
-  pagine web, non più tab di una TUI.
-- Il modulo di Grading richiede un server Ollama locale in esecuzione (`docker compose up -d`,
-  vedi [01-stack-e-setup.md](01-stack-e-setup.md)) — senza, la pagina Grading fallisce con un
-  errore comprensibile ma le altre pagine funzionano normalmente.
-- Il pricing richiede un token CardTrader valido in `.env` (`CARDTRADER_TOKEN`) — senza, la
-  ricerca carte funziona comunque ma nessun prezzo viene mai mostrato (fallback silenzioso a
-  `€0.00`). Vedi [08-pricing-cardtrader.md](08-pricing-cardtrader.md).
+- Young repository: started from 2 initial commits (`First commit`, then `Update .gitignore and
+  add pyvenv configuration file`), then Textual TUI → Grading module (CV+VLM) → price
+  migration to CardTrader → complete migration from TUI to web app (FastAPI + htmx) → collection
+  persistence migration from JSON to SQLite → **card-selling feature on CardTrader** (bulk +
+  single, same session as the SQLite migration, done on purpose to give it a stable `row_id` —
+  see [06-notes-and-discrepancies.md](06-notes-and-discrepancies.md)).
+- The selling feature required a live test with immediate creation/deletion of a
+  real listing (explicitly confirmed by the user before proceeding) to discover two
+  real deviations from CardTrader's official documentation (product id nested in
+  `resource.id`, language property called `yugioh_language` instead of `language`) — see
+  [06-notes-and-discrepancies.md](06-notes-and-discrepancies.md) for details, useful before further
+  modifying `services/cardtrader_api.py::create_listing`.
+- No "formal" automated tests (no `pytest`/`tests/`), but every feature was verified
+  end-to-end with real calls to external services (YGOPRODeck, CardTrader, Ollama) during
+  development. No CI/CD, no declared license.
+- The README describes the 4 pages (Collection, Add Card, Bulk Add, Card Grading) as
+  web pages, no longer tabs of a TUI.
+- The Grading module requires a local Ollama server running (`docker compose up -d`,
+  see [01-stack-and-setup.md](01-stack-and-setup.md)) — without it, the Grading page fails with a
+  clear error but the other pages work normally.
+- Pricing requires a valid CardTrader token in `.env` (`CARDTRADER_TOKEN`) — without it,
+  card search still works but no price is ever shown (silent fallback to
+  `€0.00`). See [08-cardtrader-pricing.md](08-cardtrader-pricing.md).
 
-## Indice della knowledge base
+## Knowledge base index
 
-- [01-stack-e-setup.md](01-stack-e-setup.md) — linguaggio, dipendenze, come avviare il progetto
-  (Docker per Ollama, token CardTrader)
-- [02-architettura.md](02-architettura.md) — struttura a livelli, entry point, flusso richieste
-- [03-modelli-dati.md](03-modelli-dati.md) — `config.py`, `models.py`, formati JSON/CSV
-- [04-servizi.md](04-servizi.md) — `services/` (API client di ricerca/prezzo, storage, grading)
-- [05-ui.md](05-ui.md) — `web/` (FastAPI, router, template Jinja2/htmx)
-- [06-note-e-discrepanze.md](06-note-e-discrepanze.md) — TODO impliciti, limiti noti, cronologia
-  della migrazione dei prezzi e della migrazione da TUI a web
-- [07-grading.md](07-grading.md) — architettura del modulo di Grading: formula, soglie, pesi,
-  come tararli
-- [08-pricing-cardtrader.md](08-pricing-cardtrader.md) — architettura del pricing CardTrader:
-  matching, rate limit, limiti noti
+- [01-stack-and-setup.md](01-stack-and-setup.md) — language, dependencies, how to start the project
+  (Docker for Ollama, CardTrader token)
+- [02-architecture.md](02-architecture.md) — layered structure, entry point, request flow
+- [03-data-models.md](03-data-models.md) — `config.py`, `models.py`, JSON/CSV formats
+- [04-services.md](04-services.md) — `services/` (search/price API client, storage, grading)
+- [05-ui.md](05-ui.md) — `web/` (FastAPI, router, Jinja2/htmx templates)
+- [06-notes-and-discrepancies.md](06-notes-and-discrepancies.md) — implicit TODOs, known limits,
+  history of the price migration and the TUI-to-web migration
+- [07-grading.md](07-grading.md) — architecture of the Grading module: formula, thresholds, weights,
+  how to tune them
+- [08-cardtrader-pricing.md](08-cardtrader-pricing.md) — architecture of CardTrader pricing:
+  matching, rate limiting, known limits

@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Aggiunta Bulk — Yu-Gi-Oh! TCG Valuer{% endblock %}
+{% block title %}Bulk Add — Yu-Gi-Oh! TCG Valuer{% endblock %}
 {% block content %}
 <div class="panel">
-  <h2>🚀 Aggiunta Bulk</h2>
-  <p><a href="/add" class="btn">⬅️ Torna ad Aggiungi Carta</a></p>
-  <p class="description">Incolla più codici set separati da spazio o a capo (es. "RA01-EN001 LOB-001 SDMM-IT014").</p>
+  <h2>🚀 Bulk Add</h2>
+  <p><a href="/add" class="btn">⬅️ Back to Add Card</a></p>
+  <p class="description">Paste multiple set codes separated by spaces or newlines (e.g. "RA01-EN001 LOB-001 SDMM-IT014").</p>
   <form hx-post="/bulk/load" hx-target="#bulk-current" hx-swap="outerHTML" hx-indicator="#bulk-load-indicator">
     <textarea name="codes" rows="4" style="width:100%;" placeholder="RA01-EN001 LOB-001 ..."></textarea>
     <div class="action-bar">
-      <button class="btn-primary" type="submit">📥 Carica Codici</button>
-      <span id="bulk-load-indicator" class="htmx-indicator">Caricamento...</span>
+      <button class="btn-primary" type="submit">📥 Load Codes</button>
+      <span id="bulk-load-indicator" class="htmx-indicator">Loading...</span>
     </div>
   </form>
   {% include "_bulk_current.html" %}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,10 +13,10 @@
         <p class="subtitle">YGOPRODeck Card Search &amp; CardTrader Price Engine</p>
     </header>
     <nav class="tabs">
-        <a href="/" class="tab {{ 'active' if active_tab == 'collection' else '' }}">📋 Collezione &amp; Valutazione</a>
-        <a href="/add" class="tab {{ 'active' if active_tab == 'add' else '' }}">➕ Aggiungi Carta</a>
-        <a href="/grading" class="tab {{ 'active' if active_tab == 'grading' else '' }}">🩺 Grading Carta (CV + AI)</a>
-        <a href="/sell" class="tab {{ 'active' if active_tab == 'sell' else '' }}">💰 Vendi su CardTrader</a>
+        <a href="/" class="tab {{ 'active' if active_tab == 'collection' else '' }}">📋 Collection &amp; Valuation</a>
+        <a href="/add" class="tab {{ 'active' if active_tab == 'add' else '' }}">➕ Add Card</a>
+        <a href="/grading" class="tab {{ 'active' if active_tab == 'grading' else '' }}">🩺 Card Grading (CV + AI)</a>
+        <a href="/sell" class="tab {{ 'active' if active_tab == 'sell' else '' }}">💰 Sell on CardTrader</a>
     </nav>
     <main class="page">
         {% block content %}{% endblock %}

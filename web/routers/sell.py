@@ -5,7 +5,7 @@ architectural pattern as the Grading module's pending_gradings inbox (web/router
 every row is independently addressable/actionable, so "sell one card" is simply "stage exactly
 one row," not a separate code path.
 
-Design decisions this router implements (see .claude/06-note-e-discrepanze.md for the full
+Design decisions this router implements (see .claude/06-notes-and-discrepancies.md for the full
 rationale, discussed and confirmed with the user before implementation):
 - A CardTrader blueprint match is resolved once and persisted onto CollectionItem
   (cardtrader_blueprint_id/cardtrader_blueprint_image_url) — never silently re-guessed after
@@ -124,7 +124,7 @@ async def sell_stage(
             elif result["status"] == "ambiguous":
                 staging.candidates = result["candidates"]
             elif result["status"] == "not_found":
-                staging.error = "Nessun match trovato su CardTrader per questa carta — impossibile metterla in vendita."
+                staging.error = "No match found on CardTrader for this card — it can't be listed for sale."
             else:
                 staging.error = f"Errore durante la risoluzione: {result.get('message', 'sconosciuto')}"
 
@@ -138,11 +138,11 @@ async def sell_resolve(
 ):
     staging = state.get_staging_item(staging_id)
     if staging is None:
-        return render(request, "_sell_page_content.html", _sell_context(request, state, flash="Voce non trovata.", flash_error=True))
+        return render(request, "_sell_page_content.html", _sell_context(request, state, flash="Entry not found.", flash_error=True))
 
     chosen = next((c for c in staging.candidates if c["id"] == blueprint_id), None)
     if chosen is None:
-        return render(request, "_sell_page_content.html", _sell_context(request, state, flash="Candidato non valido.", flash_error=True))
+        return render(request, "_sell_page_content.html", _sell_context(request, state, flash="Invalid candidate.", flash_error=True))
 
     staging.blueprint_id = chosen["id"]
     staging.blueprint_image_url = chosen["image_url"]
@@ -192,7 +192,7 @@ async def sell_confirm(request: Request, state: AppState = Depends(get_state)):
         language = str(form.get(f"language_{staging.id}", "")).strip().lower()
 
         if condition not in config.CARDTRADER_SELL_CONDITION:
-            staging.error = "Seleziona una condizione."
+            staging.error = "Select a condition."
             failed += 1
             continue
         if language not in dict(config.CARDTRADER_SELL_LANGUAGES):
@@ -205,7 +205,7 @@ async def sell_confirm(request: Request, state: AppState = Depends(get_state)):
             if price <= 0 or quantity <= 0:
                 raise ValueError("price/quantity must be positive")
         except ValueError:
-            staging.error = "Prezzo o quantità non validi."
+            staging.error = "Invalid price or quantity."
             failed += 1
             continue
 
@@ -219,7 +219,7 @@ async def sell_confirm(request: Request, state: AppState = Depends(get_state)):
         try:
             response = await state.cardtrader.create_listing(staging.blueprint_id, price, quantity, condition, language=language)
         except CardTraderAPIError as e:
-            staging.error = f"Errore CardTrader: {e.body}"
+            staging.error = f"CardTrader error: {e.body}"
             failed += 1
             continue
 
@@ -240,11 +240,11 @@ async def sell_confirm(request: Request, state: AppState = Depends(get_state)):
         state.remove_staging_item(staging.id)
         created += 1
 
-    parts = [f"✅ {created} annunci creati" if created else "Nessun annuncio creato"]
+    parts = [f"✅ {created} listings created" if created else "No listings created"]
     if skipped:
-        parts.append(f"{skipped} già in vendita (saltati)")
+        parts.append(f"{skipped} already for sale (skipped)")
     if failed:
-        parts.append(f"{failed} da correggere")
+        parts.append(f"{failed} need fixing")
     flash = ", ".join(parts) + "."
 
     return render(request, "_sell_page_content.html", _sell_context(request, state, flash=flash, flash_error=(created == 0 and failed > 0)))
@@ -254,7 +254,7 @@ async def sell_confirm(request: Request, state: AppState = Depends(get_state)):
 async def sell_cancel_listing(request: Request, listing_id: int, state: AppState = Depends(get_state)):
     listing = next((l for l in state.storage.load_listings() if l.id == listing_id), None)
     if listing is None:
-        return render(request, "_sell_page_content.html", _sell_context(request, state, flash="Annuncio non trovato.", flash_error=True))
+        return render(request, "_sell_page_content.html", _sell_context(request, state, flash="Listing not found.", flash_error=True))
 
     try:
         if listing.cardtrader_product_id is not None:
@@ -262,13 +262,13 @@ async def sell_cancel_listing(request: Request, listing_id: int, state: AppState
     except CardTraderAPIError as e:
         return render(request,
             "_sell_page_content.html",
-            _sell_context(request, state, flash=f"Errore durante l'annullamento: {e.body}", flash_error=True),
+            _sell_context(request, state, flash=f"Error while cancelling: {e.body}", flash_error=True),
         )
 
     listing.status = config.LISTING_STATUS_CANCELLED
     listing.updated_at = datetime.now(timezone.utc).isoformat()
     state.storage.update_listing(listing)
-    return render(request, "_sell_page_content.html", _sell_context(request, state, flash="Annuncio annullato."))
+    return render(request, "_sell_page_content.html", _sell_context(request, state, flash="Listing cancelled."))
 
 
 @router.post("/sell/listings/sync-prices", response_class=HTMLResponse)
@@ -279,7 +279,7 @@ async def sell_sync_prices(request: Request, state: AppState = Depends(get_state
     Needed because a listing's price is a one-time snapshot taken at creation — it does NOT track
     changes to the underlying CollectionItem pricing (e.g. after /collection/refresh-prices, or
     after a pricing bug fix like the one that motivated adding this route in the first place, see
-    .claude/06-note-e-discrepanze.md). Tolerant to per-listing failures, same pattern as
+    .claude/06-notes-and-discrepancies.md). Tolerant to per-listing failures, same pattern as
     /sell/confirm.
     """
     collection_by_row = {i.row_id: i for i in state.collection}
@@ -307,11 +307,11 @@ async def sell_sync_prices(request: Request, state: AppState = Depends(get_state
         state.storage.update_listing(listing)
         updated += 1
 
-    parts = [f"🔄 {updated} annunci aggiornati" if updated else "Nessun annuncio da aggiornare"]
+    parts = [f"🔄 {updated} listings updated" if updated else "No listings to update"]
     if skipped:
-        parts.append(f"{skipped} già allineati")
+        parts.append(f"{skipped} already in sync")
     if failed:
-        parts.append(f"{failed} falliti")
+        parts.append(f"{failed} failed")
     flash = ", ".join(parts) + "."
     return render(request, "_sell_page_content.html", _sell_context(request, state, flash=flash, flash_error=(failed > 0 and updated == 0)))
 
@@ -322,7 +322,7 @@ async def sell_poll_orders(request: Request, state: AppState = Depends(get_state
     Manual-only trigger (no CardTrader webhooks exist). GET /orders' response shape is
     unconfirmed beyond "200 with an empty list" (verified live, no real orders exist yet) — this
     looks for a product id under a couple of plausible key paths defensively, and must be
-    revisited once a real order actually appears (see .claude/06-note-e-discrepanze.md).
+    revisited once a real order actually appears (see .claude/06-notes-and-discrepancies.md).
     Does NOT touch CollectionItem.quantity — reconciling a sale against owned quantity is an
     explicitly deferred known limitation.
     """
@@ -331,7 +331,7 @@ async def sell_poll_orders(request: Request, state: AppState = Depends(get_state
     except CardTraderAPIError as e:
         return render(request,
             "_sell_page_content.html",
-            _sell_context(request, state, flash=f"Errore nel controllo ordini: {e.body}", flash_error=True),
+            _sell_context(request, state, flash=f"Error checking orders: {e.body}", flash_error=True),
         )
 
     sold_product_ids = set()
@@ -351,5 +351,5 @@ async def sell_poll_orders(request: Request, state: AppState = Depends(get_state
             state.storage.update_listing(listing)
             updated += 1
 
-    flash = f"🔄 {updated} annunci risultano venduti." if updated else "🔄 Nessuna nuova vendita rilevata."
+    flash = f"🔄 {updated} listings are now marked sold." if updated else "🔄 No new sales detected."
     return render(request, "_sell_page_content.html", _sell_context(request, state, flash=flash))

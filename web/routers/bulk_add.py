@@ -26,7 +26,7 @@ def _ctx(state: AppState, request: Request, flash: str = ""):
 @router.get("/bulk", response_class=HTMLResponse)
 async def bulk_page(request: Request, state: AppState = Depends(get_state)):
     ctx = _ctx(state, request)
-    # Bulk Add is reached via a button inside the "Aggiungi Carta" tab, not its own nav tab
+    # Bulk Add is reached via a button inside the "Add Card" tab, not its own nav tab
     # (see .CLAUDE/05-ui.md) — keep that tab highlighted so the nav still makes sense here.
     ctx["active_tab"] = "add"
     return render(request, "bulk_add.html", ctx)
@@ -74,5 +74,5 @@ async def bulk_skip(request: Request, state: AppState = Depends(get_state)):
 @router.post("/bulk/save-all", response_class=HTMLResponse)
 async def bulk_save_all(request: Request, state: AppState = Depends(get_state)):
     ok = state.storage.save_collection(state.collection)
-    flash = "Collezione salvata su collection.json!" if ok else "Errore durante il salvataggio della collezione."
+    flash = "Collection saved!" if ok else "Error saving the collection."
     return render(request, "_bulk_current.html", _ctx(state, request, flash=flash))

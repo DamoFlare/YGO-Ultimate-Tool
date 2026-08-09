@@ -160,7 +160,7 @@ class CardTraderAPI:
                 return None
             # NOT the language parsed from set_code (e.g. "EN" in "SDDE-EN017") — YGOPRODeck's
             # search only ever returns English set data during Add Card (see
-            # .claude/06-note-e-discrepanze.md), so that token reflects the ONLY sets YGOPRODeck
+            # .claude/06-notes-and-discrepancies.md), so that token reflects the ONLY sets YGOPRODeck
             # exposed, never the physical card's actual printed language. Filtering by it here
             # silently priced from a tiny, unrepresentative pool of English listings instead of
             # this collection's real (Italian) market — a real bug found by the user cross-
@@ -257,7 +257,7 @@ class CardTraderAPI:
         wrong condition.
 
         NOTE: confirmed live (real create-then-delete test, one card, immediately deleted after
-        verifying — see .claude/06-note-e-discrepanze.md):
+        verifying — see .claude/06-notes-and-discrepancies.md):
         - Top-level shape is blueprint_id/price/quantity as flat fields; price is a plain number
           in the marketplace's main currency unit (e.g. 0.20 for twenty cents), NOT a nested
           {cents, currency} object — CardTrader's own validation-error responses ("Price is not a

@@ -4,31 +4,31 @@
   {% elif result %}
     <div class="grading-images">
       <figure>
-        <figcaption>📷 Originale</figcaption>
-        <img src="{{ original_src }}" alt="Foto originale della carta">
+        <figcaption>📷 Original</figcaption>
+        <img src="{{ original_src }}" alt="Original photo of the card">
       </figure>
       <figure>
-        <figcaption>🔎 Normalizzata + Analisi</figcaption>
-        <img src="{{ annotated_src }}" alt="Immagine normalizzata con overlay di analisi">
+        <figcaption>🔎 Normalized + Analysis</figcaption>
+        <img src="{{ annotated_src }}" alt="Normalized image with analysis overlay">
       </figure>
     </div>
     <div class="result-box">
-      <h3>✅ Grade calcolato: {{ '%.1f'|format(result.final_grade) }} / 10 → Condizione: <b>{{ result.condition }}</b></h3>
+      <h3>✅ Calculated grade: {{ '%.1f'|format(result.final_grade) }} / 10 → Condition: <b>{{ result.condition }}</b></h3>
       <ul>
         <li><b>Centering</b>: {{ '%.1f'|format(result.centering_subgrade) }}/10
           (H {{ '%.1f'|format(result.centering_ratio.get('horizontal', 50)) }}/{{ '%.1f'|format(100 - result.centering_ratio.get('horizontal', 50)) }},
           V {{ '%.1f'|format(result.centering_ratio.get('vertical', 50)) }}/{{ '%.1f'|format(100 - result.centering_ratio.get('vertical', 50)) }})</li>
-        <li><b>Edges</b>: {{ '%.1f'|format(result.edges_subgrade) }}/10 (sbiancamento bordo: {{ '%.1f'|format(result.edge_wear_pct) }}%)</li>
-        <li><b>Corners</b>: {{ '%.1f'|format(result.corners_subgrade) }}/10 (sbiancamento angoli: {{ '%.1f'|format(result.corner_whitening_pct) }}%)</li>
+        <li><b>Edges</b>: {{ '%.1f'|format(result.edges_subgrade) }}/10 (edge whitening: {{ '%.1f'|format(result.edge_wear_pct) }}%)</li>
+        <li><b>Corners</b>: {{ '%.1f'|format(result.corners_subgrade) }}/10 (corner whitening: {{ '%.1f'|format(result.corner_whitening_pct) }}%)</li>
         <li><b>Surface</b>: {{ '%.1f'|format(result.surface_subgrade) }}/10
-          (graffi: {{ result.surface_details.get('scratch_severity', 'none') }}, pieghe: {{ result.surface_details.get('crease_severity', 'none') }})</li>
+          (scratches: {{ result.surface_details.get('scratch_severity', 'none') }}, creases: {{ result.surface_details.get('crease_severity', 'none') }})</li>
       </ul>
-      <p class="explanation">🧠 <b>Perché questo grade:</b> {{ result.explanation }}</p>
-      <p>ℹ️ <b>Cosa ha visto l'AI sulla superficie:</b> {{ result.surface_details.get('details', '') }}</p>
-      <p class="description">Trovi questa carta nella lista "📦 Carte gradate in attesa di collegamento" qui sotto per collegarla a una carta della collezione.</p>
+      <p class="explanation">🧠 <b>Why this grade:</b> {{ result.explanation }}</p>
+      <p>ℹ️ <b>What the AI saw on the surface:</b> {{ result.surface_details.get('details', '') }}</p>
+      <p class="description">You'll find this card in the "📦 Graded cards awaiting linking" list below to link it to a card in the collection.</p>
     </div>
   {% else %}
-    <p class="description">Carica una foto e premi "Analizza Carta" per iniziare.</p>
+    <p class="description">Upload a photo and press "Analyze Card" to get started.</p>
   {% endif %}
 </div>
 {% if pending is defined %}

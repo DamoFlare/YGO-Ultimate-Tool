@@ -135,7 +135,7 @@ class Listing(BaseModel):
     One local record of a CardTrader marketplace listing (services/storage.py, `listings` table).
     Bookkeeping only — creating/cancelling a Listing never changes CollectionItem.quantity; the
     two are reconciled only by the user via /sell/poll-orders (see web/routers/sell.py), a known
-    limitation (no CardTrader webhooks exist, see .claude/06-note-e-discrepanze.md).
+    limitation (no CardTrader webhooks exist, see .claude/06-notes-and-discrepancies.md).
     """
     id: Optional[int] = None                     # SQLite PK, None until first persisted
     collection_row_id: int                       # FK -> CollectionItem.row_id (not DB-enforced)

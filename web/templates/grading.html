@@ -1,82 +1,82 @@
 {% extends "base.html" %}
-{% block title %}Grading Carta — Yu-Gi-Oh! TCG Valuer{% endblock %}
+{% block title %}Card Grading — Yu-Gi-Oh! TCG Valuer{% endblock %}
 {% block content %}
 <div class="panel">
-  <h2>🩺 Grading Carta (Computer Vision + AI locale)</h2>
+  <h2>🩺 Card Grading (Computer Vision + local AI)</h2>
   <p class="description">
-    Analizza una foto della carta fisica per stimare un grade oggettivo 1-10, stile PSA/BGS:
-    <b>Centering</b>, <b>Edges</b> e <b>Corners</b> sono misurati in modo deterministico (OpenCV),
-    <b>Surface</b> (graffi/pieghe) da un modello Vision locale (Ollama + llava, nessun dato lascia
-    il tuo PC). Il ritaglio della carta è manuale: trascina i 4 angoli sulla foto caricata.
+    Analyzes a photo of the physical card to estimate an objective 1-10 grade, PSA/BGS style:
+    <b>Centering</b>, <b>Edges</b>, and <b>Corners</b> are measured deterministically (OpenCV),
+    <b>Surface</b> (scratches/creases) by a local Vision model (Ollama + llava, no data leaves
+    your machine). Card cropping is manual: drag the 4 corners over the uploaded photo.
   </p>
-  <p class="warning-note">⚠️ Limite noto: Centering non viene sempre rilevato con sicurezza sulle foto reali (usa un valore prudenziale) e le soglie di Edges/Corners non sono ancora tarate su un dataset di carte con condizione nota. Vedi .CLAUDE/07-grading.md.</p>
+  <p class="warning-note">⚠️ Known limitation: Centering isn't always reliably detected on real photos (a conservative value is used), and the Edges/Corners thresholds haven't been tuned yet on a dataset of cards with known condition. See .CLAUDE/07-grading.md.</p>
 
   <form hx-post="/grading/analyze" hx-target="#grading-result" hx-swap="outerHTML" hx-encoding="multipart/form-data" hx-indicator="#analyze-indicator" class="action-bar" style="flex-direction: column; align-items: stretch;">
     <div class="action-bar">
       <input type="file" id="grading-image-input" name="image" accept="image/*" required>
-      <button class="btn-primary" type="submit">🩺 Analizza Carta</button>
-      <span id="analyze-indicator" class="htmx-indicator">Analisi in corso (può richiedere qualche secondo)...</span>
+      <button class="btn-primary" type="submit">🩺 Analyze Card</button>
+      <span id="analyze-indicator" class="htmx-indicator">Analyzing (may take a few seconds)...</span>
     </div>
     <input type="hidden" id="grading-corners-input" name="corners" value="">
     <div id="cropper-wrap" style="display: none;">
-      <p class="description">✂️ Trascina i 4 angoli esattamente sui vertici fisici della carta, poi premi "Analizza Carta".</p>
+      <p class="description">✂️ Drag the 4 corners exactly onto the card's physical corners, then press "Analyze Card".</p>
       <div class="cropper-container" id="cropper-container">
-        <img id="cropper-image" alt="Anteprima della foto caricata, da ritagliare">
+        <img id="cropper-image" alt="Preview of the uploaded photo, to be cropped">
         <svg class="cropper-svg"><polygon id="cropper-poly" class="cropper-poly"></polygon></svg>
         <div class="cropper-magnifier" id="cropper-magnifier"></div>
-        <div class="cropper-handle" data-idx="0" title="Alto-sinistra"></div>
-        <div class="cropper-handle" data-idx="1" title="Alto-destra"></div>
-        <div class="cropper-handle" data-idx="2" title="Basso-destra"></div>
-        <div class="cropper-handle" data-idx="3" title="Basso-sinistra"></div>
+        <div class="cropper-handle" data-idx="0" title="Top-left"></div>
+        <div class="cropper-handle" data-idx="1" title="Top-right"></div>
+        <div class="cropper-handle" data-idx="2" title="Bottom-right"></div>
+        <div class="cropper-handle" data-idx="3" title="Bottom-left"></div>
       </div>
     </div>
   </form>
 
   <div id="grading-result">
-    <p class="description">Carica una foto, ritaglia la carta trascinando i 4 angoli, poi premi "Analizza Carta".</p>
+    <p class="description">Upload a photo, crop the card by dragging the 4 corners, then press "Analyze Card".</p>
   </div>
 </div>
 
 <div class="panel">
-  <h2>📸 Grading Bulk (più foto)</h2>
+  <h2>📸 Bulk Grading (multiple photos)</h2>
   <p class="description">
-    Seleziona più foto o un'intera cartella: prima si ritagliano <b>tutte</b> le carte, una alla
-    volta (stesso ritaglio manuale di sopra) — nessuna analisi finché non hai confermato l'ultimo
-    ritaglio, così non devi aspettare davanti allo schermo tra una carta e l'altra. Solo dopo
-    l'analisi parte in sequenza su tutte le foto ritagliate; puoi lasciarla andare in background
-    (finché questa scheda del browser resta aperta). Ogni carta analizzata finisce nella lista
-    "📦 Carte gradate in attesa di collegamento" qui sotto.
+    Select multiple photos or an entire folder: <b>all</b> cards are cropped first, one at a
+    time (same manual cropping as above) — no analysis starts until you've confirmed the last
+    crop, so you don't have to wait at the screen between one card and the next. Only after that
+    does the analysis run in sequence on all the cropped photos; you can let it run in the
+    background (as long as this browser tab stays open). Every analyzed card ends up in the
+    "📦 Graded cards awaiting linking" list below.
   </p>
   <div class="action-bar">
-    <label class="btn">📁 Seleziona più foto<input type="file" id="bulk-grading-input" accept="image/*" multiple style="display:none;"></label>
-    <label class="btn">🗂️ Seleziona una cartella<input type="file" id="bulk-grading-folder-input" accept="image/*" multiple webkitdirectory directory style="display:none;"></label>
+    <label class="btn">📁 Select multiple photos<input type="file" id="bulk-grading-input" accept="image/*" multiple style="display:none;"></label>
+    <label class="btn">🗂️ Select a folder<input type="file" id="bulk-grading-folder-input" accept="image/*" multiple webkitdirectory directory style="display:none;"></label>
   </div>
   <p id="bulk-grading-progress" class="description"></p>
   <div id="bulk-cropper-wrap" style="display: none;">
     <div class="cropper-container" id="bulk-cropper-container">
-      <img id="bulk-cropper-image" alt="Anteprima della foto corrente da ritagliare">
+      <img id="bulk-cropper-image" alt="Preview of the current photo to crop">
       <svg class="cropper-svg"><polygon id="bulk-cropper-poly" class="cropper-poly"></polygon></svg>
       <div class="cropper-magnifier" id="bulk-cropper-magnifier"></div>
-      <div class="cropper-handle" data-idx="0" title="Alto-sinistra"></div>
-      <div class="cropper-handle" data-idx="1" title="Alto-destra"></div>
-      <div class="cropper-handle" data-idx="2" title="Basso-destra"></div>
-      <div class="cropper-handle" data-idx="3" title="Basso-sinistra"></div>
+      <div class="cropper-handle" data-idx="0" title="Top-left"></div>
+      <div class="cropper-handle" data-idx="1" title="Top-right"></div>
+      <div class="cropper-handle" data-idx="2" title="Bottom-right"></div>
+      <div class="cropper-handle" data-idx="3" title="Bottom-left"></div>
     </div>
     <div class="action-bar">
-      <button class="btn-primary" type="button" id="bulk-confirm-btn">✅ Conferma ritaglio</button>
-      <button class="btn" type="button" id="bulk-skip-btn">⏭️ Salta questa foto</button>
+      <button class="btn-primary" type="button" id="bulk-confirm-btn">✅ Confirm crop</button>
+      <button class="btn" type="button" id="bulk-skip-btn">⏭️ Skip this photo</button>
     </div>
   </div>
   <div id="bulk-grading-log"></div>
 </div>
 
 <div class="panel">
-  <h2>📦 Carte gradate in attesa di collegamento</h2>
+  <h2>📦 Graded cards awaiting linking</h2>
   <p class="description">
-    Le carte analizzate (singole o in bulk) restano qui finché non le collegui a una carta della
-    collezione — non toccano <code>collection.json</code> prima di quel momento. Se il server
-    viene riavviato prima di collegarle vanno perse (nessuna persistenza su disco per questa
-    lista, vedi .CLAUDE/07-grading.md).
+    Analyzed cards (single or bulk) stay here until you link them to a card in the
+    collection — they don't touch <code>collection.db</code> before that. If the server
+    is restarted before linking them, they're lost (no disk persistence for this
+    list, see .CLAUDE/07-grading.md).
   </p>
   {% include "_grading_pending.html" %}
 </div>

@@ -4,13 +4,13 @@
 <table>
   <thead>
     <tr>
-      <th>Carta</th>
-      <th>Set / Rarità</th>
-      <th>Qtà posseduta</th>
-      <th>Lingua</th>
-      <th>Condizione</th>
-      <th>Prezzo (€)</th>
-      <th>Qtà in vendita</th>
+      <th>Card</th>
+      <th>Set / Rarity</th>
+      <th>Owned Qty</th>
+      <th>Language</th>
+      <th>Condition</th>
+      <th>Price (€)</th>
+      <th>Selling Qty</th>
       <th></th>
     </tr>
   </thead>
@@ -29,7 +29,7 @@
       <td colspan="4"><span class="result-box error" style="display:block;">{{ s.error }}</span></td>
       {% elif s.candidates %}
       <td colspan="4">
-        <p class="description" style="margin:0 0 0.5rem 0;">⚠️ Match ambiguo su CardTrader — scegli la stampa corretta (confronta l'immagine con la carta fisica):</p>
+        <p class="description" style="margin:0 0 0.5rem 0;">⚠️ Ambiguous match on CardTrader — pick the correct printing (compare the image with the physical card):</p>
         {% for c in s.candidates %}
         <button type="button" class="btn" style="margin:0.2rem;"
           hx-post="/sell/staging/{{ s.id }}/resolve" hx-vals='{"blueprint_id": {{ c.id }}}'
@@ -49,7 +49,7 @@
       </td>
       <td>
         <select name="condition_{{ s.id }}" data-prices='{{ suggested_prices.get(s.id, {}) | tojson }}'>
-          <option value="" {{ 'selected' if not s.condition else '' }}>-- seleziona --</option>
+          <option value="" {{ 'selected' if not s.condition else '' }}>-- select --</option>
           {% for code, label in [("NM","Near Mint"), ("EX","Excellent"), ("GD","Good"), ("LP","Light Played"), ("PO","Poor")] %}
           <option value="{{ code }}" {{ 'selected' if s.condition == code else '' }}>{{ label }}</option>
           {% endfor %}
@@ -67,9 +67,9 @@
 </table>
 </div>
 <div class="action-bar">
-  <button type="submit" class="btn-primary">✅ Conferma e crea annunci su CardTrader</button>
+  <button type="submit" class="btn-primary">✅ Confirm and create listings on CardTrader</button>
 </div>
 </form>
 {% else %}
-<p class="description">Nessuna carta in revisione.</p>
+<p class="description">No cards under review.</p>
 {% endif %}

@@ -1,6 +1,6 @@
 <div id="add-results">
   {% if searched and not cards %}
-    <p class="description">Nessuna carta trovata con questo termine.</p>
+    <p class="description">No card found for this search.</p>
   {% endif %}
   {% for card in cards %}
   <details class="panel" {{ "open" if loop.first else "" }}>
@@ -8,7 +8,7 @@
     {% if card.card_sets %}
     <div class="table-scroll">
     <table>
-      <thead><tr><th>Set Code</th><th>Rarità</th><th>Nome Set</th><th></th></tr></thead>
+      <thead><tr><th>Set Code</th><th>Rarity</th><th>Set Name</th><th></th></tr></thead>
       <tbody>
       {% for cset in card.card_sets %}
       <tr>
@@ -21,7 +21,7 @@
             <input type="hidden" name="set_code" value="{{ cset.set_code }}">
             <input type="hidden" name="rarity" value="{{ cset.set_rarity }}">
             <input type="number" name="qty" value="1" min="1" style="width:60px;">
-            <button class="btn-success" type="submit">✅ Aggiungi</button>
+            <button class="btn-success" type="submit">✅ Add</button>
           </form>
         </td>
       </tr>
@@ -30,11 +30,11 @@
     </table>
     </div>
     {% else %}
-    <p class="description">Nessun set specifico disponibile — verrà aggiunta come "PROMO".</p>
+    <p class="description">No specific printing available — it will be added as "PROMO".</p>
     <form hx-post="/add/confirm" hx-target="#add-feedback" hx-swap="innerHTML" class="action-bar">
       <input type="hidden" name="card_id" value="{{ card.id }}">
       <input type="number" name="qty" value="1" min="1" style="width:60px;">
-      <button class="btn-success" type="submit">✅ Aggiungi</button>
+      <button class="btn-success" type="submit">✅ Add</button>
     </form>
     {% endif %}
   </details>

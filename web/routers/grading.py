@@ -5,7 +5,7 @@ perform_grading_search/save_graded_card_to_collection from the retired ui/app.py
 The two debug images (original + annotated-normalized) are embedded directly as base64 PNG
 data URIs in the HTML response — no terminal graphics protocol, no temporary image files to
 manage, scaling handled natively by the browser's own CSS. This is the whole reason this
-feature moved off the TUI — see .CLAUDE/06-note-e-discrepanze.md for the two Textual/
+feature moved off the TUI — see .CLAUDE/06-notes-and-discrepancies.md for the two Textual/
 textual-image bugs that motivated the move.
 
 The card outline is no longer auto-detected: the user drags 4 corner handles over the uploaded
@@ -66,11 +66,11 @@ async def grading_pending_discard(request: Request, pending_id: int, state: AppS
     if removed:
         return render(request,
             "_grading_pending.html",
-            _pending_context(request, state, flash="🗑️ Rimossa dalla lista (nessuna modifica alla collezione)."),
+            _pending_context(request, state, flash="🗑️ Removed from the list (no change to the collection)."),
         )
     return render(request,
         "_grading_pending.html",
-        _pending_context(request, state, flash="❌ Voce non trovata (già rimossa?).", flash_error=True),
+        _pending_context(request, state, flash="❌ Entry not found (already removed?).", flash_error=True),
     )
 
 
@@ -88,7 +88,7 @@ async def grading_analyze(
     except (json.JSONDecodeError, ValueError):
         return render(request,
             "_grading_result.html",
-            {"request": request, "error": "Ritaglia la carta trascinando i 4 angoli prima di analizzare."},
+            {"request": request, "error": "Crop the card by dragging the 4 corners before analyzing."},
         )
 
     filename = image.filename or "upload.jpg"
@@ -102,14 +102,14 @@ async def grading_analyze(
     except CardCropError as e:
         return render(request,
             "_grading_result.html",
-            {"request": request, "error": f"Ritaglio non valido: {e}"},
+            {"request": request, "error": f"Invalid crop: {e}"},
         )
     except InspectorAgentError as e:
         return render(request, "_grading_result.html", {"request": request, "error": str(e)})
     except Exception as e:
         return render(request,
             "_grading_result.html",
-            {"request": request, "error": f"Errore imprevisto durante l'analisi: {e}"},
+            {"request": request, "error": f"Unexpected error during analysis: {e}"},
         )
     finally:
         tmp_path.unlink(missing_ok=True)
@@ -155,14 +155,14 @@ async def grading_save(
     if pending is None:
         return render(request,
             "_grading_pending.html",
-            _pending_context(request, state, flash="❌ Voce non trovata (già collegata o rimossa?).", flash_error=True),
+            _pending_context(request, state, flash="❌ Entry not found (already linked or removed?).", flash_error=True),
         )
 
     results = await state.api.get_card_by_id(card_id)
     if not results:
         return render(request,
             "_grading_pending.html",
-            _pending_context(request, state, flash="❌ Carta non trovata (rimossa dal database?).", flash_error=True),
+            _pending_context(request, state, flash="❌ Card not found (removed from the database?).", flash_error=True),
         )
 
     card = results[0]
@@ -183,5 +183,5 @@ async def grading_save(
     state.storage.save_collection(state.collection)
     state.remove_pending_grading(pending_id)
 
-    flash = f"✅ {card.name} aggiunta all'inventario con grade {r.final_grade:.1f}/10 ({r.condition})."
+    flash = f"✅ {card.name} added to the inventory with grade {r.final_grade:.1f}/10 ({r.condition})."
     return render(request, "_grading_pending.html", _pending_context(request, state, flash=flash))

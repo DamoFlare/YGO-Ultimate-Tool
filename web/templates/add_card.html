@@ -1,14 +1,14 @@
 {% extends "base.html" %}
-{% block title %}Aggiungi Carta — Yu-Gi-Oh! TCG Valuer{% endblock %}
+{% block title %}Add Card — Yu-Gi-Oh! TCG Valuer{% endblock %}
 {% block content %}
 <div class="panel">
-  <h2>🔍 Cerca Carta Yu-Gi-Oh!</h2>
-  <p class="description">Nome IT/EN, Passcode ID o Codice Set (es. "RA01-EN001" o "Mago Nero"). Il prezzo reale (CardTrader) viene recuperato solo al momento della conferma.</p>
-  <p><a href="/bulk" class="btn">🚀 Aggiungi in Bulk (più codici alla volta)</a></p>
+  <h2>🔍 Search Yu-Gi-Oh! Card</h2>
+  <p class="description">Italian/English name, passcode ID, or set code (e.g. "RA01-EN001" or "Dark Magician"). The real price (CardTrader) is fetched only when you confirm.</p>
+  <p><a href="/bulk" class="btn">🚀 Bulk Add (multiple codes at once)</a></p>
   <form class="action-bar" hx-post="/add/search" hx-target="#add-results" hx-swap="outerHTML" hx-indicator="#search-indicator">
-    <input type="text" name="query" placeholder="Inserisci nome, ID o codice set..." required>
-    <button class="btn-primary" type="submit">🔎 Cerca</button>
-    <span id="search-indicator" class="htmx-indicator">Ricerca in corso...</span>
+    <input type="text" name="query" placeholder="Enter name, ID, or set code..." required>
+    <button class="btn-primary" type="submit">🔎 Search</button>
+    <span id="search-indicator" class="htmx-indicator">Searching...</span>
   </form>
   <div id="add-feedback"></div>
   {% include "_add_results.html" %}

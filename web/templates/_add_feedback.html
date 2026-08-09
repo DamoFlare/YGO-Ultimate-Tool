@@ -1,9 +1,9 @@
 <p class="result-box">
-  ✅ Aggiunta <b>{{ card_name }}</b> x{{ qty }} alla collezione!<br>
-  Prezzo NM: €{{ '%.2f'|format(item.base_price) }}
+  ✅ Added <b>{{ card_name }}</b> x{{ qty }} to the collection!<br>
+  NM price: €{{ '%.2f'|format(item.base_price) }}
   {% if item.price_source == "cardtrader" %}
-    <span class="badge badge-source-cardtrader">reale CardTrader</span>
+    <span class="badge badge-source-cardtrader">real CardTrader price</span>
   {% else %}
-    <span class="badge badge-source-none">nessun prezzo trovato</span>
+    <span class="badge badge-source-none">no price found</span>
   {% endif %}
 </p>

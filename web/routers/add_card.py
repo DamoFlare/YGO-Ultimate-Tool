@@ -5,7 +5,7 @@ add_selected_card_to_collection from ui/app.py.
 Simplification enabled by the web paradigm: the old TUI needed a stateful two-step "select
 card, then select set" flow because the UI could only show one OptionList's results at a time.
 Here, a single search response can render every found card together with all of its sets
-inline (each set's own "Aggiungi" form carries card_id + set_code directly) — no server-side
+inline (each set's own "Add" form carries card_id + set_code directly) — no server-side
 "currently selected" state needed at all.
 """
 from fastapi import APIRouter, Depends, Form, Request
@@ -46,7 +46,7 @@ async def add_card_confirm(
 ):
     results = await state.api.get_card_by_id(card_id)
     if not results:
-        return HTMLResponse('<p class="result-box error">❌ Carta non trovata (rimossa dal database?).</p>')
+        return HTMLResponse('<p class="result-box error">❌ Card not found (removed from the database?).</p>')
 
     card = results[0]
     selected_set = next((cs for cs in card.card_sets if cs.set_code == set_code), None) if set_code else None

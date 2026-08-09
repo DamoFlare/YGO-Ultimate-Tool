@@ -49,15 +49,15 @@ CARDTRADER_SELL_CONDITION = {
 # Languages selectable when creating a listing (services/cardtrader_api.py create_listing's
 # `language` param -> CardTrader's `yugioh_language` product property). NOT derived from
 # CollectionItem.set_code's language suffix: YGOPRODeck's search only ever returns English set
-# data during Add Card (see .claude/06-note-e-discrepanze.md), so a set_code like "RA01-EN001"
+# data during Add Card (see .claude/06-notes-and-discrepancies.md), so a set_code like "RA01-EN001"
 # does not reliably reflect which language the user's physical copy actually is — the sell
 # staging UI lets the user pick it explicitly per row instead.
 CARDTRADER_SELL_LANGUAGES = [
-    ("it", "Italiano"),
-    ("en", "Inglese"),
-    ("fr", "Francese"),
-    ("de", "Tedesco"),
-    ("es", "Spagnolo"),
+    ("it", "Italian"),
+    ("en", "English"),
+    ("fr", "French"),
+    ("de", "German"),
+    ("es", "Spanish"),
 ]
 DEFAULT_SELL_LANGUAGE = "it"  # this collection is entirely Italian physical copies
 

@@ -25,7 +25,7 @@ from services.grading.geometric_agent import (
 @dataclass
 class DebugImages:
     """Images for the Grading tab's transparency panel. Not a Pydantic model — PIL Images
-    aren't JSON-serializable and don't need to be, they're never persisted to collection.json."""
+    aren't JSON-serializable and don't need to be, they're never persisted to collection.db."""
     original: Image.Image
     annotated: Image.Image
 
@@ -66,25 +66,25 @@ def _build_explanation(
 
     if bottleneck_name == "Centering":
         reason = (
-            f"la centratura rilevata (H {centering.get('horizontal', 50):.0f}/"
+            f"the detected centering (H {centering.get('horizontal', 50):.0f}/"
             f"{100 - centering.get('horizontal', 50):.0f}, V {centering.get('vertical', 50):.0f}/"
-            f"{100 - centering.get('vertical', 50):.0f}) è lontana dal 50/50 ideale"
+            f"{100 - centering.get('vertical', 50):.0f}) is far from the ideal 50/50"
             if centering.get("detected")
-            else "la centratura non è stata rilevata con sicurezza, quindi è stato usato un valore prudenziale"
+            else "centering could not be reliably detected, so a conservative value was used"
         )
     elif bottleneck_name == "Edges":
-        reason = f"il {edge_wear_pct:.1f}% del bordo mostra segni di sbiancamento/usura"
+        reason = f"{edge_wear_pct:.1f}% of the border shows signs of whitening/wear"
     elif bottleneck_name == "Corners":
-        reason = f"il {corner_whitening_pct:.1f}% dell'area dei 4 angoli mostra segni di sbiancamento"
+        reason = f"{corner_whitening_pct:.1f}% of the 4 corners' area shows signs of whitening"
     else:
         scratch = surface_details.get("scratch_severity", "none")
         crease = surface_details.get("crease_severity", "none")
-        reason = f"l'AI ha rilevato graffi '{scratch}' e pieghe '{crease}' sulla superficie"
+        reason = f"the AI detected '{scratch}' scratches and '{crease}' creases on the surface"
 
     return (
-        f"Il sotto-voto più basso è {bottleneck_name} ({bottleneck_value:.1f}/10), perché {reason}. "
-        f"Per regola stile BGS, il grade finale non può superare il sotto-voto peggiore + 1.0 "
-        f"({cap:.1f}/10), anche se la media pesata dei quattro sotto-voti sarebbe più alta."
+        f"The lowest subgrade is {bottleneck_name} ({bottleneck_value:.1f}/10), because {reason}. "
+        f"Per BGS-style rules, the final grade cannot exceed the worst subgrade + 1.0 "
+        f"({cap:.1f}/10), even if the weighted average of the four subgrades would be higher."
     )
 
 
